@@ -1,0 +1,108 @@
+.preloaderContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, var(--background), var(--accent-mint));
+  transition: opacity 1.2s ease-in-out, visibility 1.2s ease-in-out;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.svgWrapper {
+  width: 220px;
+  height: 220px;
+  position: relative;
+}
+
+.branchSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.drawGroup path {
+  fill: transparent;
+  stroke: var(--accent-teal-dark);
+  stroke-width: 0.5;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: drawLeaf 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Add slight delays to different paths for a more organic feel */
+.drawGroup path:nth-child(14) { animation-delay: 0.0s; stroke-width: 0.8; } /* Main stem */
+.drawGroup path:nth-child(1) { animation-delay: 0.05s; }
+.drawGroup path:nth-child(2) { animation-delay: 0.1s; }
+.drawGroup path:nth-child(3) { animation-delay: 0.15s; }
+.drawGroup path:nth-child(4) { animation-delay: 0.2s; }
+.drawGroup path:nth-child(5) { animation-delay: 0.25s; }
+.drawGroup path:nth-child(6) { animation-delay: 0.3s; }
+.drawGroup path:nth-child(7) { animation-delay: 0.35s; }
+.drawGroup path:nth-child(8) { animation-delay: 0.4s; }
+.drawGroup path:nth-child(9) { animation-delay: 0.45s; }
+.drawGroup path:nth-child(10) { animation-delay: 0.5s; }
+.drawGroup path:nth-child(11) { animation-delay: 0.55s; }
+.drawGroup path:nth-child(12) { animation-delay: 0.6s; }
+.drawGroup path:nth-child(13) { animation-delay: 0.65s; }
+
+@keyframes drawLeaf {
+  0% {
+    stroke-dashoffset: 100;
+    fill: transparent;
+  }
+  60% {
+    stroke-dashoffset: 0;
+    fill: transparent;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill: var(--accent-teal); /* softly fades to filled */
+  }
+}
+
+.textWrapper {
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 0.6s forwards;
+}
+
+.brandTitle {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  letter-spacing: 0.2em;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.tagline {
+  font-size: 0.9rem;
+  color: var(--accent-teal-dark);
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,12 @@
+.wrapper {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1; /* Sits completely behind the glass cards */
+  /* We will use GSAP to animate floating on this wrapper */
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

@@ -1,0 +1,163 @@
+.container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 1rem;
+  overflow: hidden;
+}
+
+.stemSvg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px; /* Provides enough width for the winding sine wave */
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  height: 350px; /* Fixed height guarantees math sine-wave perfectly syncs with DOM */
+}
+
+.cardContainer {
+  padding: 0 2rem;
+  width: 100%;
+  display: flex;
+}
+
+.leftCard {
+  grid-column: 1;
+  justify-content: flex-end;
+}
+
+.leftCard .timelineCard {
+  border-radius: 100px 0 100px 0;
+  border-color: rgba(52, 181, 178, 0.4);
+  border-width: 1.5px;
+}
+
+.rightCard {
+  grid-column: 3;
+  justify-content: flex-start;
+}
+
+.rightCard .timelineCard {
+  border-radius: 0 100px 0 100px;
+  border-color: rgba(52, 181, 178, 0.4);
+  border-width: 1.5px;
+}
+
+.timelineCard {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 30px rgba(52, 181, 178, 0.1);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  max-width: 420px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  opacity: 0; /* JS will animate */
+}
+
+.timelineCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(52, 181, 178, 0.15);
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  color: #1c3d38; /* Deep teal matching mockup text */
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+}
+
+.cardBody {
+  font-family: var(--font-body);
+  color: #2d5a5a;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.connectionContainer {
+  grid-column: 2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.connectionLineSvg {
+  position: absolute;
+  top: 50%;
+  height: 40px;
+  z-index: -1;
+  transform: translateY(-50%);
+}
+
+.leftConnection {
+  position: absolute;
+  left: 120px;
+  /* transform is handled in JS now to include -50% Y */
+  width: 152px;
+}
+
+.rightConnection {
+  position: absolute;
+  left: 20px;
+  width: 152px;
+}
+
+.svgLeft {
+  right: 0;
+}
+
+.svgRight {
+  left: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: 80px 1fr;
+    min-height: 200px;
+  }
+  
+  .stemSvg {
+    left: 40px;
+    transform: none;
+    width: 80px;
+  }
+  
+  .connectionContainer {
+    grid-column: 1;
+  }
+  
+  .cardContainer {
+    grid-column: 2;
+    justify-content: flex-start;
+    padding: 0 1rem;
+  }
+  
+  .leftCard {
+    text-align: left;
+  }
+  
+  .timelineCard {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .connectionLineSvg {
+    display: none;
+  }
+}

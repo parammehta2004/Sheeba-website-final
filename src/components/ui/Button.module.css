@@ -1,0 +1,82 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px; /* Strict Evergreen padding */
+  border-radius: var(--radius-buttons); /* 40.5px pill */
+  font-family: var(--font-body); /* Now Rubik */
+  font-weight: 500;
+  font-size: var(--text-body-sm); /* 17px */
+  letter-spacing: 0.01em;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary Button */
+.primary {
+  background: var(--accent-olive);
+  color: #f8f1de;
+  box-shadow: 0 4px 14px 0 rgba(117, 118, 100, 0.3);
+}
+
+.primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--accent-amber);
+  opacity: 0;
+  transition: var(--transition-smooth);
+  z-index: 1;
+}
+
+.primary:hover {
+  box-shadow: 0 6px 20px rgba(184, 123, 76, 0.4);
+  transform: translateY(-2px);
+}
+
+.primary:hover::before {
+  opacity: 1;
+}
+
+.primary span {
+  position: relative;
+  z-index: 2;
+}
+
+.secondary {
+  background: var(--glass-bg);
+  color: var(--gray-900);
+  border: 1px solid var(--accent-amber);
+  backdrop-filter: blur(8px);
+}
+
+
+.secondary:hover {
+  background: rgba(184, 123, 76, 0.05);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Tertiary / Text Button */
+.text {
+  background: transparent;
+  color: var(--accent-amber);
+  padding: 0.5rem 1rem;
+}
+
+.text:hover {
+  background: rgba(184, 123, 76, 0.05);
+}
+
+/* Disabled State */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}

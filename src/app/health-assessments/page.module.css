@@ -1,0 +1,179 @@
+/* Shared CSS for /health-assessments page */
+.main {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--background);
+  position: relative;
+  overflow: hidden;
+  padding-bottom: var(--spacing-120);
+}
+
+.sectionWrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem;
+  position: relative;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.4rem 1.1rem;
+  background-color: rgba(169, 189, 164, 0.2);
+  color: var(--accent-sage);
+  border-radius: var(--radius-tags);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.titleHero {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, var(--text-display));
+  line-height: 1.1;
+  color: var(--foreground);
+  margin-bottom: 1.75rem;
+}
+
+.titleSmall {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-sm);
+  line-height: 1.2;
+  color: var(--accent-sage);
+  margin-bottom: var(--spacing-14);
+}
+
+.textAccent {
+  color: var(--accent-amber);
+  font-style: italic;
+}
+
+.paragraph {
+  font-size: clamp(18px, 4vw, 22px);
+  line-height: 1.8;
+  color: var(--foreground);
+  opacity: 0.9;
+  margin-bottom: 1.75rem;
+}
+
+.heroSection {
+  min-height: 60vh;
+}
+
+.heroContent {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: var(--spacing-60);
+}
+
+.heroDescription {
+  max-width: 680px;
+  margin-top: var(--spacing-24);
+}
+
+.stepsContent {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-60);
+}
+
+/* ─── Photo-first media cards ─── */
+.mediaCardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-30);
+  width: 100%;
+}
+
+.mediaCard {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mediaCardImg {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mediaCardImg img {
+  transition: transform 0.5s ease;
+}
+
+.mediaCard:hover .mediaCardImg img {
+  transform: scale(1.05);
+}
+
+.mediaCardBody {
+  padding: var(--spacing-30);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.splitContent {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.textCol {
+  flex: 1 1 360px;
+  max-width: 480px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.visualCol {
+  flex: 1.4 1 500px;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  .splitContent {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 3rem;
+  }
+  .textCol {
+    align-items: center;
+    text-align: center;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionWrapper { padding: 4rem 1.5rem; }
+  .splitContent { gap: 2rem; }
+  .mediaCardGrid { grid-template-columns: 1fr; gap: 2rem; }
+}

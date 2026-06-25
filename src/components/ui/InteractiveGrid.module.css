@@ -1,0 +1,184 @@
+/* ── Container ── */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+/* ── Card shell — acts as an anchor ── */
+.gridCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-cards);
+  cursor: pointer;
+  aspect-ratio: 3/4;          /* Portrait — more content visible per card */
+  display: block;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(45, 90, 90, 0.12);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.gridCard:hover {
+  box-shadow: 0 16px 40px rgba(45, 90, 90, 0.22);
+  transform: translateY(-4px);
+}
+
+/* ── Background image with subtle scale on hover ── */
+.imageBackground {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.gridCard:hover .imageBackground {
+  transform: scale(1.06);
+}
+
+/* ── Always-visible default overlay ── */
+/* Gradient from bottom so text is always legible */
+.defaultOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(20, 50, 50, 0.82) 0%,
+    rgba(20, 50, 50, 0.3) 50%,
+    rgba(20, 50, 50, 0.0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.gridCard:hover .defaultOverlay {
+  opacity: 0;
+}
+
+.categoryTag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-mint);
+  background: rgba(52, 181, 178, 0.2);
+  border: 1px solid rgba(52, 181, 178, 0.4);
+  border-radius: 30px;
+  padding: 3px 10px;
+  margin-bottom: 0.6rem;
+  align-self: flex-start;
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.cardBody {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Hover overlay — deeper, reveals CTA ── */
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(45, 90, 90, 0.97) 0%,
+    rgba(52, 181, 178, 0.97) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.gridCard:hover .hoverOverlay {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.hoverInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hoverTitle {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.hoverBody {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+}
+
+.exploreButton {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 9px 20px;
+  background: var(--accent-peach);
+  color: var(--foreground);
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.3s ease;
+  align-self: flex-start;
+}
+
+.exploreButton:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ── Mobile: reduce hover to tap ── */
+@media (hover: none) {
+  /* On touch devices, always show full overlay at 40% opacity */
+  .hoverOverlay {
+    opacity: 0.92;
+    transform: none;
+    pointer-events: auto;
+  }
+  .defaultOverlay {
+    opacity: 0;
+  }
+}

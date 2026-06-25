@@ -1,0 +1,92 @@
+.mainContainer {
+  width: 100%;
+  background: var(--background);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.section {
+  width: 100%;
+  position: relative;
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem;
+}
+
+/* Base generic styles to prevent undefined class errors */
+.heroSection {}
+.heroGrid {}
+.badge {}
+.titleHero {}
+.paragraph {}
+.contactSection {}
+.contactGrid {}
+.contactTitle {}
+.contactDesc {}
+
+@media (max-width: 1024px) {
+  .heroGrid, .contactGrid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── Rich Text / Scraped detailed content styling ─── */
+.detailSection {
+  background-color: var(--card-bg); /* Use card-bg token */
+  padding: 2rem 2rem 5rem 2rem;
+  border-top: 1px solid rgba(74, 78, 70, 0.08);
+  border-bottom: 1px solid rgba(74, 78, 70, 0.08);
+}
+
+.richText {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.85;
+  color: var(--foreground);
+}
+
+.richText p {
+  margin-bottom: 1.5rem;
+}
+
+.richText h3, .richText h5 {
+  font-family: var(--font-heading);
+  color: var(--accent-deep);
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.richText h3 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.richText h5 {
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+}
+
+.richText ul {
+  padding-left: 1.75rem;
+  margin-bottom: 2rem;
+  list-style-type: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.richText li {
+  padding-left: 0.25rem;
+  color: var(--foreground);
+}
+
+.richText strong {
+  color: var(--accent-deep);
+  font-weight: 600;
+}

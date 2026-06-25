@@ -1,0 +1,299 @@
+/* ─── Global Reset & Body Background ─── */
+.main {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: var(--spacing-120);
+}
+
+/* ─── Full Width Image ─── */
+.fullWidthImg {
+  width: 100%;
+  height: 60vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.fullWidthImgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    rgba(249,246,240,0.7) 0%,
+    rgba(249,246,240,0) 50%,
+    rgba(249,246,240,0.7) 100%);
+}
+
+/* ─── Ingredients Grid ─── */
+.ingredientsContent {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.ingredientsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: var(--spacing-42);
+}
+
+.ingredientTag {
+  padding: 0.75rem 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-tags);
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  color: var(--foreground);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.ingredientTag:hover {
+  background: rgba(169, 189, 164, 0.25);
+  transform: translateY(-4px);
+}
+
+.springIllustration {
+  position: absolute;
+  bottom: -80px;
+  right: -60px;
+  width: 280px;
+  height: auto;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+
+/* ─── Shared Section Properties ─── */
+.sectionWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem;
+  position: relative;
+}
+
+/* ─── Typography (Evergreen Scale) ─── */
+.badge {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background-color: rgba(169, 189, 164, 0.2);
+  color: var(--accent-sage);
+  border-radius: var(--radius-tags);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+}
+
+.titleHero {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, var(--text-display));
+  line-height: 1.05;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+}
+
+.titleSection {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 6vw, var(--text-heading));
+  line-height: 1.1;
+  color: var(--foreground);
+  margin-bottom: 1.5rem;
+}
+
+.titleSmall {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-sm);
+  line-height: 1.2;
+  color: var(--accent-sage);
+  margin-bottom: var(--spacing-14);
+}
+
+.textAccent {
+  color: var(--accent-amber);
+  font-style: italic;
+}
+
+.paragraph {
+  font-size: var(--text-body);
+  line-height: 1.9;
+  max-width: 620px;
+  color: var(--foreground);
+  opacity: 0.85;
+  margin-bottom: 2rem;
+}
+
+/* ─── Hero Section ─── */
+.heroSection {
+  background: var(--accent-peach);
+  padding-top: 10rem;
+  padding-bottom: 4rem;
+}
+
+.heroContent {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 0;
+}
+
+/* ─── Intro Section (Image + Text) ─── */
+.introSection {
+  border-top: 1px solid rgba(169, 189, 164, 0.2);
+}
+
+.introContent {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-120);
+  align-items: center;
+}
+
+.imageWrapper {
+  position: relative;
+  z-index: 10;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: -20px 20px 40px rgba(0,0,0,0.1);
+}
+
+.introLeaf {
+  top: -60px;
+  right: -80px;
+  width: 250px;
+  height: 250px;
+  transform: rotate(45deg);
+}
+
+.glassCard {
+  position: relative;
+  z-index: 10;
+  padding: var(--spacing-42);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+}
+
+/* ─── Awards Grid ─── */
+.awardsSection {
+  border-top: 1px solid rgba(184, 123, 76, 0.2);
+}
+
+.awardsContent {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-60);
+}
+
+.sectionHeader {
+  max-width: 800px;
+}
+
+.awardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-30);
+}
+
+.awardCard {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: var(--spacing-30);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+}
+
+.awardCard h3 {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  color: var(--accent-sage);
+  margin-bottom: 0.5rem;
+}
+
+.awardCard p {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* ─── Credentials List ─── */
+.credentialsSection {
+  border-top: 1px solid rgba(169, 189, 164, 0.2);
+}
+
+.credentialsContent {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.credentialsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-20);
+  width: 100%;
+  text-align: left;
+  list-style: none;
+  padding: 0;
+  margin-top: var(--spacing-42);
+}
+
+.credentialsList li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: var(--text-body-sm);
+  line-height: 1.6;
+}
+
+.credentialsList li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent-amber);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .introContent {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionWrapper { padding: 4rem 1.5rem; }
+  .heroSection { padding-top: 8rem; }
+  .fullWidthImg { height: 40vh; }
+  .ingredientsGrid { gap: 0.5rem; }
+  .ingredientTag { padding: 0.5rem 1rem; font-size: 13px; }
+  .glassCard { padding: 2rem; }
+  .credentialsList { grid-template-columns: 1fr; gap: 1rem; }
+}

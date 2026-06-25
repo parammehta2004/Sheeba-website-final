@@ -1,0 +1,11 @@
+.leafWrapper {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  color: var(--accent-sage);
+}
+
+.leafSvg {
+  width: 100%;
+  height: 100%;
+}

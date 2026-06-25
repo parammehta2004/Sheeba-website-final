@@ -1,0 +1,223 @@
+/* ─── Global Reset & Body Background ─── */
+.main {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--background);
+  position: relative;
+  overflow: hidden; /* only x-overflow hidden, page naturally scrolls y */
+  padding-bottom: var(--spacing-120);
+}
+
+/* ─── Shared Section Properties ─── */
+.sectionWrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(4rem, 8vw, 8rem) 1.5rem;
+  position: relative;
+}
+
+/* ─── Typography (Evergreen Scale) ─── */
+.badge {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background-color: rgba(169, 189, 164, 0.2);
+  color: var(--accent-sage);
+  border-radius: var(--radius-tags);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+}
+
+.titleHero {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, var(--text-display));
+  line-height: 1.05;
+  color: var(--foreground);
+  margin-bottom: 2rem;
+}
+
+.textAccent {
+  color: var(--accent-amber);
+  font-style: italic;
+}
+
+/* ─── Contact Section (Split Grid) ─── */
+.contactSection {
+  background: var(--background);
+  min-height: 80vh;
+}
+
+.contactContent {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-60);
+  align-items: flex-start;
+  margin-top: var(--spacing-60);
+}
+
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+
+.infoBlock {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: var(--spacing-30);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.infoIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(169, 189, 164, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.infoBlock strong {
+  font-family: var(--font-heading);
+  font-size: var(--text-subheading-sm);
+  color: var(--accent-sage);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.infoBlock p {
+  font-size: var(--text-body-sm);
+  color: var(--foreground);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.infoBlock p a:hover {
+  text-decoration: underline;
+  color: var(--accent-amber);
+}
+
+/* ─── Form Row (two cols for first/last name) ─── */
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-20);
+}
+
+/* ─── FormSubmit Section ─── */
+.formSubmitSection {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.formSubmitIllustration {
+  width: 220px;
+  height: auto;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .formSubmitSection {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ─── Form Container ─── */
+.formCol {
+  position: relative;
+  z-index: 10;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: var(--spacing-42);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+}
+
+.contactLeaf {
+  top: -40px;
+  right: -60px;
+  width: 250px;
+  height: 250px;
+  transform: rotate(30deg);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroup label {
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--foreground);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: var(--background);
+  border: 1px solid rgba(74, 77, 66, 0.1);
+  border-radius: 7px; /* Evergreen input radius */
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  color: var(--foreground);
+  transition: var(--transition-fast);
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--accent-amber);
+  box-shadow: 0 0 0 3px rgba(184, 123, 76, 0.1);
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .contactContent {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}

@@ -1,0 +1,352 @@
+/* ─── Global Reset & Body Background ─── */
+.main {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: var(--spacing-120);
+}
+
+/* ─── Media Card Grid (2-col photo cards) ─── */
+.mediaCardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-30);
+  width: 100%;
+}
+
+.mediaCard {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mediaCardImg {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mediaCardImg img {
+  transition: transform 0.5s ease;
+}
+
+.mediaCard:hover .mediaCardImg img {
+  transform: scale(1.05);
+}
+
+.mediaCardBody {
+  padding: var(--spacing-30);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ─── Checklist (Services page) ─── */
+.checkList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-42) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.checkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.checkDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-teal);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.checkItem strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.25rem;
+}
+
+.checkItem p {
+  font-size: var(--text-body-sm);
+  line-height: 1.7;
+  color: var(--foreground);
+  opacity: 0.75;
+  margin: 0;
+}
+
+
+
+/* ─── Shared Section Properties ─── */
+.sectionWrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem;
+  position: relative;
+}
+
+/* ─── Typography (Evergreen Scale) ─── */
+.badge {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background-color: rgba(52, 181, 178, 0.2);
+  color: var(--accent-teal);
+  border-radius: var(--radius-tags);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+}
+
+.titleHero {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, var(--text-display));
+  line-height: 1.05;
+  color: var(--foreground);
+  margin-bottom: 2rem;
+}
+
+.titleSection {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, var(--text-heading));
+  line-height: 1.1;
+  color: var(--foreground);
+  margin-bottom: 1.5rem;
+}
+
+.titleSmall {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-sm);
+  line-height: 1.2;
+  color: var(--accent-teal);
+  margin-bottom: var(--spacing-14);
+}
+
+.textAccent {
+  color: var(--accent-blush);
+  font-style: italic;
+}
+
+.paragraph {
+  font-size: clamp(18px, 4vw, 22px);
+  line-height: 1.8;
+  max-width: 620px;
+  color: var(--foreground);
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--foreground);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 40px;
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.ctaButton:hover {
+  background-color: var(--accent-teal);
+}
+
+.submitButton {
+  width: 100%;
+  background: var(--background);
+  color: var(--foreground);
+  padding: 15px;
+  border: none;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.submitButton:hover {
+  background: var(--accent-teal);
+  color: white;
+}
+
+/* ─── Hero Section ─── */
+.heroSection {
+  background: var(--accent-mint);
+  min-height: 70vh;
+}
+
+.heroContent {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: var(--spacing-60);
+}
+
+.heroDescription {
+  max-width: 620px;
+  margin-top: var(--spacing-24);
+}
+
+/* ─── Shared Split Grids ─── */
+.splitContent {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-60);
+  align-items: flex-start;
+}
+
+.splitContentReverse {
+  grid-template-columns: 1fr 1fr;
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+
+.imageCol {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  border-radius: var(--radius-cards);
+  overflow: hidden;
+  box-shadow: -20px 20px 40px rgba(0,0,0,0.1);
+}
+
+.serviceLeaf {
+  top: -40px;
+  right: -60px;
+  width: 250px;
+  height: 250px;
+  transform: rotate(15deg);
+}
+
+/* ─── Services List (Cards) ─── */
+.serviceList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.serviceCard {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: var(--spacing-30);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+}
+
+.serviceCard h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-subheading);
+  color: var(--accent-teal);
+  margin-bottom: 0.5rem;
+}
+
+.serviceCard p {
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+  color: var(--foreground);
+  opacity: 0.85;
+}
+
+/* ─── How It Works (Steps) ─── */
+.stepsSection {
+  border-top: 1px solid rgba(52, 181, 178, 0.2);
+}
+
+.stepsContent {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-60);
+}
+
+.sectionHeader {
+  max-width: 800px;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-30);
+}
+
+.stepCard {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: var(--spacing-42);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.stepNumber {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-sm);
+  color: var(--accent-blush);
+  margin-bottom: var(--spacing-14);
+  opacity: 0.8;
+}
+
+.stepCard h3 {
+  font-family: var(--font-body);
+  font-size: var(--text-subheading-sm);
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .splitContent, .splitContentReverse {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionWrapper { padding: 4rem 1.5rem; }
+  .splitContent, .splitContentReverse { gap: 2rem; }
+  .mediaCardGrid { grid-template-columns: 1fr; gap: 2rem; }
+}
