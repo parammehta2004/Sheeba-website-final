@@ -136,6 +136,10 @@
 /* ─── Hero Section ─── */
 .heroSection {
   background: var(--accent-peach);
+  background-image: linear-gradient(rgba(0,0,0,0.38), rgba(0,0,0,0.38)), url('/assets/openindoors.png');
+  background-size: 100% auto;
+  background-position: center 30%;
+  background-repeat: no-repeat;
   padding-top: 10rem;
   padding-bottom: 4rem;
 }
@@ -255,29 +259,45 @@
 
 .credentialsList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--spacing-20);
-  width: 100%;
-  text-align: left;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  background: var(--glass-bg);
+  padding: 3.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
   list-style: none;
-  padding: 0;
-  margin-top: var(--spacing-42);
+  margin: 0;
+  width: 100%;
+  box-shadow: var(--shadow-premium);
+  box-sizing: border-box;
 }
 
-.credentialsList li {
+.credentialItem {
+  padding-left: 2rem;
   position: relative;
-  padding-left: 1.5rem;
-  font-size: var(--text-body-sm);
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--foreground);
+  text-align: left;
 }
 
-.credentialsList li::before {
-  content: '•';
+.credentialCheck {
   position: absolute;
   left: 0;
-  color: var(--accent-amber);
-  font-size: 1.5rem;
-  line-height: 1;
+  top: -2px;
+  color: var(--accent-teal);
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .credentialsList {
+    grid-template-columns: 1fr;
+    padding: 1.75rem 1.5rem;
+    gap: 1rem;
+  }
+  .credentialItem {
+    font-size: 14px;
+  }
 }
 
 /* ─── Responsive ─── */

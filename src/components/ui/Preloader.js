@@ -6,42 +6,66 @@ import styles from "./Preloader.module.css";
 // Change to "svg" or "lottie" to switch preview modes
 const PRELOADER_MODE = "svg"; 
 
+function safeSessionGet(key) {
+  try { return sessionStorage.getItem(key); } catch { return null; }
+}
+function safeSessionSet(key, val) {
+  try { sessionStorage.setItem(key, val); } catch { /* private mode */ }
+}
+
 export default function Preloader() {
-  const [isVisible, setIsVisible] = useState(() => {
-    if (typeof window !== "undefined") {
-      return !sessionStorage.getItem("hasSeenPreloader");
-    }
-    return true;
-  });
+  const [isVisible, setIsVisible] = useState(true);
+  const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
-    if (!isVisible) return;
-
-    // Safety timeout to hide it eventually, just in case
-    const hideTimer = setTimeout(() => {
+    // Already seen — skip immediately with no animation
+    if (safeSessionGet("hasSeenPreloader")) {
       setIsVisible(false);
-      sessionStorage.setItem("hasSeenPreloader", "true");
-    }, 2000);
+      return;
+    }
 
-    // Faster animation cycle
+    // Lock scrolling on html/body elements
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    // Block touch swipe and wheel scroll events
+    const preventScroll = (e) => {
+      e.preventDefault();
+    };
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
+
+    // Fade out preloader after minimum drawing animation finishes
     const fadeTimer = setTimeout(() => {
-      setIsVisible(false);
-      sessionStorage.setItem("hasSeenPreloader", "true");
+      setIsFading(true);
+      safeSessionSet("hasSeenPreloader", "true");
     }, 1600);
 
+    // Unmount preloader fully after fade transition finishes (1.4s after fade starts)
+    const unmountTimer = setTimeout(() => {
+      setIsVisible(false);
+      // Restore scroll
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      window.removeEventListener("wheel", preventScroll);
+      window.removeEventListener("touchmove", preventScroll);
+    }, 3000);
+
     return () => {
-      clearTimeout(hideTimer);
       clearTimeout(fadeTimer);
+      clearTimeout(unmountTimer);
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      window.removeEventListener("wheel", preventScroll);
+      window.removeEventListener("touchmove", preventScroll);
     };
-  }, [isVisible]);
+  }, []);
 
-
-  // Removed `if (!isVisible) return null;` so the CSS fade-out transition can actually play
-  // before it becomes invisible and unclickable.
+  if (!isVisible) return null;
 
   return (
     <>
-      <div className={`preloader-overlay ${styles.preloaderContainer} ${!isVisible ? styles.hidden : ""}`}>
+      <div className={`preloader-overlay ${styles.preloaderContainer} ${isFading ? styles.hidden : ""}`}>
         <div className={styles.content}>
         {PRELOADER_MODE === "svg" ? (
           <div className={styles.svgWrapper}>

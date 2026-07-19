@@ -23,7 +23,8 @@
   align-items: center;
   position: relative;
   z-index: 2;
-  height: 350px; /* Fixed height guarantees math sine-wave perfectly syncs with DOM */
+  min-height: 200px; /* floor only — actual height set by card content */
+  padding: 1.5rem 0;
 }
 
 .cardContainer {
@@ -125,39 +126,55 @@
   left: 0;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
+/* Responsive — turns timeline into a left-aligned list on mobile */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 0.5rem;
+  }
   .row {
-    grid-template-columns: 80px 1fr;
-    min-height: 200px;
+    grid-template-columns: 0px 30px 1fr !important;
+    min-height: auto;
+    gap: 0.5rem;
   }
-  
-  .stemSvg {
-    left: 40px;
-    transform: none;
-    width: 80px;
-  }
-  
-  .connectionContainer {
-    grid-column: 1;
-  }
-  
   .cardContainer {
-    grid-column: 2;
-    justify-content: flex-start;
-    padding: 0 1rem;
+    padding: 0 !important;
   }
-  
-  .leftCard {
-    text-align: left;
-  }
-  
   .timelineCard {
-    max-width: 100%;
-    padding: 1.5rem;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 2.25rem 1.75rem !important; /* Extra padding to push text away from leaf curves */
+    border-radius: 0 60px 0 60px !important; /* Leaf shape scaled for mobile text area */
+    border: 1px solid var(--glass-border) !important;
   }
-
-  .connectionLineSvg {
-    display: none;
+  .rightCard .timelineCard {
+    border-radius: 0 60px 0 60px !important;
+  }
+  .cardTitle {
+    font-size: 16px !important;
+    margin-bottom: 0.5rem !important;
+    line-height: 1.2 !important;
+  }
+  .cardBody {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+  /* Center the stemSvg on the 30px vine column on the left edge */
+  .stemSvg {
+    left: 15px !important;
+    transform: translateX(-50%) !important;
+    width: 30px !important;
+  }
+  /* Hide connection lines on mobile */
+  .connectionContainer {
+    width: 30px !important;
+  }
+  .connectionContainer div {
+    display: none !important;
   }
 }
+
+
+
+
+
+

@@ -1,24 +1,27 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
+import Link from "next/link";
+import { Turnstile } from "@marsidev/react-turnstile";
+
 import Navigation from "@/components/layout/Navigation";
 import Button from "@/components/ui/Button";
 import BotanicalLeaf from "@/components/ui/BotanicalLeaf";
+import BotanicalGrow from "@/components/ui/BotanicalGrow";
+import LeafCorner from "@/components/ui/LeafCorner";
+import LeafBox from "@/components/ui/LeafBox";
+import BotanicalVinesConnector from "@/components/ui/BotanicalVinesConnector";
 import InteractiveGrid from "@/components/ui/InteractiveGrid";
 import Preloader from "@/components/ui/Preloader";
 import { SERVICES_DATA } from "@/data/services";
 import styles from "./page.module.css";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export default function Home() {
   const containerRef = useRef(null);
   const [formState, setFormState] = useState("idle");
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [token, setToken] = useState(null);
+  const turnstileRef = useRef(null);
 
   const TESTIMONIALS = [
     {
@@ -56,71 +59,102 @@ export default function Home() {
   }, [TESTIMONIALS.length]);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: "vertical",
-      smooth: true,
-    });
+    let lenis;
+    let rafCallback;
+    let gsapModule;
+    let ScrollTriggerModule;
 
-    const rafCallback = (time) => { lenis.raf(time * 1000); };
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add(rafCallback);
-    gsap.ticker.lagSmoothing(0, 0);
+    async function initScroll() {
+      const [gsapImport, { ScrollTrigger }, { default: LenisModule }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+        import("lenis"),
+      ]);
+      gsapModule = gsapImport.default;
+      ScrollTriggerModule = ScrollTrigger;
+      gsapModule.registerPlugin(ScrollTrigger);
+
+      lenis = new LenisModule({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        smooth: true,
+      });
+
+      rafCallback = (time) => { lenis.raf(time * 1000); };
+      lenis.on("scroll", ScrollTrigger.update);
+      gsapModule.ticker.add(rafCallback);
+      gsapModule.ticker.lagSmoothing(0, 0);
+    }
+
+    initScroll();
 
     return () => {
-      lenis.destroy();
-      gsap.ticker.remove(rafCallback);
+      if (lenis) lenis.destroy();
+      if (gsapModule && rafCallback) gsapModule.ticker.remove(rafCallback);
     };
   }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const ctx = gsap.context(() => {
-      
-      // Moment 1: Hero Entrance
-      const hasSeenPreloader = sessionStorage.getItem("hasSeenPreloader");
-      const heroDelay = hasSeenPreloader ? 0.2 : 1.6;
-      
-      const heroTl = gsap.timeline();
-      heroTl.fromTo(".hero-motion-item", 
-        { opacity: 0, y: 40 }, 
-        { opacity: 1, y: 0, stagger: 0.15, duration: 1.5, ease: "power3.out", delay: heroDelay }
-      );
-      
-      // Universal Reveal-Up for elements as user scrolls
-      gsap.utils.toArray(".reveal-up").forEach((el) => {
-        gsap.fromTo(el, 
-          { opacity: 0, y: 50 }, 
-          { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 95%" } }
+    let ctx;
+
+    async function initAnimations() {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+      ctx = gsap.context(() => {
+        // Moment 1: Hero Entrance
+        let hasSeenPreloader;
+        try { hasSeenPreloader = sessionStorage.getItem("hasSeenPreloader"); } catch { hasSeenPreloader = null; }
+        const heroDelay = hasSeenPreloader ? 0.2 : 1.6;
+
+        const heroTl = gsap.timeline();
+        heroTl.fromTo(".hero-motion-item",
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, stagger: 0.15, duration: 1.5, ease: "power3.out", delay: heroDelay }
         );
-      });
 
-      // Moment 2: Signature Moment ("It isn't.")
-      gsap.fromTo(".signature-moment", 
-        { opacity: 0, scale: 0.95 },
-        { 
-          opacity: 1, scale: 1, duration: 1.8, ease: "power2.out",
-          scrollTrigger: { trigger: ".signature-moment", start: "top 90%" }
-        }
-      );
+        // Universal Reveal-Up for elements as user scrolls
+        gsap.utils.toArray(".reveal-up").forEach((el) => {
+          gsap.fromTo(el,
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 95%" } }
+          );
+        });
 
-      // Hero Image Parallax
-      gsap.to(".hero-parallax", {
-        yPercent: 15,
-        ease: "none",
-        scrollTrigger: { trigger: `.${styles.heroSection}`, start: "top top", end: "bottom top", scrub: true }
-      });
+        // Moment 2: Signature Moment
+        gsap.fromTo(".signature-moment",
+          { opacity: 0, scale: 0.95 },
+          {
+            opacity: 1, scale: 1, duration: 1.8, ease: "power2.out",
+            scrollTrigger: { trigger: ".signature-moment", start: "top 90%" }
+          }
+        );
 
-    }, containerRef);
-    return () => ctx.revert();
+        // Hero Image Parallax
+        gsap.to(".hero-parallax", {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: { trigger: `.${styles.heroSection}`, start: "top top", end: "bottom top", scrub: true }
+        });
+      }, containerRef);
+    }
+
+    initAnimations();
+    return () => { if (ctx) ctx.revert(); };
   }, []);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (!token) {
+      alert("Please complete the security check (checkbox) before submitting, or refresh the page if it is not visible.");
+      return;
+    }
     setFormState("submitting");
     try {
-      const res = await fetch("https://vapor.biohackk.com/api/leads", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -128,12 +162,20 @@ export default function Home() {
           email: e.target.email.value,
           phone: e.target.phone.value,
           message: e.target.message.value,
+          "cf-turnstile-response": token,
         }),
       });
-      if(res.ok) setFormState("success");
-      else setFormState("error");
+      if(res.ok) {
+        setFormState("success");
+        setToken(null);
+        turnstileRef.current?.reset();
+      } else {
+        setFormState("error");
+        turnstileRef.current?.reset();
+      }
     } catch (err) {
       setFormState("error");
+      turnstileRef.current?.reset();
     }
   };
 
@@ -158,7 +200,7 @@ export default function Home() {
                 <i className={styles.heroTitleItalic}>missed it.</i>
               </h1>
               <p className={`${styles.heroSub} hero-motion-item`}>
-                Recognized as the best nutritionist in singapore and a leading medical nutritionist in singapore, Sheeba Majmudar connects the dots that conventional medicine leaves unread — using functional medicine, naturopathy, and a decade of evidence from over 100,000 clients globally.
+                Recognized as the best Nutritionist and the only leading medical Nutritionist in Singapore, Sheeba Majmudar connects the dots that conventional medicine leaves unread - using functional medicine, naturopathy and two decades of evidence from over 20,000+ clients globally.
               </p>
               <div className={`${styles.heroActions} hero-motion-item`}>
                 <Button href="#contact" variant="primary" style={{backgroundColor: "var(--accent-deep)", color: "#fff"}}>Begin your assessment →</Button>
@@ -186,7 +228,14 @@ export default function Home() {
                 "/assets/5f21103b71ac9bc277d48611_the-straits-times-logo 1.png",
                 "/assets/5f2110409c34140ebcfebe9a_home-logo_3c9d35b8 1.png",
                 "/assets/5f20f8b96e72ac64c6267398_todays-parent-logo-1 1.png",
-                "/assets/5f20f8b961c788fb9ad9f113_Group 661.png"
+                "/assets/5f20f8b961c788fb9ad9f113_Group 661.png",
+                "/assets/press/vogue singapore.svg",
+                "/assets/press/harpers bazaar.png",
+                "/assets/press/her world.svg",
+                "/assets/press/elle singapore.svg",
+                "/assets/press/expat living.png",
+                "/assets/press/mens health.png",
+                "/assets/press/sunday times.svg"
               ].map((src, i) => (
                 <img key={`${loopIdx}-${i}`} src={src} className={styles.pressLogo} alt="Featured Press" />
               ))}
@@ -225,30 +274,41 @@ export default function Home() {
           </div>
           
           <div className={styles.observationCards}>
+            <BotanicalVinesConnector />
+            
             <div className={`${styles.obsCard} reveal-up`}>
-              <div className={styles.obsNumber}>01</div>
+              <LeafBox />
+              <LeafCorner position="top-right" />
+              <LeafCorner position="bottom-left" />
+              <BotanicalGrow number="01" delay={0.1} />
               <div className={styles.obsText}>
-                <div style={{fontWeight: 600, fontSize: '28px', marginBottom: '0.4rem', fontFamily: 'var(--font-heading)', color: 'rgba(199,220,217,0.95)'}}>Cellular Energy Deficits</div>
-                <div style={{color: 'rgba(199, 220, 217, 0.6)', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.8rem'}}>Mitochondrial Cofactor Depletion</div>
-                <span style={{color: 'rgba(199,220,217,0.8)', fontSize: '19px', lineHeight: '1.6'}}>Fatigue is rarely just age. By identifying missing cofactors in ATP production, exhaustion can be resolved at the cellular level rather than being masked by stimulants.</span>
+                <div style={{fontWeight: 600, fontSize: '34px', marginBottom: '0.4rem', fontFamily: 'var(--font-heading)', color: 'rgba(199,220,217,0.95)'}}>Cellular Energy Deficits</div>
+                <div style={{color: 'rgba(199, 220, 217, 0.6)', fontSize: '16px', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.8rem'}}>Mitochondrial Cofactor Depletion</div>
+                <span style={{color: 'rgba(199,220,217,0.8)', fontSize: '22px', lineHeight: '1.6'}}>Fatigue is rarely just age. By identifying missing cofactors in ATP production, exhaustion can be resolved at the cellular level rather than being masked by stimulants.</span>
               </div>
             </div>
             
             <div className={`${styles.obsCard} reveal-up`}>
-              <div className={styles.obsNumber}>02</div>
+              <LeafBox />
+              <LeafCorner position="top-right" />
+              <LeafCorner position="bottom-left" />
+              <BotanicalGrow number="02" delay={0.3} />
               <div className={styles.obsText}>
-                <div style={{fontWeight: 600, fontSize: '28px', marginBottom: '0.4rem', fontFamily: 'var(--font-heading)', color: 'rgba(199,220,217,0.95)'}}>Hormonal Weight Resistance</div>
-                <div style={{color: 'rgba(199, 220, 217, 0.6)', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.8rem'}}>Elevated Cortisol Storage Lock</div>
-                <span style={{color: 'rgba(199,220,217,0.8)', fontSize: '19px', lineHeight: '1.6'}}>Caloric deficits fail when stress hormones lock cells into storage mode. Only by signalling safety to the nervous system will the body release stubborn weight.</span>
+                <div style={{fontWeight: 600, fontSize: '34px', marginBottom: '0.4rem', fontFamily: 'var(--font-heading)', color: 'rgba(199,220,217,0.95)'}}>Hormonal Weight Resistance</div>
+                <div style={{color: 'rgba(199, 220, 217, 0.6)', fontSize: '16px', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.8rem'}}>Elevated Cortisol Storage Lock</div>
+                <span style={{color: 'rgba(199,220,217,0.8)', fontSize: '22px', lineHeight: '1.6'}}>Caloric deficits fail when stress hormones lock cells into storage mode. Only by signalling safety to the nervous system will the body release stubborn weight.</span>
               </div>
             </div>
             
             <div className={`${styles.obsCard} reveal-up`}>
-              <div className={styles.obsNumber}>03</div>
+              <LeafBox />
+              <LeafCorner position="top-right" />
+              <LeafCorner position="bottom-left" />
+              <BotanicalGrow number="03" delay={0.5} />
               <div className={styles.obsText}>
-                <div style={{fontWeight: 600, fontSize: '28px', marginBottom: '0.4rem', fontFamily: 'var(--font-heading)', color: 'rgba(199,220,217,0.95)'}}>Autoimmune Triggers</div>
-                <div style={{color: 'rgba(199, 220, 217, 0.6)', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.8rem'}}>Gut Permeability Correlation</div>
-                <span style={{color: 'rgba(199,220,217,0.8)', fontSize: '19px', lineHeight: '1.6'}}>Autoimmune flare-ups track precisely with the integrity of the intestinal lining. By repairing the territory, the systemic inflammatory response naturally stands down.</span>
+                <div style={{fontWeight: 600, fontSize: '34px', marginBottom: '0.4rem', fontFamily: 'var(--font-heading)', color: 'rgba(199,220,217,0.95)'}}>Autoimmune Triggers</div>
+                <div style={{color: 'rgba(199, 220, 217, 0.6)', fontSize: '16px', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.8rem'}}>Gut Permeability Correlation</div>
+                <span style={{color: 'rgba(199,220,217,0.8)', fontSize: '22px', lineHeight: '1.6'}}>Autoimmune flare-ups track precisely with the integrity of the intestinal lining. By repairing the territory, the systemic inflammatory response naturally stands down.</span>
               </div>
             </div>
           </div>
@@ -260,15 +320,15 @@ export default function Home() {
         <div className={styles.content}>
           {/* STATS */}
           <div className="reveal-up" style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(3rem, 6vw, 4rem)', color: 'var(--accent-teal)', lineHeight: 1, marginBottom: '0.5rem' }}>100,000+</div>
+            <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(3rem, 6vw, 4rem)', color: 'var(--accent-teal)', lineHeight: 1, marginBottom: '0.5rem' }}>20,000+</div>
             <div style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', fontWeight: 600, color: 'var(--foreground)', marginBottom: '0.75rem' }}>Happy Clients Worldwide</div>
             <div style={{ fontSize: '1rem', color: 'var(--foreground)', opacity: 0.6, letterSpacing: '0.05em', fontStyle: 'italic' }}>Changing lives, one person at a time.</div>
           </div>
 
           <div className="reveal-up" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2rem', marginBottom: '6rem' }}>
             {[
-              { number: '100,000+', label: 'Clients' },
-              { number: '10+',   label: 'Years Experience' },
+              { number: '20,000+', label: 'Clients' },
+              { number: '20+',   label: 'Years Experience' },
               { number: '5★',    label: 'Average Rating' },
             ].map((stat, i) => (
               <div key={i} style={{ textAlign: 'center', padding: '1.5rem 2.5rem', borderRadius: '16px', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', boxShadow: 'var(--shadow-premium)' }}>
@@ -282,7 +342,7 @@ export default function Home() {
           <div className="reveal-up" style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <h2 className={styles.credTitle} style={{color: 'var(--foreground)'}}>Industry Recognition.</h2>
           </div>
-          <div className={`${styles.qualificationsGrid} reveal-up`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
+          <div className={`${styles.qualificationsGrid} reveal-up`}>
             {[
               { title: "Best Naturopathic Nutritionist 2021", sub: "APAC Business Awards" },
               { title: "Nutritionist of the Year 2020", sub: "Prestige Awards" },
@@ -290,19 +350,17 @@ export default function Home() {
               { title: "100 Most Inspiring Women", sub: "Cozycot 2014 International Women's day Award" },
               { title: "Asia’s Greatest Brands", sub: "The only nutritionist in her field to receive this award" },
             ].map((qual, i) => (
-              <div key={i} className={styles.qualItem} style={{background: 'var(--glass-bg)', padding: '2rem', borderRadius: '12px', border: '1px solid var(--glass-border)', boxShadow: 'var(--shadow-premium)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              <div key={i} className={styles.qualItem}>
                 <svg 
                   viewBox="0 0 24 24" 
-                  width="36" 
-                  height="36" 
                   fill="var(--accent-teal)" 
-                  style={{ marginBottom: '1rem', flexShrink: 0 }}
+                  className={styles.qualIcon}
                 >
                   <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96 2.47-.31 4.39-2.39 4.39-4.94V7c0-1.1-.9-2-2-2zM5 8V7h2v3H5V8zm14 2h-2V7h2v3z"/>
                 </svg>
                 <div className={styles.qualText}>
-                  <div className={styles.qualTitle} style={{color: 'var(--foreground)', fontSize: '22px', fontWeight: '600', marginBottom: '0.5rem'}}>{qual.title}</div>
-                  <div className={styles.qualSub} style={{color: 'var(--foreground)', opacity: 0.7, fontSize: '16px'}}>{qual.sub}</div>
+                  <div className={styles.qualTitle}>{qual.title}</div>
+                  <div className={styles.qualSub}>{qual.sub}</div>
                 </div>
               </div>
             ))}
@@ -314,30 +372,36 @@ export default function Home() {
       <section className={`${styles.section} ${styles.sectionLight}`}>
         <div className={styles.content}>
           <div className="reveal-up">
-
-            
             <div className={styles.svcGrid}>
               {/* Assessments Column */}
               <div>
-                <h2 className={styles.svcColTitle} style={{color: 'var(--foreground)'}}>Assessments</h2>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.8rem', marginBottom: '0.5rem' }}>
+                  <h2 className={styles.svcColTitle} style={{ color: 'var(--foreground)', margin: 0 }}>Assessments</h2>
+                  <Link href="/health-assessments" style={{ color: 'var(--accent-teal)', fontSize: '24px', fontWeight: 'bold', textDecoration: 'none', transition: 'opacity 0.3s' }} title="View All Health Assessments">&gt;</Link>
+                </div>
                 <p className={styles.svcColDesc} style={{color: 'var(--foreground)', opacity: 0.8}}>The foundational data required to stop guessing.</p>
                 <InteractiveGrid 
                   items={SERVICES_DATA
                     .filter(s => s.type === "Health Assessment")
                     .slice(0, 4)
                     .map(s => ({...s, body: s.description}))} 
+                  basePath="/health-assessments"
                 />
               </div>
               
               {/* Therapies Column */}
               <div>
-                <h2 className={styles.svcColTitle} style={{color: 'var(--foreground)'}}>Therapies</h2>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.8rem', marginBottom: '0.5rem' }}>
+                  <h2 className={styles.svcColTitle} style={{ color: 'var(--foreground)', margin: 0 }}>Therapies</h2>
+                  <Link href="/therapies" style={{ color: 'var(--accent-teal)', fontSize: '24px', fontWeight: 'bold', textDecoration: 'none', transition: 'opacity 0.3s' }} title="View All Therapies">&gt;</Link>
+                </div>
                 <p className={styles.svcColDesc} style={{color: 'var(--foreground)', opacity: 0.8}}>Specific protocols to shift the body back into a healing state.</p>
                 <InteractiveGrid 
                   items={SERVICES_DATA
                     .filter(s => s.type === "Therapy")
                     .slice(0, 4)
                     .map(s => ({...s, body: s.description}))} 
+                  basePath="/therapies"
                 />
               </div>
             </div>
@@ -457,48 +521,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── NATUROPATHIC APPROACH: Services Video Section ─── */}
-      <section style={{ backgroundColor: 'var(--background)', padding: '6rem 2rem', display: 'flex', justifyContent: 'center' }}>
-        <div className={styles.content}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center', maxWidth: '1000px', margin: '0 auto' }}>
+      {/* ─── NATUROPATHIC APPROACH: Redesigned Background Image Section ─── */}
+      <section className={styles.naturopathicSection}>
+        <div className={styles.naturopathicContainer}>
+          <div className={`reveal-up ${styles.naturopathicCard}`}>
 
-            {/* Left Column: Text */}
-            <div className="reveal-up" style={{ textAlign: 'left' }}>
+            <h2 className={styles.credTitle} style={{ color: 'var(--foreground)', marginBottom: '2.5rem', textAlign: 'left' }}>A Naturopathic Approach</h2>
 
-              <h2 className={styles.credTitle} style={{ color: 'var(--foreground)', marginBottom: '2.5rem' }}>A Naturopathic Approach</h2>
-
-              <div style={{ marginBottom: '2rem', textAlign: 'left' }}>
-                <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.75rem' }}>
-                  <span style={{ color: 'var(--accent-teal)', fontSize: '1.2rem', flexShrink: 0, marginTop: '2px' }}>✦</span>
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--foreground)', marginBottom: '0.4rem' }}>Functional Medicine &amp; Assessments</div>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--foreground)', opacity: 0.7, lineHeight: 1.7, margin: 0 }}>Using basic clinical assessments, Sheeba is able to connect the dots using a functional medicine approach. This helps determine the underlying nutrient gaps, which can then be targeted using a food and supplement protocol to optimize and address health goals.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                  <span style={{ color: 'var(--accent-teal)', fontSize: '1.2rem', flexShrink: 0, marginTop: '2px' }}>✦</span>
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--foreground)', marginBottom: '0.4rem' }}>Naturopathy &amp; Energetic Medicine</div>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--foreground)', opacity: 0.7, lineHeight: 1.7, margin: 0 }}>From customized plans for wellbeing, Sheeba recommends from her expert knowledge in multiple and varied fields, taking from the best in alternative medicine that support and nurture the whole body&#39;s emotional, mental, electromagnetic aspects.</p>
-                  </div>
+            <div style={{ marginBottom: '2.5rem', textAlign: 'left' }}>
+              <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.75rem' }}>
+                <span style={{ color: 'var(--accent-teal)', fontSize: '1.2rem', flexShrink: 0, marginTop: '2px' }}>✦</span>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: '1.25rem', color: 'var(--foreground)', marginBottom: '0.5rem' }}>Functional Medicine &amp; Assessments</div>
+                  <p style={{ fontSize: '1.05rem', color: 'var(--foreground)', opacity: 0.95, lineHeight: 1.75, margin: 0 }}>Using basic clinical assessments, Sheeba is able to connect the dots using a functional medicine approach. This helps determine the underlying nutrient gaps, which can then be targeted using a food and supplement protocol to optimize and address health goals.</p>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Video */}
-            <div className="reveal-up" style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 20px 60px rgba(45, 90, 90, 0.2)' }}>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{ width: '100%', height: '400px', objectFit: 'cover', borderRadius: '12px', display: 'block' }}
-              >
-                <source src="/assets/5f5895499d00383743a88ec3_Sheeba-BG--Video-transcode.mp4" type="video/mp4" />
-              </video>
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <span style={{ color: 'var(--accent-teal)', fontSize: '1.2rem', flexShrink: 0, marginTop: '2px' }}>✦</span>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: '1.25rem', color: 'var(--foreground)', marginBottom: '0.5rem' }}>Naturopathy &amp; Energetic Medicine</div>
+                  <p style={{ fontSize: '1.05rem', color: 'var(--foreground)', opacity: 0.95, lineHeight: 1.75, margin: 0 }}>From customized plans for wellbeing, Sheeba recommends from her expert knowledge in multiple and varied fields, taking from the best in alternative medicine that support and nurture the whole body&#39;s emotional, mental, electromagnetic aspects.</p>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -541,6 +588,22 @@ export default function Home() {
                   <div className={styles.formGroup}>
                     <input type="text" name="message" className={styles.inputField} placeholder=" " required />
                     <label className={styles.inputLabel}>What are you looking to resolve?</label>
+                  </div>
+                  {/* Cloudflare Turnstile Captcha */}
+                  <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "YOUR_SITE_KEY_HERE"}
+                      onSuccess={(tok) => setToken(tok)}
+                      onExpire={() => setToken(null)}
+                      onError={() => {
+                        setToken(null);
+                        alert("Turnstile error. Please refresh the page.");
+                      }}
+                      options={{
+                        theme: 'dark'
+                      }}
+                    />
                   </div>
                   <button type="submit" className={styles.submitBtn} disabled={formState === "submitting"}>
                     {formState === "submitting" ? "Sending..." : "Request Consultation"}

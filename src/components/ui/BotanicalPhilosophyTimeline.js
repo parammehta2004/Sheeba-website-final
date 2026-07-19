@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LeafDecoration from "./LeafDecoration";
@@ -12,17 +12,63 @@ if (typeof window !== "undefined") {
 
 export default function BotanicalPhilosophyTimeline({ items }) {
   const containerRef = useRef(null);
+  const rowRefs = useRef([]);
+  const gsapCtxRef = useRef(null);
+
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  // rowHeights[i] = pixel height of row i after layout
+  const [rowHeights, setRowHeights] = useState(() => items.map(() => 0));
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    setMounted(true);
+  }, []);
+
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Measure actual rendered row heights
+  const measureHeights = useCallback(() => {
+    const measured = rowRefs.current.map((el) => el?.offsetHeight || 300);
+    setRowHeights(measured);
+  }, []);
+
+  // Measure heights after render + on resize
+  useEffect(() => {
+    if (!mounted) return;
+    // Small delay to let CSS settle
+    const t = setTimeout(measureHeights, 80);
+    window.addEventListener("resize", measureHeights);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", measureHeights);
+    };
+  }, [measureHeights, isMobile, mounted]);
+
+
+
+  // GSAP — only run when heights are populated
+  useEffect(() => {
+    const anyZero = rowHeights.some((h) => h === 0);
+    if (anyZero || !containerRef.current) return;
+
+    // Kill previous ctx before re-creating
+    if (gsapCtxRef.current) {
+      gsapCtxRef.current.revert();
+      gsapCtxRef.current = null;
+    }
 
     const timeoutId = setTimeout(() => {
-      const stemPathEl = document.querySelector(".timeline-stem-path");
+      const stemPathEl = containerRef.current?.querySelector(".timeline-stem-path");
       if (!stemPathEl) return;
       const pathLength = stemPathEl.getTotalLength();
 
       const ctx = gsap.context(() => {
-        // 1. Draw the central vine downwards precisely synced with scroll
         gsap.set(".timeline-stem-path", { strokeDasharray: pathLength });
         gsap.from(".timeline-stem-path", {
           strokeDashoffset: pathLength,
@@ -35,107 +81,134 @@ export default function BotanicalPhilosophyTimeline({ items }) {
           },
         });
 
-        // 2. Animate elements per row (Leaf pop, line extend, card fade)
         const rows = gsap.utils.toArray(".timeline-row");
         const leaves = gsap.utils.toArray(".timeline-leaf");
-        
+
         rows.forEach((row, i) => {
           const card = row.querySelector(".timeline-card");
           const leaf = leaves[i];
-          const lineSvg = row.querySelector(".timeline-line");
-
           const isLeft = i % 2 === 0;
 
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: row,
-              start: "top 85%", // Syncs exactly with container start
+              start: "top 85%",
               end: "top 55%",
-              scrub: true,
+              scrub: isMobile ? 1 : true,
             },
           });
 
           if (leaf) {
-            // Scale the wrapper
             tl.from(leaf, { scale: 0, ease: "back.out(1.5)" }, 0);
-            
-            // Oscillate the inner content AFTER it has scaled in
             const leafInner = leaf.querySelector(".timeline-leaf-inner");
             if (leafInner) {
               ScrollTrigger.create({
                 trigger: row,
-                start: "top 55%", // Exact moment the scrub timeline finishes
+                start: "top 55%",
                 onEnter: () => {
                   gsap.to(leafInner, {
-                    rotation: isLeft ? 15 : -15, // Significantly increased amplitude
+                    rotation: isLeft ? 15 : -15,
                     yoyo: true,
                     repeat: -1,
                     ease: "sine.inOut",
                     duration: 3 + Math.random() * 2,
                     delay: Math.random() * 0.5,
-                    overwrite: "auto"
+                    overwrite: "auto",
                   });
                 },
                 onLeaveBack: () => {
                   gsap.killTweensOf(leafInner);
                   gsap.set(leafInner, { rotation: 0 });
-                }
+                },
               });
             }
           }
-          if (lineSvg) {
-            // Unmask the wrapper div by animating its width
-            const wrapper = row.querySelector(".timeline-line-wrapper");
-            if (wrapper) {
-              tl.fromTo(wrapper, { width: 0 }, { width: 152, ease: "power1.inOut" }, 0);
-            }
+
+          const wrapper = row.querySelector(".timeline-line-wrapper");
+          if (wrapper) {
+            tl.fromTo(wrapper, { width: 0 }, { width: isMobile ? 25 : 152, ease: "power1.inOut" }, 0);
           }
+
           if (card) {
-            tl.fromTo(
+            // Trigger card reveal ONCE when entering viewport; remains visible on reverse scroll
+            gsap.fromTo(
               card,
-              { opacity: 0, x: isLeft ? 30 : -30 },
-              { opacity: 1, x: 0, ease: "power2.out" },
-              0.1
+              { opacity: 0, y: isMobile ? 25 : (isLeft ? 15 : -15) },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: row,
+                  start: "top 85%",
+                  once: true,
+                },
+              }
             );
           }
         });
       }, containerRef);
 
-      return () => ctx.revert();
+      gsapCtxRef.current = ctx;
     }, 100);
 
-    return () => clearTimeout(timeoutId);
-  }, [items]);
+    return () => {
+      clearTimeout(timeoutId);
+      if (gsapCtxRef.current) {
+        gsapCtxRef.current.revert();
+        gsapCtxRef.current = null;
+      }
+    };
+  }, [rowHeights, isMobile]);
 
-  const height = items.length * 350 + 100;
+  // ── Derived geometry from measured heights ──
+  const stemWidth = isMobile ? 30 : 140;
+  const amplitude = isMobile ? 0 : 45;
+  const centerX = isMobile ? 15 : 70;
+  const leafSize = isMobile ? 70 : 140;
 
-  // Generative Math: Calculate smooth sine wave stem perfectly synced with 350px rows
-  let stemPath = `M 70 0 `;
-  for (let y = 0; y <= height; y += 5) {
-    const x = 70 + Math.sin((y * Math.PI) / 350) * 50;
-    stemPath += `L ${x} ${y} `;
+  // Cumulative offsets: rowOffsets[i] = y-start of row i
+  const rowOffsets = rowHeights.reduce((acc, h, i) => {
+    acc.push(i === 0 ? 0 : acc[i - 1] + rowHeights[i - 1]);
+    return acc;
+  }, []);
+  const totalHeight = rowOffsets.length
+    ? rowOffsets[rowOffsets.length - 1] + rowHeights[rowHeights.length - 1] + 40
+    : 100;
+
+  // Build SVG sine-wave path — one half-sine per row so path is always continuous
+  let stemPath = `M ${centerX} 0 `;
+  for (let i = 0; i < items.length; i++) {
+    const rowH = rowHeights[i] || 300;
+    const yStart = rowOffsets[i] || 0;
+    const dir = i % 2 === 0 ? -1 : 1; // Even rows wind left (-1), odd rows wind right (+1)
+    for (let step = 5; step <= rowH; step += 5) {
+      const y = yStart + step;
+      const x = centerX + Math.sin((step * Math.PI) / rowH) * amplitude * dir;
+      stemPath += `L ${x} ${y} `;
+    }
+  }
+
+  if (!mounted) {
+    return <div className={styles.container} ref={containerRef} style={{ minHeight: "400px" }} />;
   }
 
   return (
     <div className={styles.container} ref={containerRef}>
-      {/* Central Stem & Leaves SVG layer */}
+      {/* Central Stem SVG */}
       <svg
         className={styles.stemSvg}
-        viewBox={`0 0 140 ${height}`}
+        viewBox={`0 0 ${stemWidth} ${totalHeight}`}
         preserveAspectRatio="none"
-        style={{ height: `${height}px` }}
+        style={{ height: `${totalHeight}px`, width: `${stemWidth}px` }}
       >
         <defs>
           <linearGradient id="vineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#b89a6c" />
             <stop offset="100%" stopColor="#a9bda4" />
           </linearGradient>
-          <linearGradient id="leafGradient" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="#8da499" />
-            <stop offset="100%" stopColor="#dcebe9" />
-          </linearGradient>
         </defs>
-
         <path
           className="timeline-stem-path"
           d={stemPath}
@@ -145,62 +218,92 @@ export default function BotanicalPhilosophyTimeline({ items }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-
-        {/* Leaves are rendered as HTML overlays to use the existing LeafDecoration component */}
       </svg>
 
-      {/* HTML Leaves Overlay */}
+      {/* HTML Leaf Overlays — precisely at the midpoint of each row on the vine */}
       {items.map((_, i) => {
-        const yOffset = i * 350 + 175; // Apex exactly matches row center
+        const rowH = rowHeights[i] || 300;
+        const yMid = (rowOffsets[i] || 0) + rowH / 2;
         const isLeftCard = i % 2 === 0;
-        // Apex x is at 120 (right) or 20 (left) inside the 140px SVG centered on page.
-        // So global left is 50% - 70px + xOffset
-        const leftPos = isLeftCard ? "calc(50% + 50px)" : "calc(50% - 50px)";
-        
+        const dir = isLeftCard ? -1 : 1;
+        // On mobile: vine is straight/gentle at centerX (no amplitude offset needed)
+        // On desktop: vine alternates at centerX + amplitude * dir
+        const xOnVine = isMobile ? centerX : centerX + amplitude * dir;
+        const leftPos = isMobile 
+          ? `calc(${xOnVine}px + 0.25rem)` 
+          : `calc(50% - ${stemWidth / 2}px + ${xOnVine}px)`;
+
         return (
           <div
-            key={`html-leaf-${i}`}
+            key={`leaf-${i}`}
             className="timeline-leaf"
             style={{
               position: "absolute",
-              top: `${yOffset}px`,
+              top: `${yMid}px`,
               left: leftPos,
-              width: "140px", // Much bigger
-              height: "140px",
-              // Tilt down-outward (110 degrees)
-              transform: `translate(-50%, -95%) rotate(${isLeftCard ? 110 : -110}deg)`,
+              width: `${leafSize}px`,
+              height: `${leafSize}px`,
+              transform: `translate(-50%, -95%) rotate(${isMobile ? -90 : (isLeftCard ? 110 : -110)}deg)`,
               transformOrigin: "50% 95%",
-              zIndex: 3
+              zIndex: 3,
             }}
           >
-            <div className="timeline-leaf-inner" style={{ width: "100%", height: "100%", transformOrigin: "50% 95%" }}>
+            <div
+              className="timeline-leaf-inner"
+              style={{ width: "100%", height: "100%", transformOrigin: "50% 95%" }}
+            >
               <LeafDecoration variant={isLeftCard ? "a" : "b"} />
             </div>
           </div>
         );
       })}
 
-      {/* HTML Content Overlay */}
+      {/* Row Content */}
       {items.map((item, index) => {
         const isLeft = index % 2 === 0;
-
         return (
-          <div key={index} className={`${styles.row} timeline-row`}>
-            {/* Left Column */}
+          <div
+            key={index}
+            ref={(el) => { rowRefs.current[index] = el; }}
+            className={`${styles.row} timeline-row`}
+          >
+            {/* Left card slot */}
             <div className={`${styles.cardContainer} ${styles.leftCard}`}>
-              {isLeft && (
+              {!isMobile && isLeft && (
                 <div className={`${styles.timelineCard} timeline-card`}>
+                  {item.logoSrc && (
+                    item.logoLink ? (
+                      <a href={item.logoLink} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginBottom: "0.8rem" }} className={styles.logoLinkWrapper}>
+                        <img 
+                          src={item.logoSrc} 
+                          alt={item.logoAlt || "Logo"} 
+                          style={{ height: "35px", width: "auto", display: "block" }} 
+                        />
+                      </a>
+                    ) : (
+                      <img 
+                        src={item.logoSrc} 
+                        alt={item.logoAlt || "Logo"} 
+                        style={{ height: "35px", width: "auto", marginBottom: "0.8rem", display: "block" }} 
+                      />
+                    )
+                  )}
                   <h3 className={styles.cardTitle}>{item.title}</h3>
                   <p className={styles.cardBody}>{item.text}</p>
                 </div>
               )}
             </div>
 
-            {/* Connection Lines Node */}
+            {/* Centre vine column */}
             <div className={styles.connectionContainer}>
               <div
                 className={`timeline-line-wrapper ${isLeft ? styles.leftConnection : styles.rightConnection}`}
-                style={{ overflow: "hidden", height: "40px", top: "50%", transform: isLeft ? "translate(-100%, -50%)" : "translateY(-50%)" }}
+                style={{
+                  overflow: "hidden",
+                  height: "40px",
+                  top: "50%",
+                  transform: isLeft ? "translate(-100%, -50%)" : "translateY(-50%)",
+                }}
               >
                 <svg
                   className={`timeline-line ${isLeft ? styles.svgLeft : styles.svgRight}`}
@@ -220,10 +323,27 @@ export default function BotanicalPhilosophyTimeline({ items }) {
               </div>
             </div>
 
-            {/* Right Column */}
+            {/* Right card slot */}
             <div className={`${styles.cardContainer} ${styles.rightCard}`}>
-              {!isLeft && (
+              {(isMobile || !isLeft) && (
                 <div className={`${styles.timelineCard} timeline-card`}>
+                  {item.logoSrc && (
+                    item.logoLink ? (
+                      <a href={item.logoLink} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginBottom: "0.8rem" }} className={styles.logoLinkWrapper}>
+                        <img 
+                          src={item.logoSrc} 
+                          alt={item.logoAlt || "Logo"} 
+                          style={{ height: "35px", width: "auto", display: "block" }} 
+                        />
+                      </a>
+                    ) : (
+                      <img 
+                        src={item.logoSrc} 
+                        alt={item.logoAlt || "Logo"} 
+                        style={{ height: "35px", width: "auto", marginBottom: "0.8rem", display: "block" }} 
+                      />
+                    )
+                  )}
                   <h3 className={styles.cardTitle}>{item.title}</h3>
                   <p className={styles.cardBody}>{item.text}</p>
                 </div>

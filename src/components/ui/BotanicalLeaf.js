@@ -1,59 +1,56 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./BotanicalLeaf.module.css";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export default function BotanicalLeaf({ className = "", positionStyles = {}, speed = 1 }) {
   const leafRef = useRef(null);
   const svgRef = useRef(null);
 
   useEffect(() => {
+    // Skip all animations on touch/mobile — these decorative elements are invisible anyway
+    if (window.matchMedia("(hover: none)").matches) return;
     if (!leafRef.current || !svgRef.current) return;
-    
-    // 1. Fade in on scroll
-    gsap.to(leafRef.current, { 
-      opacity: 0.15, 
-      duration: 2.5, 
-      ease: "power2.out",
-      scrollTrigger: { 
-        trigger: leafRef.current, 
-        start: "top 95%",
-        once: true
-      }
-    });
 
-    // 2. Parallax drift (Wrapper)
-    gsap.to(leafRef.current, {
-      y: -250 * speed,
-      ease: "none",
-      scrollTrigger: {
-        trigger: leafRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
-      }
-    });
+    async function initLeaf() {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
 
-    // 3. Ambient Sway (Inner SVG)
-    const swayDuration = 3 + Math.random() * 3; // 3 to 6 seconds
-    const swayAngle = 3 + Math.random() * 5;    // 3 to 8 degrees
+      // 1. Fade in on scroll
+      gsap.to(leafRef.current, {
+        opacity: 0.15,
+        duration: 2.5,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: leafRef.current,
+          start: "top 95%",
+          once: true
+        }
+      });
 
-    gsap.fromTo(svgRef.current,
-      { rotation: -swayAngle },
-      {
-        rotation: swayAngle,
-        duration: swayDuration,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1
-      }
-    );
+      // 2. Parallax drift
+      gsap.to(leafRef.current, {
+        y: -250 * speed,
+        ease: "none",
+        scrollTrigger: {
+          trigger: leafRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+
+      // 3. Ambient Sway
+      const swayDuration = 3 + Math.random() * 3;
+      const swayAngle = 3 + Math.random() * 5;
+      gsap.fromTo(svgRef.current,
+        { rotation: -swayAngle },
+        { rotation: swayAngle, duration: swayDuration, ease: "sine.inOut", yoyo: true, repeat: -1 }
+      );
+    }
+
+    initLeaf();
   }, [speed]);
 
   return (

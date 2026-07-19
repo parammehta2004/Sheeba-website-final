@@ -154,7 +154,7 @@
   flex: 1.4 1 500px;
   max-width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 @media (max-width: 1024px) {
@@ -170,10 +170,35 @@
     text-align: center;
     max-width: 600px;
   }
+  .visualCol {
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
   .sectionWrapper { padding: 4rem 1.5rem; }
-  .splitContent { gap: 2rem; }
-  .mediaCardGrid { grid-template-columns: 1fr; gap: 2rem; }
+  .heroSection {
+    padding-top: 6rem;
+    padding-bottom: 0;
+    min-height: auto;
+  }
+  .heroSection + .sectionWrapper {
+    padding-top: 0;
+  }
+  .titleHero {
+    margin-bottom: 1.5rem;
+  }
+  .heroDescription {
+    margin-top: 0;
+  }
+  .paragraph {
+    margin-bottom: 0;
+  }
+  .splitContent { gap: 0.75rem; }
+  .visualCol {
+    margin-top: -9.5rem;
+    margin-bottom: -5rem;
+  }
+  .mediaCardGrid { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 }

@@ -1,0 +1,149 @@
+/* TherapyDiagram.module.css */
+.diagramContainer {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.canvasArea {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* leaf drawing proportions */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leafBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(52, 181, 178, 0.4); /* Dropzone Teal low opacity for the outline */
+  pointer-events: none;
+  z-index: 1;
+}
+
+.leafSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-45deg) scale(0.9);
+  transform-origin: center center;
+}
+
+/* Glassmorphic card styling matching background */
+.therapyCard {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.75rem;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-tags, 30px);
+  color: #2d5a5a; /* Dark teal text for contrast on white */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: var(--font-heading, "Outfit", sans-serif);
+  letter-spacing: 0.5px;
+}
+
+/* Icons styling using target accent color */
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-teal, #34b5b2);
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.iconWrapper svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cardText {
+  line-height: 1.2;
+}
+
+/* Symmetrical desktop placements over the leaf canvas */
+/* Left Columns */
+.posTopLeft {
+  top: 15%;
+  right: 50%;
+  transform: translateX(-40px);
+}
+
+.posMidLeft {
+  top: 45%;
+  right: 50%;
+  transform: translateX(-80px);
+}
+
+.posBottomLeft {
+  top: 75%;
+  right: 50%;
+  transform: translateX(-25px);
+}
+
+/* Right Columns */
+.posTopRight {
+  top: 15%;
+  left: 50%;
+  transform: translateX(40px);
+}
+
+.posMidRight {
+  top: 45%;
+  left: 50%;
+  transform: translateX(80px);
+}
+
+.posBottomRight {
+  top: 75%;
+  left: 50%;
+  transform: translateX(25px);
+}
+
+/* Responsive constraints */
+@media (max-width: 600px) {
+  .canvasArea {
+    aspect-ratio: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  
+  .leafBackdrop {
+    display: none; /* Hide background outline on narrow screens to save vertical space */
+  }
+  
+  .therapyCard {
+    position: relative;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+    justify-content: flex-start;
+  }
+}

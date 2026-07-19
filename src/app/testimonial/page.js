@@ -42,11 +42,10 @@ const CATEGORIES = [
   "General Wellness"
 ];
 
-function ReviewCard({ review }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const textLimit = 220;
+function ReviewCard({ review, onExpand }) {
+  const textLimit = 120;
   const shouldTruncate = review.text.length > textLimit;
-  const displayedText = shouldTruncate && !isExpanded
+  const displayedText = shouldTruncate
     ? `${review.text.substring(0, textLimit)}...`
     : review.text;
 
@@ -57,7 +56,11 @@ function ReviewCard({ review }) {
   const category = getReviewCategory(review.text);
 
   return (
-    <div className={`${styles.reviewCard} reveal-card`}>
+    <div 
+      className={`${styles.reviewCard} reveal-card`} 
+      onClick={() => onExpand(review)}
+      style={{ cursor: "pointer" }}
+    >
       <div className={styles.cardHeader}>
         <div className={styles.avatarCircle}>
           {initial}
@@ -86,12 +89,7 @@ function ReviewCard({ review }) {
       <div className={styles.cardBody}>
         <p className={styles.cardQuote}>&ldquo;{displayedText}&rdquo;</p>
         {shouldTruncate && (
-          <button
-            className={styles.readMoreBtn}
-            onClick={() => setIsExpanded(!isExpanded)}
-          >
-            {isExpanded ? "Read less" : "Read more"}
-          </button>
+          <span className={styles.readMoreBtn}>Read more</span>
         )}
       </div>
     </div>
@@ -100,9 +98,33 @@ function ReviewCard({ review }) {
 
 export default function Testimonial() {
   const containerRef = useRef(null);
+  const lenisRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Outcomes");
   const [visibleCount, setVisibleCount] = useState(9);
+  const [activeReview, setActiveReview] = useState(null); // holds review object
+
+  const closeModal = () => {
+    setActiveReview(null);
+  };
+
+  // Background Scroll Lock (including Lenis pause) when Modal is open
+  useEffect(() => {
+    if (activeReview) {
+      lenisRef.current?.stop();
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    } else {
+      lenisRef.current?.start();
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+    return () => {
+      lenisRef.current?.start();
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+  }, [activeReview]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -112,10 +134,15 @@ export default function Testimonial() {
       smooth: true, mouseMultiplier: 1,
     });
     lenis.on("scroll", ScrollTrigger.update);
+    lenisRef.current = lenis;
     const rafCallback = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(rafCallback);
     gsap.ticker.lagSmoothing(0, 0);
-    return () => { lenis.destroy(); gsap.ticker.remove(rafCallback); };
+    return () => { 
+      lenis.destroy(); 
+      gsap.ticker.remove(rafCallback); 
+      lenisRef.current = null;
+    };
   }, []);
 
   // Filter and Search logic
@@ -135,9 +162,16 @@ export default function Testimonial() {
     return filteredReviews.slice(0, visibleCount);
   }, [filteredReviews, visibleCount]);
 
+  const [hasLoadedMore, setHasLoadedMore] = useState(false);
+
   // Handle Load More
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 9);
+    setHasLoadedMore(true);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // GSAP animation for initial load (runs once on mount)
@@ -174,38 +208,40 @@ export default function Testimonial() {
       <main className={styles.main} ref={containerRef}>
         
         {/* ── Hero ── */}
-        <section className={`${styles.sectionWrapper} ${styles.heroSection} bg-theme-blush`}>
-          <div className={styles.heroContent}>
-            <div className={`${styles.heroSplit} reveal-up`}>
-              <img
-                src="/assets/5f4602b881856e2d40bbaa02_testimonials-p-500.png"
-                alt="Testimonials Illustration"
-                className={styles.heroImage}
-              />
-              <div>
-
-                <h1 className={styles.titleHero}>
-                  Stories of <span className={styles.textAccent}>Transformation.</span>
-                </h1>
-                <p className={styles.paragraph}>
-                  With over a decade of clinical success, Sheeba has guided hundreds of clients globally to identify root causes and build sustainable wellness. Explore their stories of transformation.
-                </p>
-                <div className={styles.statsSummary}>
-                  <div className={styles.statItem}>
-                    <span className={styles.statVal}>83</span>
-                    <span className={styles.statLabel}>Verified Stories</span>
-                  </div>
-                  <div className={styles.statItem}>
-                    <span className={styles.statVal}>5.0 ★</span>
-                    <span className={styles.statLabel}>Average Rating</span>
-                  </div>
-                  <div className={styles.statItem}>
-                    <span className={styles.statVal}>100%</span>
-                    <span className={styles.statLabel}>Tailored Care</span>
-                  </div>
+        <section 
+          className={`${styles.sectionWrapper} ${styles.heroSection}`}
+        >
+          <div className={styles.heroContent} style={{ maxWidth: '1480px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem', padding: '0 1rem' }}>
+            
+            {/* Top Row: Title (Left) & Stats (Right) */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem', width: '100%' }}>
+              <h1 className={styles.titleHero} style={{ color: '#ffffff', margin: 0, maxWidth: '600px' }}>
+                Stories of <span className={styles.textAccent} style={{ color: '#34b5b2' }}>Transformation.</span>
+              </h1>
+              
+              <div className={styles.statsSummary} style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div className={styles.statItem}>
+                  <span className={styles.statVal} style={{ color: 'var(--accent-teal-dark)' }}>83</span>
+                  <span className={styles.statLabel} style={{ color: 'var(--foreground)', opacity: 0.75 }}>Verified Stories</span>
+                </div>
+                <div className={styles.statItem}>
+                  <span className={styles.statVal} style={{ color: 'var(--accent-teal-dark)' }}>5.0 ★</span>
+                  <span className={styles.statLabel} style={{ color: 'var(--foreground)', opacity: 0.75 }}>Average Rating</span>
+                </div>
+                <div className={styles.statItem}>
+                  <span className={styles.statVal} style={{ color: 'var(--accent-teal-dark)' }}>100%</span>
+                  <span className={styles.statLabel} style={{ color: 'var(--foreground)', opacity: 0.75 }}>Tailored Care</span>
                 </div>
               </div>
             </div>
+
+            {/* Bottom Row: Paragraph (Left) */}
+            <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+              <p className={styles.paragraph} style={{ color: 'rgba(255, 255, 255, 0.95)', margin: 0, maxWidth: '580px', transform: 'translate(45%, -25%)' }}>
+                With over a decade of clinical success, Sheeba <br /> has guided hundreds of clients globally to identify root causes and build sustainable wellness. Explore their stories of transformation.
+              </p>
+            </div>
+
           </div>
         </section>
 
@@ -249,12 +285,16 @@ export default function Testimonial() {
           </div>
         </section>
 
-        {/* ── Testimonial Masonry/Grid ── */}
+        {/* ── Testimonial Grid ── */}
         <section className={styles.testimonialsSection}>
           <div className={styles.testimonialsContent}>
             {displayedReviews.length > 0 ? (
               displayedReviews.map((review, idx) => (
-                <ReviewCard key={idx} review={review} />
+                <ReviewCard 
+                  key={idx} 
+                  review={review} 
+                  onExpand={setActiveReview}
+                />
               ))
             ) : (
               <div className={styles.noResults}>
@@ -274,6 +314,69 @@ export default function Testimonial() {
           )}
         </section>
 
+        {hasLoadedMore && (
+          <button 
+            onClick={scrollToTop} 
+            className={styles.backToTopBtn} 
+            aria-label="Scroll back to top"
+            title="Back to Top"
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            </svg>
+          </button>
+        )}
+
+        {/* ── Glassmorphic Modal Popup (Inline) ── */}
+        {activeReview && (
+          <div 
+            className={styles.modalOverlay} 
+            onClick={closeModal}
+            onTouchMove={(e) => e.preventDefault()}
+          >
+            <div 
+              className={styles.modalContent} 
+              onClick={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+              onWheel={(e) => e.stopPropagation()}
+            >
+              <button className={styles.modalCloseBtn} onClick={closeModal}>
+                &times;
+              </button>
+              
+              <div className={styles.modalHeader}>
+                <div className={styles.avatarCircle}>
+                  {activeReview.name ? activeReview.name.charAt(0).toUpperCase() : "C"}
+                </div>
+                <div className={styles.authorMeta}>
+                  <strong className={styles.cardAuthorName}>{activeReview.name}</strong>
+                  <div className={styles.ratingStars}>
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className={i < activeReview.rating ? styles.starFilled : styles.starEmpty}
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                      >
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+                {getReviewCategory(activeReview.text) && (
+                  <span className={styles.categoryPillTag}>
+                    {getReviewCategory(activeReview.text)}
+                  </span>
+                )}
+              </div>
+
+              <div className={styles.modalBody}>
+                <p className={styles.modalQuote}>&ldquo;{activeReview.text}&rdquo;</p>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </>
   );

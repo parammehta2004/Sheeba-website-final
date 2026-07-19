@@ -37,15 +37,15 @@ const MEDIA_ITEMS = [
   },
   {
     type: "video",
-    title: "Sheeba's Tips & Tricks #2",
-    embedUrl: "https://www.youtube.com/embed/31QC-vR0Obc",
-    description: "Welcome to another episode of tips & tricks by SheebaTheNutritionist! Sheeba is giving away secrets on how you can support your health in just 2 STEPS! Click play and find out the secret!"
+    title: "If Everything You've Tried Hasn't Worked...",
+    embedUrl: "https://www.youtube.com/embed/87_DxoxfQSU",
+    description: "There comes a point where trying harder stops creating change. Not because you lack discipline, but because the approach isn't aligned with how your body is functioning. Discover how to move from trial-and-error to precision wellness."
   },
   {
     type: "video",
-    title: "Sheeba's Tips & Tricks #3",
-    embedUrl: "https://www.youtube.com/embed/x8AQyTy0gz4",
-    description: "Welcome to another episode of Edible To Incredible tips & tricks by SheebaTheNutritionist! Have you wondered what happens to your body when you consume a supplement? Sheeba will be sharing with you some great tips to save your money and find supplements that are actually worthwhile! Click play to find out!"
+    title: "Dropzone: About Us",
+    videoUrl: "/assets/Dropzone About Us Video.mp4",
+    description: "An introduction to the Dropzone program, Singapore's award-winning, practitioner-guided fat loss protocol. Learn how the program targets stubborn fat cells specifically while sparing 100% of muscle mass by activating autophagy."
   },
   {
     type: "audio",
@@ -65,6 +65,12 @@ const MEDIA_ITEMS = [
     title: "5 Easy Diet-Friendly Recipes For Weight Loss",
     link: "https://shopee.sg/blog/healthy-recipe-for-weight-loss/?utm_source=sheebamajmudar&utm_medium=webowner&utm_campaign=flab-to-fab",
     description: "Article written by Iris Tan - Shopee."
+  },
+  {
+    type: "article",
+    title: "Dropzone Instagram Page",
+    link: "https://www.instagram.com/dropzonefit",
+    description: "Follow Dropzone on Instagram for weight loss tips, success stories, and regular wellness updates."
   }
 ];
 
@@ -142,19 +148,29 @@ export default function MediaGallery() {
       {/* ─── VIDEOS ─── */}
       <section className={styles.videosSection}>
         <div className={styles.content}>
-          <h2 className={`${styles.sectionTitle} reveal-up`}>Video Appearances</h2>
+          <h2 className={`${styles.sectionTitle} reveal-up`}>Video Interviews</h2>
           
           <div className={styles.videosGrid}>
             {MEDIA_ITEMS.filter(m => m.type === "video").map((item, idx) => (
               <div key={idx} className={`${styles.videoCard} reveal-up`}>
                 <div className={styles.videoWrapper}>
-                  <iframe 
-                    src={item.embedUrl} 
-                    className={styles.videoIframe}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen 
-                    title={item.title}
-                  />
+                  {item.videoUrl ? (
+                    <video 
+                      src={item.videoUrl} 
+                      className={styles.videoIframe}
+                      controls
+                      playsInline
+                      title={item.title}
+                    />
+                  ) : (
+                    <iframe 
+                      src={item.embedUrl} 
+                      className={styles.videoIframe}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen 
+                      title={item.title}
+                    />
+                  )}
                 </div>
                 <div>
                   <h3 className={styles.videoTitle}>{item.title}</h3>

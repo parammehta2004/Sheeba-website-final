@@ -1,6 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async headers() {
+    const isDev = process.env.NODE_ENV === 'development';
+    const cspDirectives = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https://images.unsplash.com https://cdn.prod.website-files.com",
+      "media-src 'self' https://cdn.prod.website-files.com",
+      `connect-src 'self' https://vapor.biohackk.com https://challenges.cloudflare.com${isDev ? " ws: wss:" : ""}`,
+      "frame-src 'self' https://www.youtube.com https://w.soundcloud.com https://player.vimeo.com https://challenges.cloudflare.com",
+      "frame-ancestors 'none'",
+    ];
+
+    if (!isDev) {
+      cspDirectives.push("upgrade-insecure-requests");
+    }
+
     return [
       {
         // Apply security headers to all routes
@@ -39,25 +56,7 @@ const nextConfig = {
           // Content Security Policy — allow self + trusted external sources only
           {
             key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              // Scripts: self + GSAP CDN + Lenis + Google Tag Manager (if needed in future)
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net",
-              // Styles: self + Google Fonts
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              // Fonts: self + Google Fonts CDN
-              "font-src 'self' https://fonts.gstatic.com",
-              // Images: self + Unsplash + data URIs
-              "img-src 'self' data: blob: https://images.unsplash.com https://cdn.prod.website-files.com",
-              // Media (video): self + the Sheeba video CDN
-              "media-src 'self' https://cdn.prod.website-files.com",
-              // API calls: self + the leads API
-              "connect-src 'self' https://vapor.biohackk.com",
-              // Prevent embedding in frames from unknown origins
-              "frame-ancestors 'none'",
-              // Only load resources over HTTPS
-              "upgrade-insecure-requests",
-            ].join('; '),
+            value: cspDirectives.join('; '),
           },
           // Control DNS prefetching
           {
@@ -84,6 +83,42 @@ const nextConfig = {
         hostname: 'cdn.prod.website-files.com',
       },
     ],
+  },
+  // Allow mobile devices on local network to connect to HMR in dev mode
+  allowedDevOrigins: ['192.168.29.236'],
+  async redirects() {
+    return [
+      {
+        source: '/index.html',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/home',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/contact',
+        destination: '/contact-us',
+        permanent: true,
+      },
+      {
+        source: '/testimonials',
+        destination: '/testimonial',
+        permanent: true,
+      },
+      {
+        source: '/media',
+        destination: '/media-gallery',
+        permanent: true,
+      },
+      {
+        source: '/:path*\\.html',
+        destination: '/:path*',
+        permanent: true,
+      },
+    ];
   },
 };
 

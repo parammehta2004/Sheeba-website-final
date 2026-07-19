@@ -121,10 +121,16 @@
   pointer-events: none;
 }
 
-.gridCard:hover .hoverOverlay {
+.gridCard:hover .hoverOverlay,
+.gridCard.activeCard .hoverOverlay {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+.gridCard:hover .defaultOverlay,
+.gridCard.activeCard .defaultOverlay {
+  opacity: 0;
 }
 
 .hoverInner {
@@ -147,6 +153,10 @@
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.88);
   margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .exploreButton {
@@ -170,15 +180,71 @@
   transform: translateY(-2px);
 }
 
-/* ── Mobile: reduce hover to tap ── */
-@media (hover: none) {
-  /* On touch devices, always show full overlay at 40% opacity */
-  .hoverOverlay {
-    opacity: 0.92;
-    transform: none;
-    pointer-events: auto;
+@media (max-width: 768px) {
+  .gridContainer {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
   }
+  
   .defaultOverlay {
-    opacity: 0;
+    padding: 1rem !important; /* Matches hover padding to prevent shift */
+  }
+  
+  .cardTitle {
+    font-size: 0.9rem !important; /* Slightly smaller to fit long terms */
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2 !important; /* Cap title at 2 lines so alignment is uniform */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .categoryTag {
+    font-size: 7.5px !important;
+    padding: 1px 5px !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .hoverOverlay {
+    padding: 1rem !important;
+  }
+
+  .hoverTitle {
+    font-size: 0.9rem !important;
+    line-height: 1.25 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .hoverBody {
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+    -webkit-line-clamp: 3 !important; /* Standardizes body reveal space */
+  }
+
+  .exploreButton {
+    padding: 4px 10px !important;
+    font-size: 8.5px !important;
+    margin-top: 0.2rem !important;
+    letter-spacing: 1px !important;
   }
 }
+
+@media (max-width: 480px) {
+  .gridContainer {
+    grid-template-columns: 1fr !important;
+  }
+}
+

@@ -6,6 +6,7 @@ import Lenis from "lenis";
 import Navigation from "@/components/layout/Navigation";
 import LeafDecoration from "@/components/ui/LeafDecoration";
 import InteractiveGrid from "@/components/ui/InteractiveGrid";
+import TherapyDiagram from "@/components/ui/TherapyDiagram";
 import styles from "./page.module.css";
 
 if (typeof window !== "undefined") {
@@ -13,12 +14,13 @@ if (typeof window !== "undefined") {
 }
 
 const THERAPIES = [
-  { title: "Biodynamic Craniosacral Therapy", body: "The therapy is gaining a lot of recognition and popularity because of its profound therapeutic effects. It is a gentle profound non-invasive, hands-on treatment for the whole body.", slug: "biodynamic-craniosacral-therapy", img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=800" },
-  { title: "Reconnective Healing", body: "Reconnective Healing® transcends traditional energy healing techniques. It allows us to let go of the concept, approach and even the need for the method itself while including the benefits of all known energy healing methods.", slug: "reconnective-healing", img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=800" },
-  { title: "Gemmotherapy", body: "It has concentrated plant stem cells that are highly bioavailable and bioactive compounds yet gentle on the system. Can be used for children and adults to harmonise many health conditions.", slug: "gemmotherapy", img: "https://images.unsplash.com/photo-1502904550040-7534597429ae?auto=format&fit=crop&q=80&w=800" },
-  { title: "Dropzone", body: "Our signature Dropzone Program, a practitioner guided program has helped thousands to lose fat and engage in healthier lifestyles.", slug: "dropzone", img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=800" },
-  { title: "Aroma Therapy", body: "Essential oils have been used for over 5,000 years and continue to be used to fast track in healing all aspects of health, emotions, sleep and mood.", slug: "therapeutic-aroma-therapy", img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800" },
-  { title: "NES (Nutri Energetic System)", body: "The NES system can detect your bio-field (energy), and the miHealth can then raise the electrical potential of those cells, restoring them over time to their normal, optimal functioning as part of the natural healing response.", slug: "nes-nutri-energetic-system", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=800" },
+  { title: "Biodynamic Craniosacral Therapy", body: "The therapy is gaining a lot of recognition and popularity because of its profound therapeutic effects. It is a gentle profound non-invasive, hands-on treatment for the whole body.", slug: "biodynamic-craniosacral-therapy", img: "/assets/bct.jpg", bgPosition: "35% center" },
+  { title: "Reconnective Healing", body: "Reconnective Healing® transcends traditional energy healing techniques. It allows us to let go of the concept, approach and even the need for the method itself while including the benefits of all known energy healing methods.", slug: "reconnective-healing", img: "/assets/reconh.jpg", bgPosition: "center" },
+  { title: "Gemmotherapy", body: "It has concentrated plant stem cells that are highly bioavailable and bioactive compounds yet gentle on the system. Can be used for children and adults to harmonise many health conditions.", slug: "gemmotherapy", img: "/assets/gemmo.jpg", bgPosition: "65% center" },
+  { title: "Weight (Fat loss) programs", body: "Our signature Dropzone Program, a practitioner guided program has helped thousands to lose fat and engage in healthier lifestyles.", slug: "dropzone", img: "/assets/falos.jpeg" },
+  { title: "Practitioner Supplements", body: "Access premium, practitioner-grade supplements curated specifically to support your customized health protocols and total wellness journey.", slug: "practitioner-supplements", img: "/assets/prasup.jpeg", bgPosition: "85% center", externalLink: "https://www.practitionergraded.com" },
+  { title: "Aroma Therapy", body: "Essential oils have been used for over 5,000 years and continue to be used to fast track in healing all aspects of health, emotions, sleep and mood.", slug: "therapeutic-aroma-therapy", img: "/assets/aromather.jpeg" },
+  { title: "E4L (Nutri Energetic System)", body: "The E4L system can detect your bio-field (energy) to scan for imbalances, restoring cells over time to their normal, optimal functioning as part of the natural healing response.", slug: "e4l-nutri-energetic-system", img: "/assets/e4l%20nes.jpg", bgPosition: "85% center" },
 ];
 
 export default function Therapies() {
@@ -60,25 +62,29 @@ export default function Therapies() {
       <main className={styles.main} ref={containerRef}>
 
         {/* ── Hero ── */}
-        <section className={`${styles.sectionWrapper} ${styles.heroSection} bg-theme-teal-dark`}>
-          <div className={styles.splitContent}>
-            <div className={styles.textCol}>
-              <div className="reveal-up">
+        <section className={styles.heroSection} style={{ width: '100%', minHeight: '65vh', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: '8rem 2rem' }}>
+          {/* Background Image Banner */}
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
+            <img
+              src="/assets/therapiesleaf.png"
+              alt="Therapies Background Banner"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            />
+            {/* Dark overlay for contrast */}
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(26, 61, 61, 0.45)' }} />
+          </div>
 
-                <h1 className={styles.titleHero}>
-                  Our <span className={styles.textAccent}>Therapies</span>
-                </h1>
-              </div>
-              <div className={`${styles.heroDescription} reveal-up`}>
-                <p className={styles.paragraph} style={{ margin: '2rem 0' }}>
-                  Sheeba&apos;s therapy approach goes beyond nutrition — drawing from the very best
-                  of alternative medicine to nurture the whole body: emotional, mental, and
-                  electromagnetic, achieving lasting wellbeing at any age.
-                </p>
-              </div>
-            </div>
-            <div className={`${styles.visualCol} reveal-up`}>
-              <img src="/assets/695efc3939941c2ace881a9a_Main-illustration--Sheeba.png" alt="Therapy Diagram" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
+          {/* Text Content Overlay */}
+          <div className={styles.heroContent} style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '100%' }}>
+            <div className="reveal-up" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '100%' }}>
+              <h1 className={styles.titleHero} style={{ color: '#ffffff', textAlign: 'center', margin: '0 auto 2rem auto' }}>
+                Our <span className={styles.textAccent} style={{ color: 'var(--accent-peach)' }}>Therapies</span>
+              </h1>
+              <p className={styles.paragraph} style={{ color: '#ffffff', maxWidth: '800px', margin: '0 auto', textAlign: 'center', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                Sheeba&apos;s therapy approach goes beyond nutrition — drawing from the very best
+                of alternative medicine to nurture the whole body: emotional, mental, and
+                electromagnetic, achieving lasting wellbeing at any age.
+              </p>
             </div>
           </div>
         </section>
@@ -86,7 +92,7 @@ export default function Therapies() {
         {/* ── Therapies Grid ── */}
         <section className={styles.sectionWrapper} style={{ backgroundColor: 'transparent' }}>
           <div className={styles.stepsContent}>
-            <InteractiveGrid items={THERAPIES} basePath="/therapies" />
+            <InteractiveGrid items={THERAPIES} basePath="/therapies" hideTags={true} />
           </div>
         </section>
 

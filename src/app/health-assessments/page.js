@@ -5,7 +5,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Navigation from "@/components/layout/Navigation";
 import LeafDecoration from "@/components/ui/LeafDecoration";
-import OrbitalAssessments from "@/components/ui/OrbitalAssessments";
+import RotatingHexagon from "@/components/ui/RotatingHexagon";
+
 import InteractiveGrid from "@/components/ui/InteractiveGrid";
 import styles from "./page.module.css";
 
@@ -14,10 +15,11 @@ if (typeof window !== "undefined") {
 }
 
 const ASSESSMENTS = [
-  { title: "Functional Blood Chemistry Analysis", body: "To formulate a clear plan for optimal health, basic blood analysis would be necessary to get to the root cause of health issues. It is more patient-centric approach rather than going at the disease itself.", slug: "functional-blood-chemistry-analysis", img: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=800" },
-  { title: "Dutch Test", body: "Dutch Test is the simplest and informative test for anyone who is considering bioidentical hormone therapy, natural protocols, or suspect they may have a hormone-related challenge", slug: "dutch-test", img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=800" },
-  { title: "Hair Tissue Mineral Analysis", body: "This assessment measures the mineral contents of one's hair.", slug: "hair-tissue-mineral-analysis", img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800" },
-  { title: "Food Compatibility Testing", body: "The compatibility programme is not a \"one-size-fits-all\" solution. Instead, it represents your individual requirements and responses.", slug: "compatibility-testing", img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=800" },
+  { title: "Metabolic Mapping", body: "Our clinical North Star. By performing a functional analysis of 42+ metabolic markers in your blood test, we decode your body's unique biochemistry and design a highly customized blueprint for your health.", slug: "metabolic-mapping", img: "/assets/mmcard.jpg", bgPosition: "35% center" },
+  { title: "Dutch Test", body: "Dutch Test is the simplest and informative test for anyone who is considering bioidentical hormone therapy, natural protocols, or suspect they may have a hormone-related challenge", slug: "dutch-test", img: "/assets/dutch.png", bgSize: "85%", bgColor: "#3e5548" },
+  { title: "Hair Tissue Mineral Analysis", body: "This assessment measures the mineral contents of one's hair.", slug: "hair-tissue-mineral-analysis", img: "/assets/htmt.jpg" },
+  { title: "Food Compatibility Testing", body: "The compatibility programme is not a \"one-size-fits-all\" solution. Instead, it represents your individual requirements and responses.", slug: "compatibility-testing", img: "/assets/fct.jpg", bgPosition: "85% center" },
+  { title: "E4L (Nutri Energetic System)", body: "The E4L system can detect your bio-field (energy) to scan for imbalances, restoring cells over time to their normal, optimal functioning as part of the natural healing response.", slug: "e4l-nutri-energetic-system", img: "/assets/e4l%20nes.jpg", bgPosition: "85% center" },
 ];
 
 export default function HealthAssessments() {
@@ -69,7 +71,7 @@ export default function HealthAssessments() {
                 </h1>
               </div>
               <div className={`${styles.heroDescription} reveal-up`}>
-                <p className={styles.paragraph} style={{ margin: '1.25rem 0' }}>
+                <p className={styles.paragraph}>
                   To formulate a clear plan for optimal health, we begin with a thorough assessment.
                   Understanding the root cause allows us to create a precise, personalised protocol
                   to restore your wellbeing.
@@ -77,7 +79,7 @@ export default function HealthAssessments() {
               </div>
             </div>
             <div className={`${styles.visualCol} reveal-up`}>
-              <OrbitalAssessments assessments={ASSESSMENTS} />
+              <RotatingHexagon />
             </div>
           </div>
         </section>
@@ -85,7 +87,7 @@ export default function HealthAssessments() {
         {/* ── Assessments Grid ── */}
         <section className={styles.sectionWrapper}>
           <div className={styles.stepsContent}>
-            <InteractiveGrid items={ASSESSMENTS} basePath="/health-assessments" />
+            <InteractiveGrid items={ASSESSMENTS} basePath="/health-assessments" hideTags={true} columns={3} />
           </div>
         </section>
 

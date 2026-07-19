@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+
 import styles from "./Navigation.module.css";
 
 const links = [
@@ -55,23 +55,15 @@ export default function Navigation() {
                 <Link href={link.href} className={styles.navLink}>
                   {link.name} <span className={styles.chevron}>▾</span>
                 </Link>
-                <AnimatePresence>
-                  {activeDropdown === link.name && (
-                    <motion.div 
-                      className={styles.dropdownMenu}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {link.dropdown.map(drop => (
-                        <Link key={drop.name} href={drop.href} className={styles.dropdownItem}>
-                          {drop.name}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {activeDropdown === link.name && (
+                  <div className={styles.dropdownMenu}>
+                    {link.dropdown.map(drop => (
+                      <Link key={drop.name} href={drop.href} className={styles.dropdownItem}>
+                        {drop.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             ) : (
               <Link key={link.name} href={link.href} className={styles.navLink}>
@@ -83,22 +75,14 @@ export default function Navigation() {
 
         <button className={styles.menuBtn} onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
           <div className={styles.hamburger}>
-            <motion.span animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }} />
-            <motion.span animate={isOpen ? { opacity: 0 } : { opacity: 1 }} />
-            <motion.span animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }} />
+            <span className={isOpen ? styles.barOpen1 : ""} />
+            <span className={isOpen ? styles.barOpen2 : ""} />
+            <span className={isOpen ? styles.barOpen3 : ""} />
           </div>
         </button>
       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className={styles.mobileMenu}
-          >
+      <div className={`${styles.mobileMenu} ${isOpen ? styles.mobileMenuOpen : ""}`}>
             <div className={styles.mobileNavContent}>
               {links.map((link, i) => (
                 <div key={link.name}>
@@ -125,9 +109,7 @@ export default function Navigation() {
                 </div>
               ))}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
     </nav>
   );
 }

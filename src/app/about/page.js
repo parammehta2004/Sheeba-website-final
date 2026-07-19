@@ -13,7 +13,9 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+
 const AWARDS = [
+  { title: "Voted Best Weightloss Program", body: "Voted the best weightloss program in Singapore (Dropzone Program)." },
   { title: "CozyCot 2014", body: '"100 Most Inspiring Women of 2014" in Singapore' },
   { title: "Asia's Greatest Brands", body: "The only nutritionist in her field to receive this prestigious award." },
   { title: "Recommended by Industry Professionals", body: "Recommended by local GP Doctors, Gynaecologists, Cardiologists and Physiotherapists." },
@@ -28,7 +30,7 @@ const CREDENTIALS = [
   "Bachelor of Arts (Psychology)",
   "Diploma Clinical Herbology (USA)",
   "Reconnective Healing (by Dr Eric Pearl) (USA)",
-  "Biodynamic Craniosacral Therapy (Certified Lev 4)",
+  "Biodynamic Craniosacral Therapy (Certified Level 5)",
   "Aromatherapist (USA)",
   "Gemmotherapy (Plant stem cell concentrates)",
   "Advanced Blood Chemistry Analysis (Functional Medicine, USA)",
@@ -41,13 +43,17 @@ const INGREDIENTS = [
   { title: "Functional Medicine", text: "She has worked with big industry names in natural healthcare in the USA, giving her an edge in understanding client's medical conditions and blood tests by functional medicine blood chemistry analysis. This makes patients and doctors comfortable in recommending her or working with her to improve client's medical blood tests and concerns through functional medicine analysis." },
   { title: "Customise Protocols", text: "We all know that one size does not fit all. So how can one diet or exercise regime fit all? To make it work, the program needs to be customized for the individual. Your assessment works like your biochemistry fingerprint that can help formulate the best customized protocol, with your goals in mind. She can work with your GP, other holistic health practitioners or where relevant, refer you to one (eg: an acupuncturist)." },
   { title: "Always a Student", text: "In this field, one is always a student. Nutrition information is in a state of constant flux, and the way she looks at it, we have just reached the tip of the iceberg. So she keeps herself abreast with all the latest research in the field and beyond — because 'being well' also means 'looking well' and 'feeling well'." },
-  { title: "Mind Body Whole Treatment", text: "Sheeba understands that if true healing has to happen, it needs to incorporate the body, mind and spirit. In her own journey for health, she found Biodynamic Craniosacral Therapy to be transformational. A true seeker, she learned this modality from one of the most renowned teachers in this field, Leonid Soboleff." },
-  { title: "Holistic", text: "Sheeba used to work as a full time naturopath consultant for Verita Advanced Wellness Naturopath Pte Ltd for over 3 years, which offers all the latest possible modalities in alternate care, with complete health assessment, consultation with naturopath, nutrition, pilates, yoga, sonic gym, massages, gourmet vegan cafe, all under one 17,000sq ft roof, with state of the art equipment and the best that technology and natural healing has to offer." },
+  { title: "Mind Body Whole Treatment", text: "Sheeba is a certified practitioner of Energy4Life (formerly NES Health), a pioneering bioenergetic system that scans the human body-field to detect energy blockages. By combining non-invasive scanning, pulsed electromagnetic fields (miHealth), and liquid Infoceuticals, E4L corrects energetic distortions to restore the body's natural self-healing and optimal vitality." },
+  { title: "Energetic Wellness", text: "Correcting energetic distortions is key to restoring the body's natural self-healing. By utilizing pioneering bioenergetic technology, she scans the human body-field to detect blockages and utilizes pulsed electromagnetic fields and liquid infoceuticals to restore optimal vitality and flow." },
   { title: "Corporate", text: "She is an engaging speaker, giving talks and presentations, conducting workshops to corporate employees all over Singapore, including Singapore General Hospital, Mount Elizabeth Hospital, Gleneagles, East shore Hospital, DSTA (Defense Science and Technology Agency), Republic Polytechnic, WINGS, various schools, etc." },
-  { title: "Research", text: "She is the consulting nutritionist for Men's Health Magazine (Singapore) for their Nutritionist's column and contributes researched nutrition related articles regularly in the magazine, and to other media as well." },
+  { title: "Research", text: "Sheeba is the main supplement formulator for Moom Health and is featured regularly in all nutrition research for media in Singapore and overseas." },
   { title: "Passion", text: "She has a steady private clientele where she does one to one sessions if the client can't come to her, she goes to them. She believes in remaining a student and continuing the journey of inquiry and study in all fields that holistically support health." },
   { title: "Touch", text: "In search of a complete holistic approach, Sheeba experienced Biodynamic craniosacral therapy and decided to learn it from a renowned teacher, Leonid Soboleff. It is a beautiful and very gentle touch that helps the body heal and align, which needs to be experienced, whose mechanics are based on quantum physics." },
-  { title: "Evolution", text: "Personally in search of the highest, Sheeba read Dr Eric Pearl's book, The Reconnection – Heal Others Heal Yourself. She took the seminar with him and is now a Reconnective Healing Practitioner. This to her is the highest form of healing a person can receive, that completely transcends energy healing and its complex rituals and techniques." }
+  { title: "Evolution", text: "Personally in search of the highest, Sheeba read Dr Eric Pearl's book, The Reconnection – Heal Others Heal Yourself. She took the seminar with him and is now a Reconnective Healing Practitioner. This to her is the highest form of healing a person can receive, that completely transcends energy healing and its complex rituals and techniques." },
+  { 
+    title: "Game Changer", 
+    text: "Creator and Founder of the only guaranteed precision fat loss program in the world. Sheeba has \"decoded\" metabolism to get precision results where clients only lose body fat while preserving muscle mass. It is a customized approach as there is no \"one size fits all\" model with transformational results every time."
+  }
 ];
 
 export default function About() {
@@ -112,47 +118,66 @@ export default function About() {
         {/* ── Intro Portrait ── */}
         <section className={styles.sectionWrapper} style={{ paddingTop: '2rem' }}>
           <div className={styles.introContent}>
-            <div className="reveal-up" style={{ position: 'relative', width: '100%', height: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ position: 'relative', width: '100%', maxWidth: '450px', height: '450px' }}>
-                <div style={{ position: 'absolute', width: '260px', height: '260px', borderRadius: '50%', border: '2px solid var(--accent-teal)', top: '20px', left: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 181, 178, 0.15)', zIndex: 2, boxShadow: '0 10px 30px rgba(52, 181, 178, 0.2)' }}>
-                  <span style={{ fontFamily: 'var(--font-heading)', color: 'var(--foreground)', fontWeight: 600, fontSize: '18px', textAlign: 'center', position: 'relative', left: '-12px' }}>Functional<br/>Medicine</span>
-                </div>
-                <div style={{ position: 'absolute', width: '260px', height: '260px', borderRadius: '50%', border: '2px solid var(--accent-amber)', top: '20px', right: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(184, 123, 76, 0.15)', zIndex: 1, boxShadow: '0 10px 30px rgba(184, 123, 76, 0.2)' }}>
-                  <span style={{ fontFamily: 'var(--font-heading)', color: 'var(--foreground)', fontWeight: 600, fontSize: '18px', textAlign: 'center', position: 'relative', left: '12px' }}>Holistic<br/>Wellness</span>
-                </div>
-                <div style={{ position: 'absolute', width: '260px', height: '260px', borderRadius: '50%', border: '2px solid var(--accent-sage)', bottom: '30px', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(169, 189, 164, 0.15)', zIndex: 3, boxShadow: '0 10px 30px rgba(169, 189, 164, 0.2)' }}>
-                  <span style={{ fontFamily: 'var(--font-heading)', color: 'var(--foreground)', fontWeight: 600, fontSize: '18px', textAlign: 'center', position: 'relative', top: '12px' }}>Corporate<br/>Health</span>
-                </div>
-                <svg width="100%" height="100%" viewBox="0 0 450 450" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 5 }}>
-                  <defs>
-                    <clipPath id="leftClip">
-                      <circle cx="140" cy="150" r="130" />
-                    </clipPath>
-                    <clipPath id="rightClip">
-                      <circle cx="310" cy="150" r="130" />
-                    </clipPath>
-                  </defs>
-                  <g clipPath="url(#leftClip)">
-                    <g clipPath="url(#rightClip)">
-                      <circle cx="225" cy="290" r="130" fill="#2d5a5a" opacity="0.75" />
-                    </g>
+            <div className="reveal-up" style={{ position: 'relative', width: '100%', maxWidth: '450px', margin: '0 auto' }}>
+              <svg viewBox="0 0 450 450" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
+                <defs>
+                  {/* Clip paths for triple intersection centre */}
+                  <clipPath id="leftClip"><circle cx="140" cy="150" r="130" /></clipPath>
+                  <clipPath id="rightClip"><circle cx="310" cy="150" r="130" /></clipPath>
+                  <clipPath id="bottomClip"><circle cx="225" cy="290" r="130" /></clipPath>
+                </defs>
+
+                {/* Circle 1 — Functional Medicine (teal) */}
+                <circle cx="140" cy="150" r="130"
+                  fill="rgba(52,181,178,0.12)"
+                  stroke="var(--accent-teal)"
+                  strokeWidth="1.5"
+                />
+                {/* Circle 2 — Holistic Wellness (amber) */}
+                <circle cx="310" cy="150" r="130"
+                  fill="rgba(184,123,76,0.12)"
+                  stroke="var(--accent-amber)"
+                  strokeWidth="1.5"
+                />
+                {/* Circle 3 — Weight Loss (sage) */}
+                <circle cx="225" cy="290" r="130"
+                  fill="rgba(92,123,116,0.12)"
+                  stroke="var(--accent-sage)"
+                  strokeWidth="1.5"
+                />
+
+                {/* Triple-intersection centre highlight */}
+                <g clipPath="url(#leftClip)">
+                  <g clipPath="url(#rightClip)">
+                    <circle cx="225" cy="290" r="130" fill="rgba(45,90,90,0.55)" />
                   </g>
-                </svg>
-                <div style={{ position: 'absolute', left: '50%', top: '193px', transform: 'translate(-50%, -50%)', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src="/assets/leaf-logo.svg" alt="Sheeba Leaf Logo" style={{ width: '60px', height: '44px' }} />
-                </div>
-              </div>
+                </g>
+
+                {/* Labels */}
+                <text x="100" y="140" textAnchor="middle" fontFamily="var(--font-heading)" fontSize="16" fontWeight="600" fill="var(--foreground)">Functional</text>
+                <text x="100" y="160" textAnchor="middle" fontFamily="var(--font-heading)" fontSize="16" fontWeight="600" fill="var(--foreground)">Medicine</text>
+
+                <text x="350" y="140" textAnchor="middle" fontFamily="var(--font-heading)" fontSize="16" fontWeight="600" fill="var(--foreground)">Holistic</text>
+                <text x="350" y="160" textAnchor="middle" fontFamily="var(--font-heading)" fontSize="16" fontWeight="600" fill="var(--foreground)">Wellness</text>
+
+                <text x="225" y="360" textAnchor="middle" fontFamily="var(--font-heading)" fontSize="16" fontWeight="600" fill="var(--foreground)">Weight</text>
+                <text x="225" y="380" textAnchor="middle" fontFamily="var(--font-heading)" fontSize="16" fontWeight="600" fill="var(--foreground)">Loss</text>
+
+                {/* Leaf logo at centre intersection */}
+                <image href="/assets/leaf-logo.svg" x="195" y="175" width="60" height="44" />
+              </svg>
             </div>
+
             <div className={`${styles.glassCard} reveal-up`}>
               <h2 className={styles.titleSmall}>Sheeba Majmudar</h2>
               <p className={styles.paragraph}>
-                Canadian born, having lived in US, India, Singapore, Japan and now based in
-                Hong Kong, Sheeba&apos;s east and west exposure fused into a passion to
+                Canadian born, having lived in Hong Kong, US, India, Japan and now based in
+                Singapore, Sheeba&apos;s east and west exposure fused into a passion to
                 discover health naturally, but realistically.
               </p>
               <p className={styles.paragraph}>
-                &ldquo;Just the way we spend on good education and make informed financial investments,
-                similarly, we need to invest wisely in our health.&rdquo;
+                <em>&ldquo;Just the way we spend on good education and make informed financial investments,
+                similarly, we need to invest wisely in our health.&rdquo; &ndash; Sheeba Majmudar</em>
               </p>
             </div>
           </div>
@@ -220,10 +245,10 @@ export default function About() {
 
               <h2 className={styles.titleSection}>Credentials</h2>
             </div>
-            <ul className="reveal-up" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', background: 'var(--glass-bg)', padding: '3.5rem', borderRadius: '12px', border: '1px solid var(--glass-border)', listStyle: 'none', margin: '0', width: '100%', boxShadow: 'var(--shadow-premium)' }}>
+            <ul className={`${styles.credentialsList} reveal-up`}>
               {CREDENTIALS.map((cred, idx) => (
-                <li key={idx} style={{ paddingLeft: '2rem', position: 'relative', fontSize: '16px', lineHeight: '1.5', color: 'var(--foreground)', textAlign: 'left' }}>
-                  <span style={{ position: 'absolute', left: 0, top: '-2px', color: 'var(--accent-teal)', fontSize: '20px' }}>✓</span>
+                <li key={idx} className={styles.credentialItem}>
+                  <span className={styles.credentialCheck}>✓</span>
                   {cred}
                 </li>
               ))}

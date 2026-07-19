@@ -34,14 +34,14 @@
   --font-body: var(--font-body-main), 'Outfit', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   /* Typography — Scale */
-  --text-caption: 16px;
-  --text-body-sm: 19px;
-  --text-body: 22px;
-  --text-subheading-sm: 26px;
-  --text-subheading: 28px;
-  --text-heading-sm: 36px;
-  --text-heading: 62px;
-  --text-display: 82px;
+  --text-caption: 18px;
+  --text-body-sm: 21px;
+  --text-body: 24px;
+  --text-subheading-sm: 29px;
+  --text-subheading: 31px;
+  --text-heading-sm: 40px;
+  --text-heading: 68px;
+  --text-display: 88px;
 
   /* Spacing Scale */
   --spacing-4: 4px;
@@ -71,6 +71,22 @@
   /* Transitions */
   --transition-smooth: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   --transition-fast: all 0.2s ease-out;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --text-caption: 16px;
+    --text-body-sm: 18px;
+    --text-body: 20px;
+    --text-subheading-sm: 24px;
+    --text-subheading: 26px;
+    --text-heading-sm: 32px;
+    --text-heading: 48px;
+    --text-display: 60px;
+    
+    --spacing-120: 80px;
+    --spacing-60: 40px;
+  }
 }
 
 html {

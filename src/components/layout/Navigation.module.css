@@ -146,6 +146,12 @@
   overflow: hidden;
   background: #2d5a5a;
   border-bottom: 1px solid rgba(52, 181, 178, 0.4);
+  max-height: 0;
+  transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobileMenuOpen {
+  max-height: 100vh;
 }
 
 .mobileNavContent {
@@ -178,4 +184,17 @@
 .mobileDropdownItem {
   font-size: 1.1rem;
   color: rgba(199, 220, 217, 0.7);
+}
+
+/* CSS-only hamburger animation (replaces Framer Motion) */
+.barOpen1 {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.barOpen2 {
+  opacity: 0 !important;
+}
+
+.barOpen3 {
+  transform: rotate(-45deg) translate(5px, -5px);
 }

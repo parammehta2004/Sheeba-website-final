@@ -62,3 +62,15 @@
   z-index: 2;
   flex-grow: 1;
 }
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
+  .title {
+    font-size: 1.25rem;
+  }
+  .content {
+    font-size: 0.95rem;
+  }
+}

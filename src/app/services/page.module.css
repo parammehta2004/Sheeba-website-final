@@ -144,8 +144,16 @@
 }
 
 .textAccent {
-  color: var(--accent-blush);
+  color: var(--accent-amber);
   font-style: italic;
+}
+
+.darkSection .textAccent {
+  color: var(--accent-blush);
+}
+
+.darkSection .titleSection {
+  color: #ffffff;
 }
 
 .paragraph {
@@ -347,6 +355,9 @@
 
 @media (max-width: 768px) {
   .sectionWrapper { padding: 4rem 1.5rem; }
+  .heroSection {
+    padding-top: 6rem;
+  }
   .splitContent, .splitContentReverse { gap: 2rem; }
-  .mediaCardGrid { grid-template-columns: 1fr; gap: 2rem; }
+  .mediaCardGrid { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 }

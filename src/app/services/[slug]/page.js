@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Navigation from "@/components/layout/Navigation";
 import LeafDecoration from "@/components/ui/LeafDecoration";
 import { SERVICES_DATA } from "@/data/services";
+import { Turnstile } from "@marsidev/react-turnstile";
 import styles from "./page.module.css";
 
 if (typeof window !== "undefined") {
@@ -17,6 +18,8 @@ export default function ServiceDetail() {
   const { slug } = useParams();
   const containerRef = useRef(null);
   const [formState, setFormState] = useState("idle");
+  const [token, setToken] = useState(null);
+  const turnstileRef = useRef(null);
 
   const service = SERVICES_DATA.find((s) => s.slug === slug);
   const primaryAccent = slug === "dropzone" ? "var(--accent-teal)" : "var(--accent-sage)";
@@ -59,9 +62,13 @@ export default function ServiceDetail() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (!token) {
+      alert("Please complete the security check (checkbox) before submitting, or refresh the page if it is not visible.");
+      return;
+    }
     setFormState("submitting");
     try {
-      const res = await fetch("https://vapor.biohackk.com/api/leads", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -69,22 +76,25 @@ export default function ServiceDetail() {
           email: e.target.email.value,
           phone: e.target.phone.value,
           message: e.target.message.value,
+          "cf-turnstile-response": token,
         }),
       });
-      if(res.ok) setFormState("success");
-      else setFormState("error");
+      if(res.ok) {
+        setFormState("success");
+        setToken(null);
+        turnstileRef.current?.reset();
+      } else {
+        setFormState("error");
+        turnstileRef.current?.reset();
+      }
     } catch (err) {
       setFormState("error");
+      turnstileRef.current?.reset();
     }
   };
 
   if (!service) {
-    return (
-      <main className={styles.mainContainer} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-        <Navigation />
-        <h1 style={{fontFamily: 'var(--font-heading)', fontSize: '32px'}}>Service not found</h1>
-      </main>
-    );
+    notFound();
   }
 
   return (
@@ -92,24 +102,57 @@ export default function ServiceDetail() {
       <Navigation />
 
       {/* ─── HERO SECTION ─── */}
-      <section className={`${styles.section} ${styles.heroSection}`} style={{ backgroundColor: "var(--background)", padding: "7rem 0 2rem 0", display: "flex", alignItems: "center" }}>
+      <section className={`${styles.section} ${styles.heroSection}`} style={{ backgroundColor: "var(--background)", padding: "7rem 0 2rem 0", display: "flex", flexDirection: "column", alignItems: "center" }}>
         <LeafDecoration variant="a" className="floating-leaf" style={{ top: "15%", left: "5%", width: "400px", height: "400px", transform: "rotate(45deg)", opacity: 0.1, position: 'absolute' }} />
-        <div className={styles.content}>
-          <div className={styles.heroGrid} style={{ display: 'grid', gridTemplateColumns: '1fr 30%', gap: '4rem', alignItems: 'center' }}>
-            <div className="reveal-up">
+        
+        {/* Banner image stretched horizontally across top */}
+        <div className="reveal-up" style={{ 
+          width: '100%', 
+          height: '35vh', 
+          minHeight: '250px',
+          overflow: 'hidden', 
+          position: 'relative',
+          backgroundColor: service.bannerColor || service.bgColor || 'rgba(0,0,0,0.02)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: '4rem',
+          boxShadow: 'inset 0 0 20px rgba(0,0,0,0.05)'
+        }}>
+          <img 
+            src={service.img} 
+            alt={service.title} 
+            style={{ 
+              width: "100%", 
+              height: "100%", 
+              objectFit: (service.bannerSize || service.bgSize) ? "contain" : "cover", 
+              objectPosition: service.bgPosition || 'center',
+              maxHeight: (service.bannerSize || service.bgSize) ? "95%" : "100%"
+            }} 
+          />
+        </div>
 
-              <h1 className={styles.titleHero} style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(2rem, 3.5vw, 40px)", lineHeight: "1.1", marginBottom: "1.5rem", color: "var(--foreground)" }}>
+        <div className={styles.content} style={{ maxWidth: '800px', margin: '0 auto', padding: '0 2rem' }}>
+          <div className="reveal-up" style={{ textAlign: 'center' }}>
+            {slug === "dropzone" ? (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: 'center', gap: "1.5rem", marginBottom: "1.5rem" }}>
+                <img 
+                  src="/assets/dropzone-logo.svg" 
+                  alt="Dropzone Logo" 
+                  style={{ width: "64px", height: "64px" }} 
+                />
+                <h1 className={styles.titleHero} style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(2.5rem, 5vw, 54px)", lineHeight: "1.1", margin: 0, color: "var(--foreground)" }}>
+                  {service.title}
+                </h1>
+              </div>
+            ) : (
+              <h1 className={styles.titleHero} style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(2.2rem, 4vw, 48px)", lineHeight: "1.15", marginBottom: "2rem", color: "var(--foreground)" }}>
                 {service.title}
               </h1>
-              <p className={styles.paragraph} style={{ fontSize: "18px", lineHeight: "1.7", color: "rgba(74, 78, 70, 0.8)", marginBottom: "2rem" }}>
-                {service.description}
-              </p>
-            </div>
-            
-            <div className="reveal-up" style={{ position: "relative" }}>
-              <div style={{ position: "absolute", top: "-15px", right: "-15px", width: "100%", height: "100%", border: `1px solid ${primaryAccent}`, borderRadius: "8px", zIndex: 0 }}></div>
-              <img src={service.img} alt={service.title} style={{ width: "100%", height: "auto", objectFit: "cover", borderRadius: "8px", position: "relative", zIndex: 1, boxShadow: "0 15px 30px rgba(0,0,0,0.08)" }} />
-            </div>
+            )}
+            <p className={styles.paragraph} style={{ fontSize: "19px", lineHeight: "1.8", color: "rgba(74, 78, 70, 0.85)", marginBottom: "0" }}>
+              {service.description}
+            </p>
           </div>
         </div>
       </section>
@@ -181,6 +224,22 @@ export default function ServiceDetail() {
                   <div style={{ marginBottom: "2.5rem" }}>
                     <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>What are you looking to resolve?</label>
                     <input type="text" name="message" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                  </div>
+                  {/* Cloudflare Turnstile Captcha */}
+                  <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "YOUR_SITE_KEY_HERE"}
+                      onSuccess={(tok) => setToken(tok)}
+                      onExpire={() => setToken(null)}
+                      onError={() => {
+                        setToken(null);
+                        alert("Turnstile error. Please refresh the page.");
+                      }}
+                      options={{
+                        theme: 'light'
+                      }}
+                    />
                   </div>
                   <button type="submit" disabled={formState === "submitting"} style={{ width: "100%", background: "var(--background)", color: "var(--foreground)", padding: "18px", border: "none", borderRadius: "40px", fontSize: "16px", fontWeight: "500", cursor: "pointer", transition: "all 0.3s" }}>
                     {formState === "submitting" ? "Sending..." : "Request Consultation"}

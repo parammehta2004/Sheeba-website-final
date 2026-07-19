@@ -1,11 +1,27 @@
 export const SERVICES_DATA = [
   // Health Assessments
   {
+    slug: "metabolic-mapping",
+    type: "Health Assessment",
+    title: "Metabolic Mapping",
+    description: "Our clinical North Star. By performing a functional analysis of 42+ metabolic markers in your blood test, we decode your body's unique biochemistry and design a highly customized blueprint for your health.",
+    img: "/assets/mmcard.jpg",
+    bgPosition: "35% center",
+    longContent: `
+      <h5>The "North Star" — Metabolic Mapping</h5>
+      <p>Your biology is unique. Rather than relying on generic templates, we decode your body's "inner software" using <strong>Metabolic Mapping</strong>—our clinical North Star. By performing a functional analysis of 42+ metabolic markers in your blood test (including cellular hydration, adrenal fatigue, subclinical thyroid function, and gut health), we identify the exact root blocks preventing fat burning and design a highly customized blueprint for your body.</p>
+      <p>This comprehensive biochemical blueprint allows us to stop guessing and start targeting exactly what your body needs to thrive, ensuring sustainable health and wellness progress.</p>
+      <h5>Bridging Biochemistry and Fat Loss</h5>
+      <p>Metabolic Mapping serves as the clinical engine behind our weight management protocols. If you are aiming for fat loss, your biochemical markers (such as thyroid levels, cortisol, and insulin sensitivity) directly dictate how your body burns fat. For this reason, your Metabolic Mapping blueprint links seamlessly with our premier fat loss system, <a href="https://www.dropzone.fit" target="_blank" rel="noopener noreferrer" style="color: var(--accent-teal); text-decoration: underline; font-weight: bold;">Dropzone</a>. By bridging the clinical data from Sheeba The Nutritionist with the target protocols on <a href="https://www.dropzone.fit" target="_blank" rel="noopener noreferrer" style="color: var(--accent-teal); text-decoration: underline; font-weight: bold;">Dropzone.fit</a>, we ensure your weight loss plan is perfectly aligned with your internal biochemistry.</p>
+    `
+  },
+  {
     slug: "compatibility-testing",
     type: "Health Assessment",
     title: "Food Compatibility Test",
     description: "In the Food Compatibility Test, it is a non-invasive procedure (great for kids) that uses your hair sample. It helps determine at a cell level which foods and household products may be creating inflammation. It is different from a regular food allergy blood test. Find out why this is better!",
-    img: "https://images.unsplash.com/photo-1498623116890-37e912136059?auto=format&fit=crop&q=80&w=800&blend=FDF0E6&blend-mode=multiply&blend-alpha=20",
+    img: "/assets/fct.jpg",
+    bgPosition: "85% center",
     longContent: `
       <p>In the Food Compatibility Test, it is a non-invasive procedure (great for kids!) that uses your hair sample. The good news is that not only is this test limited to foods (over 600) but also tests everyday household products that may be triggering inflammation.</p>
       <h5>So how is this different and is it accurate?</h5>
@@ -19,7 +35,9 @@ export const SERVICES_DATA = [
     type: "Health Assessment",
     title: "Dutch Test",
     description: "Dutch Test is the simplest and informative test for anyone who is considering bioidentical hormone therapy, natural protocols, or suspect they may have a hormone-related challenge",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800&blend=34b5b2&blend-mode=multiply&blend-alpha=20",
+    img: "/assets/dutch.png",
+    bgSize: "85%",
+    bgColor: "#3e5548",
     longContent: `
       <p>Sheeba conducts the Dutch hormone test which uses dried urine, an advanced hormone test which helps in identifying hormone related challenges. This is crucial information for determining whether one truly has low cortisol and understand all true hormone levels from the cellular level. whether it be a conversion issue, or lack of certain levels of hormones and much more.</p>
       <p><strong>The Dutch Hormone Test</strong>, which uses dried urine, is the simplest, most elegant and informative test for anyone considering bioidentical hormone therapy, natural protocols, or suspect they may have a hormone-related challenge.</p>
@@ -28,46 +46,13 @@ export const SERVICES_DATA = [
       <p>This does not necessarily mean we have to use hormones to treat such underlying conditions, but it gives a true indication of what we can do to naturally support the hormonal imbalances.</p>
     `
   },
-  {
-    slug: "functional-blood-chemistry-analysis",
-    type: "Health Assessment",
-    title: "Functional Blood Chemistry Analysis",
-    description: "To understand the underlying biochemistry is the first step in your health journey with Sheeba. Based on this in depth, one of a kind analysis, she will customize a protocol to optimize health with your goals.",
-    img: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&q=80&w=800&blend=FDECEB&blend-mode=multiply&blend-alpha=20",
-    longContent: `
-      <p>Lab tests look normal, yet you still feel bad? Take your diagnosis to the next level with functional blood chemistry analysis.</p>
-      <p>Not all Doctors read blood tests the same. Many traditional health care providers do not embrace the concept of a functional range. We do a comprehensive range of blood tests panels, and examine the functional range. It provides the backbone in creating customized protocols to address hormones, mineral and vitamin levels back into the functional range, including detoxification plans to assist easy release of toxins from the body, so your body can go back to functioning at an optimal level.</p>
-      <p style="font-style: italic; font-weight: 500;">* Strongly recommended for adults who wants to start a customized health program.</p>
-      <h5>Summary of the test results very accurately indicates organs or body systems that are stressed and may reveal these factors:</h5>
-      <ul>
-        <li>Cellular hydration / dehydration</li>
-        <li>Cell oxygen uptake</li>
-        <li>Adrenal fatigue</li>
-        <li>Subclinical thyroid issues</li>
-        <li>Hormonal imbalances</li>
-        <li>Water retention</li>
-        <li>Liver issues – fatty liver / congestion</li>
-        <li>Low mineral levels</li>
-        <li>Infections like candida, fungal, parasitic</li>
-        <li>Immunity levels</li>
-        <li>General antioxidant and vitamin levels</li>
-        <li>Detoxification capacity</li>
-        <li>Blood sugar imbalances</li>
-        <li>Cholesterol and blood lipid profiles</li>
-        <li>Blood viscosity</li>
-        <li>Electrolyte imbalances</li>
-        <li>Multiple stressed organs or systems</li>
-        <li>Metabolic challenges (why you are not losing weight)</li>
-        <li>And most importantly, how you can support your body holistically and naturally once you have all this information!</li>
-      </ul>
-    `
-  },
+
   {
     slug: "hair-tissue-mineral-analysis",
     type: "Health Assessment",
     title: "Hair Tissue Mineral Analysis",
     description: "This assessment uses your hair (non-invasive) to assess mineral and vitamin levels, determine any metabolic, hormonal or toxicity issues. It is great for children or adults who need more information than their current assessment.",
-    img: "https://images.unsplash.com/photo-1439405326854-014607f694d7?auto=format&fit=crop&q=80&w=800&blend=E6F0EE&blend-mode=multiply&blend-alpha=20",
+    img: "/assets/htmt.jpg",
     longContent: `
       <p>This assessment measures the mineral deficiencies and heavy metal toxicities going on at the cellular level. A small sample of hair from the scalp is taken and sent to a licensed laboratory for analysis. We strongly recommend this for children that would like to have a health assessment test done.</p>
       <h5>Careful analysis of the hair contents, can reveal the following information about you and your body:</h5>
@@ -93,34 +78,43 @@ export const SERVICES_DATA = [
 
   // Therapies
   {
-    slug: "nes-nutri-energetic-system",
-    type: "Therapy",
-    title: "NES (Nutri Energetic System)",
-    description: "The NES system can detect your bio-field (energy), and the miHealth can then raise the electrical potential of those cells, restoring them over time to their normal, optimal functioning as part of the natural healing response.",
-    img: "https://images.unsplash.com/photo-1473496169904-658ba37448eb?auto=format&fit=crop&q=80&w=800&blend=4A6D6D&blend-mode=multiply&blend-alpha=20",
+    slug: "e4l-nutri-energetic-system",
+    type: "Health Assessment",
+    title: "E4L (Energy4Life) Bioenergetic Wellness System",
+    description: "The E4L system is designed to assess and support the body's communication networks by mapping the human body-field—the master control system for physical activity.",
+    img: "/assets/e4l%20nes.jpg",
+    bgPosition: "85% center",
     longContent: `
-      <p>Bioenergetics is the study of how energy is created, used and flows in the body and how, in turn, it influences the body's innate self-healing capacity. The patterns of energy generated by various body organs such as the heart producing a magnetic field and the nervous system producing alpha waves, create what is known as the body field.</p>
-      <p>The patterns (which contain information) of energy contained in the body-field are both able to be detected and also, in turn, influence your physiology like a master control system above and beyond biochemistry. The scan helps to read the energetic bio terrain of the person, including the psychological aspect to the related health condition(s). It identifies energy distortions in the body field using a non-invasive scan that takes just 20 seconds.</p>
-      <p>The science behind Provision and the healing system it uses is based on Quantum Physics, Heart Math, TCM meridians, and more. It is the first of its kind in the health arena and is the next big frontier in Alternative Medicine.</p>
-      <h5>It has helped in:</h5>
-      <ul>
-        <li>Chronic conditions</li>
-        <li>Autoimmune issues</li>
-        <li>Pain — all types</li>
-        <li>Fatigue of unknown origin</li>
-        <li>Trauma and emotional issues</li>
-        <li>Psycho-emotional issues like anorexia and bulimia</li>
-        <li>Learning disabilities and the autism spectrum</li>
-        <li>Wellness for all animals (horse, cat, dog)</li>
-        <li>Improved mind-body connection</li>
-        <li>Total wellness and peak performance</li>
-      </ul>
-      <h5>MiHealth — Needleless Acupuncture</h5>
-      <ul>
-        <li>MIHealth is a handheld medical device (featured on The Doctors Show in the USA) incorporating Pulsed Electromagnetic Frequencies along with Laser Acupuncture that help to rejuvenate the body's information flow, clear blockages, release trigger points and correct energy flow for rapid healing, pain relief, better sleep, sport recovery, and more.</li>
-        <li>It has multiple functions that can be used depending on what is needed by the client.</li>
-        <li>It has potent anti-inflammatory and energizing or calming effects on the body and can be safely used on most people. Typical usage time is 15–20 minutes.</li>
-      </ul>
+      <p>The E4L (Energy4Life) Bioenergetic Wellness System (formerly known as Nutri-Energetics Systems or NES Health) is a bioenergetic wellness system designed to assess and support the body's communication networks. Rather than providing a medical diagnosis, it focuses on mapping the "human body-field," which is considered the master control system for the body's physical activity.</p>
+      
+      <h5>How the System Works</h5>
+      <p>The E4L system operates on a two-step process to detect and correct energetic distortions caused by stress, toxins, and physical imbalances:</p>
+      
+      <strong>Step 1: The Bioenergetic Scan</strong>
+      <p>Using a specialized scanner, the system performs a non-invasive assessment (often taking just seconds) to generate a personalized wellness report. It identifies underlying distortions or "energy leaks" related to immunity, digestion, and stress.</p>
+      
+      <strong>Step 2: Restoring Information</strong>
+      <p>Based on the scan findings, practitioners recommend liquid remedies called Infoceuticals. These drops are designed to provide bioenergetic information to support healthy communication between cells and optimize the body's energy levels, which can be used by babies and adults alike.</p>
+    `
+  },
+  {
+    slug: "e4l-nutri-energetic-system",
+    type: "Therapy",
+    title: "E4L (Energy4Life) Bioenergetic Wellness System",
+    description: "The E4L system is designed to assess and support the body's communication networks by mapping the human body-field—the master control system for physical activity.",
+    img: "/assets/e4l%20nes.jpg",
+    bgPosition: "85% center",
+    longContent: `
+      <p>The E4L (Energy4Life) Bioenergetic Wellness System (formerly known as Nutri-Energetics Systems or NES Health) is a bioenergetic wellness system designed to assess and support the body's communication networks. Rather than providing a medical diagnosis, it focuses on mapping the "human body-field," which is considered the master control system for the body's physical activity.</p>
+      
+      <h5>How the System Works</h5>
+      <p>The E4L system operates on a two-step process to detect and correct energetic distortions caused by stress, toxins, and physical imbalances:</p>
+      
+      <strong>Step 1: The Bioenergetic Scan</strong>
+      <p>Using a specialized scanner, the system performs a non-invasive assessment (often taking just seconds) to generate a personalized wellness report. It identifies underlying distortions or "energy leaks" related to immunity, digestion, and stress.</p>
+      
+      <strong>Step 2: Restoring Information</strong>
+      <p>Based on the scan findings, practitioners recommend liquid remedies called Infoceuticals. These drops are designed to provide bioenergetic information to support healthy communication between cells and optimize the body's energy levels, which can be used by babies and adults alike.</p>
     `
   },
   {
@@ -128,7 +122,7 @@ export const SERVICES_DATA = [
     type: "Therapy",
     title: "Aroma Therapy",
     description: "Essential oils have been used for over 5,000 years and continue to be used to fast track in healing all aspects of health, emotions, sleep and mood.",
-    img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800&blend=FDF0E6&blend-mode=multiply&blend-alpha=20",
+    img: "/assets/aromather.jpeg",
     longContent: `
       <p>Sheeba uses aromatherapy for her clients as and when required, to address specific health concerns. Aromatherapy is the use of medicinal or therapeutic grade plant essences that can be inhaled, applied, diffused or even ingested. Aromatherapy can be used to access brain areas and the emotional centres of the brain — creating balance and harmony of body and mind.</p>
       <p>Essential oils can be a great adjunct tool to hasten healing as they do not require digestive absorption and results are almost immediate. They possess anti-inflammatory, anti-microbial, anti-viral and detoxification properties that are a powerful aid to healing and promote the feeling of well-being. They decrease stress and assist in better quality sleep, reduce pain and improve circulation, digestion and immune function.</p>
@@ -144,28 +138,55 @@ export const SERVICES_DATA = [
   {
     slug: "dropzone",
     type: "Therapy",
-    title: "Dropzone",
-    description: "Our signature Dropzone program is a state-of-the-art, practitioner-guided fat loss protocol that guarantees measurable fat loss by tailoring the strategy to your unique biochemistry and activating autophagy while sparing muscle mass.",
-    img: "https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?auto=format&fit=crop&q=80&w=800&blend=34b5b2&blend-mode=multiply&blend-alpha=20",
+    title: "Weight (Fat loss) programs",
+    description: "Voted the best weightloss program in Singapore, our signature Dropzone program is a state-of-the-art, practitioner-guided fat loss protocol that guarantees measurable fat loss by tailoring the strategy to your unique biochemistry and activating autophagy while sparing muscle mass.",
+    img: "/assets/dzlogoupd.png",
+    externalLink: "https://www.dropzone.fit",
     longContent: `
       <p>Dropzone is a state-of-the-art precision targeted fat loss program that is customized for your body and metabolism – the only program in the world that guarantees measurable fat loss because it is tailored specifically to you. Created by Sheeba Majmudar, it combines nutrition, lifestyle, and targeted protocols based on over 20 years of clinical experience.</p>
-      <h5>Activate Your Autophagy (Sparing Muscle Mass)</h5>
-      <p>Dropzone utilizes a game-changing mechanism: activating autophagy (cellular clean-up and anti-aging) to burn stored fat rapidly without traditional starvation or high-fat keto diets. Unlike traditional autophagy methods where muscle mass is lost alongside fat, Dropzone uses targeted nano drops to access fat cells directly, sparing your precious muscle mass and keeping your metabolism high.</p>
-      <h5>Metabolic Mapping</h5>
-      <p>Every individual biology is unique. Through functional analysis of your blood test, we decode your metabolic blueprint to identify root triggers (cellular hydration, thyroid function, adrenal fatigue, gut health) and remove the hidden blocks preventing fat burning.</p>
+      
+      <h5>Voted the Best Weightloss Program in Singapore</h5>
+      <p>Recognised for its unmatched clinical results, Dropzone has been voted the best weightloss program in Singapore, offering a precision-guided approach to sustainable body transformation that works even when other diets fail.</p>
+
+      <h5>The Science of Permanent Fatloss</h5>
+      <p>Dropzone utilizes a game-changing mechanism to deliver permanent fatloss. By activating autophagy (the body's natural cellular recycling and anti-aging system), the body is stimulated to burn stored fat rapidly for fuel. Crucially, while traditional fasting or extreme calorie restriction causes the body to break down muscle mass alongside fat, Dropzone utilizes instant-absorption nanosomes to target fat cells specifically. This spares 100% of your precious muscle mass, keeping your metabolism running high and preventing the post-diet rebound.</p>
+      
+      <h5>The "North Star" — Metabolic Mapping</h5>
+      <p>Your biology is unique. Rather than relying on generic templates, we decode your body's "inner software" using <strong>Metabolic Mapping</strong>—our clinical North Star. By performing a functional analysis of 42+ metabolic markers in your blood test (including cellular hydration, adrenal fatigue, subclinical thyroid function, and gut health), we identify the exact root blocks preventing fat burning and design a highly customized blueprint for your body.</p>
+
       <h5>Key Benefits</h5>
       <ul>
-        <li>Sustainable Fat Loss (Sparing Muscle Mass)</li>
+        <li>Sustainable and Permanent Fat Loss (Sparing Muscle Mass)</li>
         <li>Activated Autophagy & Anti-Aging Effects</li>
-        <li>Decoded Metabolic Mapping & Root Cause Resolution</li>
-        <li>Hormonal Balance & Boosted Immunity</li>
+        <li>Decoded North Star Metabolic Mapping (42+ Biomarkers)</li>
+        <li>Hormonal Balance & Reset Digestion</li>
         <li>Reduction of Visceral and Subcutaneous Fat</li>
         <li>Clearer Skin & Reduced Systemic Inflammation</li>
       </ul>
       <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(52, 181, 178, 0.08); border: 1.5px dashed var(--accent-teal); border-radius: 12px; text-align: center;">
         <p style="margin-bottom: 1rem; font-weight: 600; color: var(--accent-teal-dark);">Discover all the details about the program, pricing tiers, and client results on the official site.</p>
         <a href="https://www.dropzone.fit" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: var(--accent-teal); color: #fff; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: transform 0.2s;">
-          Explore all the stuff on Dropzone at dropzone.fit →
+          Explore all the details on Dropzone at dropzone.fit →
+        </a>
+      </div>
+    `
+  },
+  {
+    slug: "practitioner-supplements",
+    type: "Therapy",
+    title: "Practitioner Supplements",
+    description: "Access premium, practitioner-grade supplements curated specifically to support your customized health protocols and total wellness journey.",
+    img: "/assets/prasup.jpeg",
+    bgPosition: "85% center",
+    externalLink: "https://www.practitionergraded.com",
+    longContent: `
+      <h5>Premium Practitioner-Grade Supplements</h5>
+      <p>Not all supplements are created equal. We partner with top-tier, practitioner-exclusive manufacturers to provide high-bioavailability, clinical-strength formulas that are verified for purity and potency.</p>
+      <p>Your customized health protocol will recommend specific target nutrients. Access the official practitioner store directly to order your recommended formulas.</p>
+      <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(52, 181, 178, 0.08); border: 1.5px dashed var(--accent-teal); border-radius: 12px; text-align: center;">
+        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--accent-teal-dark);">Purchase your prescribed clinical-grade supplements from our partner store.</p>
+        <a href="https://www.practitionergraded.com" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: var(--accent-teal); color: #fff; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: transform 0.2s;">
+          Shop at Practitioner Guided →
         </a>
       </div>
     `
@@ -175,7 +196,8 @@ export const SERVICES_DATA = [
     type: "Therapy",
     title: "Gemmotherapy",
     description: "Nothing to do with gems, but more valuable in terms of health. Used by Sheeba in detox, weight loss and administering natural remedies from concentrated plant stem cells that are instantly absorbed.",
-    img: "https://images.unsplash.com/photo-1468413253725-0d51810dd11e?auto=format&fit=crop&q=80&w=800&blend=FDECEB&blend-mode=multiply&blend-alpha=20",
+    img: "/assets/gemmo.jpg",
+    bgPosition: "65% center",
     longContent: `
       <h5>Embryonic Plant Stem Cells</h5>
       <p>I am excited to introduce to you what I have recently added to my growing list of natural therapies that support healing. I have started using this therapy in my practice with amazing results.</p>
@@ -216,7 +238,8 @@ export const SERVICES_DATA = [
     type: "Therapy",
     title: "Reconnective Healing",
     description: "Reconnective healing is a non-touch energy healing that encompasses all healing techniques which works at your blueprint level to promote a healing response that is permanent.",
-    img: "https://images.unsplash.com/photo-1518837695005-2083093ea35a?auto=format&fit=crop&q=80&w=800&blend=E6F0EE&blend-mode=multiply&blend-alpha=20",
+    img: "/assets/reconh.jpg",
+    bgPosition: "center",
     longContent: `
       <p>Reconnective Healing (RH) is a return to an optimal state of balance. It is the result of interacting with the fully comprehensive RH spectrum of frequencies that consists of Energy, Light &amp; Information.</p>
       <p>Dr. Eric Pearl's book, <em>The Reconnection — Heal Others, Heal Yourself</em>, created a sensation, with live testimonials of real, instant healings that could not be explained by science. His work was repeatedly tested and scrutinized by scientists, who confirmed in a book called <em>The Science of Reconnective Healing</em> that there was palpable and undeniable proof that something real and measurable was taking place each time there was a seminar or healing session.</p>
@@ -229,7 +252,8 @@ export const SERVICES_DATA = [
     type: "Therapy",
     title: "Biodynamic Craniosacral Therapy",
     description: "Biodynamic Craniosacral can benefit anyone with physical or emotional, mental issues as it uses light touch to communicate with the central nervous system and allows the body to naturally align, removing disruptive patterns.",
-    img: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&q=80&w=800&blend=4A6D6D&blend-mode=multiply&blend-alpha=20",
+    img: "/assets/bct.jpg",
+    bgPosition: "35% center",
     longContent: `
       <p><strong>Biodynamic Craniosacral Therapy (BDCT)</strong> is a sophisticated, subtle form of bodywork that uses the principles of Quantum Physics. Unlike other physical or energy therapies, healing in BDCT comes not from the practitioner, but from within the client. Healing of your body and mind is generated by your own Life Force in motion. Using her hands, the Biodynamic Craniosacral Therapist is able to sense this motion. Rather than focusing on disease or symptoms, the practitioner stays centered and synchronizes with the deep, slow rhythm of the regenerative health in the life force.</p>
       <h5>Is Biodynamic Craniosacral Therapy a type of energy work?</h5>

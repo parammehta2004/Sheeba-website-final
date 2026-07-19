@@ -170,6 +170,9 @@
 
 @media (max-width: 768px) {
   .sectionWrapper { padding: 4rem 1.5rem; }
+  .heroSection {
+    padding-top: 6rem;
+  }
   .splitContent { gap: 2rem; }
-  .mediaCardGrid { grid-template-columns: 1fr; gap: 2rem; }
+  .mediaCardGrid { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 }

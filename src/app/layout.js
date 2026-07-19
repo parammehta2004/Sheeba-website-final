@@ -22,15 +22,12 @@ export const metadata = {
     googleBot: { index: true, follow: true },
   },
   // ── Canonical URL ───────────────────────────────────────────────────────────
-  metadataBase: new URL('https://sheeba-the-nutritionist.vercel.app'),
-  alternates: {
-    canonical: '/',
-  },
+  metadataBase: new URL('https://sheebathenutritionist.com'),
   // ── Open Graph (controls link previews — prevents social phishing spoofs) ──
   openGraph: {
     title: "Sheeba The Nutritionist | Best Nutritionist in Singapore",
     description: "Highly recognized as the best nutritionist in singapore and a leading medical nutritionist in singapore. Expert in Functional Medicine & Naturopathy.",
-    url: 'https://sheeba-the-nutritionist.vercel.app',
+    url: 'https://sheebathenutritionist.com',
     siteName: "Sheeba The Nutritionist",
     locale: 'en_SG',
     type: 'website',
@@ -54,9 +51,18 @@ export default function RootLayout({ children }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              if (typeof window !== 'undefined' && window.sessionStorage.getItem('hasSeenPreloader')) {
-                document.documentElement.classList.add('skip-preloader');
+              if (typeof window !== 'undefined' && window.sessionStorage) {
+                try {
+                  if (window.sessionStorage.getItem('hasSeenPreloader')) {
+                    document.documentElement.classList.add('skip-preloader');
+                  }
+                } catch(e) {}
               }
+              // Absolute DOM fallback: force-hide preloader after 5s no matter what
+              setTimeout(function() {
+                var el = document.querySelector('.preloader-overlay');
+                if (el) el.style.display = 'none';
+              }, 8000);
             `,
           }}
         />
