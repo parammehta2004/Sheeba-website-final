@@ -21,6 +21,9 @@ export const metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+  verification: {
+    google: "PDXwA2usy_ahAD3AXTODzICwsqC0QsPb1PY4klSeLOA",
+  },
   // ── Canonical URL ───────────────────────────────────────────────────────────
   metadataBase: new URL('https://sheebathenutritionist.com'),
   // ── Open Graph (controls link previews — prevents social phishing spoofs) ──
