@@ -6,9 +6,11 @@ export async function POST(req) {
     const { name, email, phone, message, "cf-turnstile-response": turnstileToken } = body;
 
     // 1. Validate inputs
-    if (!name || !email || !phone || !message) {
+    if (!name || !email || !phone) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
+    const safeMessage = message || "No message provided.";
+
 
     // 2. Verify Cloudflare Turnstile Captcha
     if (!turnstileToken) {
@@ -42,7 +44,7 @@ export async function POST(req) {
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone}</p>
       <p><strong>Message:</strong></p>
-      <blockquote style="white-space: pre-wrap; padding: 10px; background-color: #f5f5f5; border-left: 4px solid #ccc;">${message}</blockquote>
+      <blockquote style="white-space: pre-wrap; padding: 10px; background-color: #f5f5f5; border-left: 4px solid #ccc;">${safeMessage}</blockquote>
     `;
 
     const emailResponse = await fetch("https://api.resend.com/emails", {

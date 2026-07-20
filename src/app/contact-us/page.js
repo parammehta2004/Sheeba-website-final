@@ -187,7 +187,7 @@ export default function ContactUs() {
                   <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
                     <Turnstile
                       ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "YOUR_SITE_KEY_HERE"}
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAADyibchCPA5EBZOT"}
                       onSuccess={(tok) => setToken(tok)}
                       onExpire={() => setToken(null)}
                       onError={() => {
