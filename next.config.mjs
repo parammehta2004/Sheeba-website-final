@@ -118,6 +118,31 @@ const nextConfig = {
         destination: '/:path*',
         permanent: true,
       },
+      {
+        source: '/services/biohackk',
+        destination: '/therapies/dropzone',
+        permanent: true,
+      },
+      {
+        source: '/blog',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug*',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/bookings/biohackk-booking-success',
+        destination: '/contact-us',
+        permanent: true,
+      },
+      {
+        source: '/homeopathy-the-recommended-approach',
+        destination: '/about',
+        permanent: true,
+      },
     ];
   },
 };
