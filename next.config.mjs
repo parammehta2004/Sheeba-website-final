@@ -143,6 +143,26 @@ const nextConfig = {
         destination: '/about',
         permanent: true,
       },
+      {
+        source: '/treatment',
+        destination: '/therapies',
+        permanent: true,
+      },
+      {
+        source: '/services/nes-nutri-energetic-system',
+        destination: '/therapies/e4l-nutri-energetic-system',
+        permanent: true,
+      },
+      {
+        source: '/services/functional-blood-chemistry-analysis',
+        destination: '/health-assessments/metabolic-mapping',
+        permanent: true,
+      },
+      {
+        source: '/services/gemmotheraphy',
+        destination: '/services/gemmotherapy',
+        permanent: true,
+      },
     ];
   },
 };
