@@ -33,9 +33,10 @@ export default function Navigation() {
   }, []);
 
   return (
-    <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+    <header>
+    <nav aria-label="Main" className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.container}>
-        <Link href="/" className={styles.logo}>
+        <Link href="/" className={styles.logo} aria-label="Sheeba The Nutritionist – Home">
           <img 
             src="/assets/5f2247f763009cda43de03a7_Logo--Sheeba.svg" 
             alt="Sheeba The Nutritionist" 
@@ -51,9 +52,13 @@ export default function Navigation() {
                 className={styles.navItem}
                 onMouseEnter={() => setActiveDropdown(link.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
+                onFocus={() => setActiveDropdown(link.name)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) setActiveDropdown(null);
+                }}
               >
                 <Link href={link.href} className={styles.navLink}>
-                  {link.name} <span className={styles.chevron}>▾</span>
+                  {link.name} <span className={styles.chevron} aria-hidden="true">▾</span>
                 </Link>
                 {activeDropdown === link.name && (
                   <div className={styles.dropdownMenu}>
@@ -73,8 +78,15 @@ export default function Navigation() {
           ))}
         </div>
 
-        <button className={styles.menuBtn} onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
-          <div className={styles.hamburger}>
+        <button
+          type="button"
+          className={styles.menuBtn}
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Menu"
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
+        >
+          <div className={styles.hamburger} aria-hidden="true">
             <span className={isOpen ? styles.barOpen1 : ""} />
             <span className={isOpen ? styles.barOpen2 : ""} />
             <span className={isOpen ? styles.barOpen3 : ""} />
@@ -82,7 +94,8 @@ export default function Navigation() {
         </button>
       </div>
 
-      <div className={`${styles.mobileMenu} ${isOpen ? styles.mobileMenuOpen : ""}`}>
+      {/* inert while closed so the hidden links stay out of the tab order */}
+      <div id="mobile-menu" className={`${styles.mobileMenu} ${isOpen ? styles.mobileMenuOpen : ""}`} inert={!isOpen}>
             <div className={styles.mobileNavContent}>
               {links.map((link, i) => (
                 <div key={link.name}>
@@ -111,5 +124,6 @@ export default function Navigation() {
             </div>
           </div>
     </nav>
+    </header>
   );
 }

@@ -98,8 +98,9 @@ export default function ServiceDetail() {
   }
 
   return (
-    <main className={styles.mainContainer} ref={containerRef}>
-      <Navigation />
+    <>
+    <Navigation />
+    <main id="main" className={styles.mainContainer} ref={containerRef}>
 
       {/* ─── HERO SECTION ─── */}
       <section className={`${styles.section} ${styles.heroSection}`} style={{ backgroundColor: "var(--background)", padding: "7rem 0 2rem 0", display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -210,20 +211,20 @@ export default function ServiceDetail() {
               ) : (
                 <form onSubmit={handleFormSubmit}>
                   <div style={{ marginBottom: "1.5rem" }}>
-                    <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Full Name</label>
-                    <input type="text" name="name" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                    <label htmlFor="service-name" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Full Name</label>
+                    <input type="text" id="service-name" name="name" autoComplete="name" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "1.5rem" }}>
-                    <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Email Address</label>
-                    <input type="email" name="email" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                    <label htmlFor="service-email" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Email Address</label>
+                    <input type="email" id="service-email" name="email" autoComplete="email" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "1.5rem" }}>
-                    <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Phone Number</label>
-                    <input type="tel" name="phone" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                    <label htmlFor="service-phone" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Phone Number</label>
+                    <input type="tel" id="service-phone" name="phone" autoComplete="tel" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "2.5rem" }}>
-                    <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>What are you looking to resolve?</label>
-                    <input type="text" name="message" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                    <label htmlFor="service-message" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>What are you looking to resolve?</label>
+                    <input type="text" id="service-message" name="message" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   {/* Cloudflare Turnstile Captcha */}
                   <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
@@ -241,10 +242,10 @@ export default function ServiceDetail() {
                       }}
                     />
                   </div>
-                  <button type="submit" disabled={formState === "submitting"} style={{ width: "100%", background: "var(--background)", color: "var(--foreground)", padding: "18px", border: "none", borderRadius: "40px", fontSize: "16px", fontWeight: "500", cursor: "pointer", transition: "all 0.3s" }}>
+                  <button type="submit" disabled={formState === "submitting"} aria-describedby={formState === "error" ? "service-form-error" : undefined} style={{ width: "100%", background: "var(--background)", color: "var(--foreground)", padding: "18px", border: "none", borderRadius: "40px", fontSize: "16px", fontWeight: "500", cursor: "pointer", transition: "all 0.3s" }}>
                     {formState === "submitting" ? "Sending..." : "Request Consultation"}
                   </button>
-                  {formState === "error" && <p style={{color:'red', fontSize:'12px', marginTop:'1rem', textAlign:'center'}}>There was an error sending your request.</p>}
+                  {formState === "error" && <p id="service-form-error" role="alert" style={{color:'red', fontSize:'12px', marginTop:'1rem', textAlign:'center'}}>There was an error sending your request.</p>}
                 </form>
               )}
             </div>
@@ -253,5 +254,6 @@ export default function ServiceDetail() {
       </section>
 
     </main>
+    </>
   );
 }

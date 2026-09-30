@@ -4,8 +4,9 @@ import Navigation from "@/components/layout/Navigation";
 
 export default function DataPrivacyPolicy() {
   return (
-    <main style={{ backgroundColor: "#f8f1de", minHeight: "100vh", paddingBottom: "6rem" }}>
-      <Navigation />
+    <>
+    <Navigation />
+    <main id="main" style={{ backgroundColor: "#f8f1de", minHeight: "100vh", paddingBottom: "6rem" }}>
       <section style={{ padding: "10rem 2rem 4rem", maxWidth: "800px", margin: "0 auto", textAlign: "left", color: "var(--foreground)" }}>
         <h1 style={{ fontFamily: "var(--font-heading)", fontSize: "48px", marginBottom: "2rem" }}>
           Data & Privacy Policy
@@ -85,5 +86,6 @@ export default function DataPrivacyPolicy() {
         </div>
       </section>
     </main>
+    </>
   );
 }

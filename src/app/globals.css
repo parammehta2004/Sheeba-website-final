@@ -162,3 +162,31 @@ html.skip-preloader .preloader-overlay {
 .bg-theme-mint { background-color: var(--accent-mint); }
 .bg-theme-teal { background-color: var(--accent-teal); color: white; }
 .bg-theme-teal-dark { background-color: var(--accent-teal-dark); color: white; }
+
+/* ── Accessibility: skip link + visible keyboard focus ─────────────────────── */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  z-index: 100000;
+  padding: 0.75rem 1.25rem;
+  background: var(--accent-deep);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 16px;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transform: translateY(-120%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+}

@@ -99,7 +99,7 @@ export default function Preloader() {
         )}
         
         <div className={styles.textWrapper}>
-          <h1 className={styles.brandTitle}>SHEEBA THE NUTRITIONIST</h1>
+          <p className={styles.brandTitle}>SHEEBA THE NUTRITIONIST</p>
           <p className={styles.tagline}>Preparing our nutrition haven for you...</p>
         </div>
       </div>

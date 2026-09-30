@@ -59,7 +59,7 @@ export default function Therapies() {
   return (
     <>
       <Navigation />
-      <main className={styles.main} ref={containerRef}>
+      <main id="main" className={styles.main} ref={containerRef}>
 
         {/* ── Hero ── */}
         <section className={styles.heroSection} style={{ width: '100%', minHeight: '65vh', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: '8rem 2rem' }}>

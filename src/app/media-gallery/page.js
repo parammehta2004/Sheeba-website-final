@@ -117,8 +117,9 @@ export default function MediaGallery() {
   }, []);
 
   return (
-    <main className={styles.mainContainer} ref={containerRef}>
-      <Navigation />
+    <>
+    <Navigation />
+    <main id="main" className={styles.mainContainer} ref={containerRef}>
       
       {/* ─── HERO SECTION ─── */}
       <section className={styles.heroSection}>
@@ -245,5 +246,6 @@ export default function MediaGallery() {
       </section>
 
     </main>
+    </>
   );
 }

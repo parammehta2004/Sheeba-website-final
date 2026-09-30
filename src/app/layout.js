@@ -1,5 +1,6 @@
 import { Marcellus, Outfit } from "next/font/google";
 import "./globals.css";
+import { pageMetadata, HOME_PAGE, SITE_URL, SITE_JSON_LD, jsonLdHtml } from "@/lib/seo";
 
 const marcellus = Marcellus({
   weight: "400",
@@ -12,9 +13,14 @@ const outfit = Outfit({
   subsets: ["latin"],
 });
 
+// Site-wide defaults. Every route sets its own title, description, canonical
+// and Open Graph via pageMetadata(); the canonical is left out here so no
+// page can inherit the homepage's.
+const siteDefaults = pageMetadata(HOME_PAGE);
+delete siteDefaults.alternates;
+
 export const metadata = {
-  title: "Sheeba The Nutritionist | Best Nutritionist in Singapore",
-  description: "Highly recognized as the best nutritionist in singapore and a leading medical nutritionist in singapore. Expert in Functional Medicine & Naturopathy.",
+  ...siteDefaults,
   // ── SEO & Indexing ──────────────────────────────────────────────────────────
   robots: {
     index: true,
@@ -24,17 +30,7 @@ export const metadata = {
   verification: {
     google: "PDXwA2usy_ahAD3AXTODzICwsqC0QsPb1PY4klSeLOA",
   },
-  // ── Canonical URL ───────────────────────────────────────────────────────────
-  metadataBase: new URL('https://sheebathenutritionist.com'),
-  // ── Open Graph (controls link previews — prevents social phishing spoofs) ──
-  openGraph: {
-    title: "Sheeba The Nutritionist | Best Nutritionist in Singapore",
-    description: "Highly recognized as the best nutritionist in singapore and a leading medical nutritionist in singapore. Expert in Functional Medicine & Naturopathy.",
-    url: 'https://sheebathenutritionist.com',
-    siteName: "Sheeba The Nutritionist",
-    locale: 'en_SG',
-    type: 'website',
-  },
+  metadataBase: new URL(SITE_URL),
 };
 
 // ── Viewport config (separated per Next.js 16 API) ────────────────────────────
@@ -49,8 +45,9 @@ import Footer from "@/components/layout/Footer";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${marcellus.variable} ${outfit.variable}`} suppressHydrationWarning>
+    <html lang="en-SG" className={`${marcellus.variable} ${outfit.variable}`} suppressHydrationWarning>
       <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(SITE_JSON_LD)} />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -71,6 +68,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <a href="#main" className="skip-link">Skip to content</a>
         {children}
         <Footer />
       </body>

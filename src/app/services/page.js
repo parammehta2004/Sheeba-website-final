@@ -111,7 +111,7 @@ export default function Services() {
   return (
     <>
       <Navigation />
-      <main className={styles.main} ref={containerRef}>
+      <main id="main" className={styles.main} ref={containerRef}>
 
         {/* ── Hero: Holistic Health ── */}
         <section className={styles.heroSection} style={{ width: '100%', padding: '10rem 0 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
@@ -217,20 +217,20 @@ export default function Services() {
               ) : (
                 <form onSubmit={handleFormSubmit}>
                   <div style={{ marginBottom: "1.5rem" }}>
-                    <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Full Name</label>
-                    <input type="text" name="name" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                    <label htmlFor="services-name" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Full Name</label>
+                    <input type="text" id="services-name" name="name" autoComplete="name" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "1.5rem" }}>
-                    <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Email Address</label>
-                    <input type="email" name="email" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                    <label htmlFor="services-email" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Email Address</label>
+                    <input type="email" id="services-email" name="email" autoComplete="email" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "1.5rem" }}>
-                    <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Phone Number</label>
-                    <input type="tel" name="phone" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                    <label htmlFor="services-phone" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Phone Number</label>
+                    <input type="tel" id="services-phone" name="phone" autoComplete="tel" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "2rem" }}>
-                    <label style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>What are you looking to resolve?</label>
-                    <input type="text" name="message" required style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", outline: "none", fontFamily: "var(--font-body)" }} />
+                    <label htmlFor="services-message" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>What are you looking to resolve?</label>
+                    <input type="text" id="services-message" name="message" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   {/* Cloudflare Turnstile Captcha */}
                   <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
@@ -248,10 +248,10 @@ export default function Services() {
                       }}
                     />
                   </div>
-                  <button type="submit" disabled={formState === "submitting"} className={styles.submitButton}>
+                  <button type="submit" disabled={formState === "submitting"} aria-describedby={formState === "error" ? "services-form-error" : undefined} className={styles.submitButton}>
                     {formState === "submitting" ? "Sending..." : "Request Consultation"}
                   </button>
-                  {formState === "error" && <p style={{color:'red', fontSize:'12px', marginTop:'1rem', textAlign:'center'}}>Error sending request.</p>}
+                  {formState === "error" && <p id="services-form-error" role="alert" style={{color:'red', fontSize:'12px', marginTop:'1rem', textAlign:'center'}}>Error sending request.</p>}
                 </form>
               )}
             </div>

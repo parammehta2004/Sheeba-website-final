@@ -100,7 +100,7 @@ export default function About() {
   return (
     <>
       <Navigation />
-      <main className={styles.main} ref={containerRef}>
+      <main id="main" className={styles.main} ref={containerRef}>
 
         {/* ── Hero ── */}
         <section className={`${styles.sectionWrapper} ${styles.heroSection}`} style={{ paddingBottom: '0' }}>

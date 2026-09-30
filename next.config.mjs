@@ -88,6 +88,14 @@ const nextConfig = {
   allowedDevOrigins: ['192.168.29.236'],
   async redirects() {
     return [
+      // Canonical host is www: send the bare domain there (trailing slashes are
+      // already stripped by Next's default trailingSlash: false).
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'sheebathenutritionist.com' }],
+        destination: 'https://www.sheebathenutritionist.com/:path*',
+        permanent: true,
+      },
       {
         source: '/index.html',
         destination: '/',
