@@ -8,6 +8,7 @@ import Navigation from "@/components/layout/Navigation";
 import LeafDecoration from "@/components/ui/LeafDecoration";
 import { SERVICES_DATA } from "@/data/services";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
 import styles from "./page.module.css";
 
 if (typeof window !== "undefined") {
@@ -226,22 +227,23 @@ export default function ServiceDetail() {
                     <label htmlFor="service-message" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>What are you looking to resolve?</label>
                     <input type="text" id="service-message" name="message" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
-                  {/* Cloudflare Turnstile Captcha */}
-                  <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAADyibchCPA5EBZOT"}
-                      onSuccess={(tok) => setToken(tok)}
-                      onExpire={() => setToken(null)}
-                      onError={() => {
-                        setToken(null);
-                        alert("Turnstile error. Please refresh the page.");
-                      }}
-                      options={{
-                        theme: 'light'
-                      }}
-                    />
-                  </div>
+                  {TURNSTILE_SITE_KEY && (
+                    <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
+                      <Turnstile
+                        ref={turnstileRef}
+                        siteKey={TURNSTILE_SITE_KEY}
+                        onSuccess={(tok) => setToken(tok)}
+                        onExpire={() => setToken(null)}
+                        onError={() => {
+                          setToken(null);
+                          alert("Turnstile error. Please refresh the page.");
+                        }}
+                        options={{
+                          theme: 'light'
+                        }}
+                      />
+                    </div>
+                  )}
                   <button type="submit" disabled={formState === "submitting"} aria-describedby={formState === "error" ? "service-form-error" : undefined} style={{ width: "100%", background: "var(--background)", color: "var(--foreground)", padding: "18px", border: "none", borderRadius: "40px", fontSize: "16px", fontWeight: "500", cursor: "pointer", transition: "all 0.3s" }}>
                     {formState === "submitting" ? "Sending..." : "Request Consultation"}
                   </button>

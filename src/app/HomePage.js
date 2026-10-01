@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
 
 import Navigation from "@/components/layout/Navigation";
 import Button from "@/components/ui/Button";
@@ -598,22 +599,23 @@ export default function HomePage() {
                     <input type="text" id="home-message" name="message" className={styles.inputField} placeholder=" " required aria-required="true" />
                     <label htmlFor="home-message" className={styles.inputLabel}>What are you looking to resolve?</label>
                   </div>
-                  {/* Cloudflare Turnstile Captcha */}
-                  <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAADyibchCPA5EBZOT"}
-                      onSuccess={(tok) => setToken(tok)}
-                      onExpire={() => setToken(null)}
-                      onError={() => {
-                        setToken(null);
-                        alert("Turnstile error. Please refresh the page.");
-                      }}
-                      options={{
-                        theme: 'dark'
-                      }}
-                    />
-                  </div>
+                  {TURNSTILE_SITE_KEY && (
+                    <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
+                      <Turnstile
+                        ref={turnstileRef}
+                        siteKey={TURNSTILE_SITE_KEY}
+                        onSuccess={(tok) => setToken(tok)}
+                        onExpire={() => setToken(null)}
+                        onError={() => {
+                          setToken(null);
+                          alert("Turnstile error. Please refresh the page.");
+                        }}
+                        options={{
+                          theme: 'dark'
+                        }}
+                      />
+                    </div>
+                  )}
                   <button type="submit" className={styles.submitBtn} disabled={formState === "submitting"} aria-describedby={formState === "error" ? "home-form-error" : undefined}>
                     {formState === "submitting" ? "Sending..." : "Request Consultation"}
                   </button>

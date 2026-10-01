@@ -7,6 +7,7 @@ import Navigation from "@/components/layout/Navigation";
 import Button from "@/components/ui/Button";
 import LeafDecoration from "@/components/ui/LeafDecoration";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
 import styles from "./page.module.css";
 
 if (typeof window !== "undefined") {
@@ -183,22 +184,23 @@ export default function ContactUs() {
                       There was an error sending your enquiry. Please try again.
                     </p>
                   )}
-                  {/* Cloudflare Turnstile Captcha */}
-                  <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAADyibchCPA5EBZOT"}
-                      onSuccess={(tok) => setToken(tok)}
-                      onExpire={() => setToken(null)}
-                      onError={() => {
-                        setToken(null);
-                        alert("Turnstile error. Please refresh the page.");
-                      }}
-                      options={{
-                        theme: 'light'
-                      }}
-                    />
-                  </div>
+                  {TURNSTILE_SITE_KEY && (
+                    <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
+                      <Turnstile
+                        ref={turnstileRef}
+                        siteKey={TURNSTILE_SITE_KEY}
+                        onSuccess={(tok) => setToken(tok)}
+                        onExpire={() => setToken(null)}
+                        onError={() => {
+                          setToken(null);
+                          alert("Turnstile error. Please refresh the page.");
+                        }}
+                        options={{
+                          theme: 'light'
+                        }}
+                      />
+                    </div>
+                  )}
                   <Button variant="primary" type="submit" style={{ width: "100%", marginTop: "0.5rem" }} disabled={formState === 'submitting'} aria-describedby={formState === 'error' ? 'contact-form-error' : undefined}>
                     {formState === 'submitting' ? 'Sending...' : 'Submit Enquiry'}
                   </Button>
