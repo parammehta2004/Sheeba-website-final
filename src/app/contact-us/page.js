@@ -121,7 +121,8 @@ export default function ContactUs() {
               {CONTACT_INFO.map((info, idx) => (
                 <div key={idx} className={`${styles.infoBlock} reveal-up`} style={{ transitionDelay: `${idx * 0.1}s` }}>
                   <div className={styles.infoIcon}>
-                    <img src={info.icon} alt={info.label} style={{ width: "24px", height: "24px", objectFit: "contain" }} />
+                    {/* Decorative: the label is shown as text beside it */}
+                    <img src={info.icon} alt="" style={{ width: "24px", height: "24px", objectFit: "contain" }} />
                   </div>
                   <div>
                     <strong>{info.label}</strong>

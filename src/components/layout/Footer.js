@@ -15,16 +15,16 @@ export default function Footer() {
         </div>
 
         {/* Company Column */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+        <nav aria-label="Footer" style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
           <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', marginBottom: '0.5rem' }}>Company</h4>
           <Link href="/about" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>About</Link>
           <Link href="/services" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Services</Link>
           <Link href="/media-gallery" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Media Gallery</Link>
           <Link href="/testimonial" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Testimonials</Link>
-        </div>
+        </nav>
 
         {/* Legal & Support Column */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+        <nav aria-label="Support and legal" style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
           <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', marginBottom: '0.5rem' }}>Support</h4>
           <Link href="/contact-us" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Contact Us</Link>
           <Link href="/faq" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>FAQ</Link>
@@ -32,7 +32,7 @@ export default function Footer() {
           <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', margin: '1rem 0 0.5rem' }}>Legal</h4>
           <Link href="/t-cs" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>T&Cs</Link>
           <Link href="/data-privacy-policy" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Data & Privacy Policy</Link>
-        </div>
+        </nav>
 
         {/* Contact Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
