@@ -1,4 +1,6 @@
 import { Marcellus, Outfit } from "next/font/google";
+import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { pageMetadata, HOME_PAGE, SITE_URL, SITE_JSON_LD, jsonLdHtml } from "@/lib/seo";
 
@@ -71,6 +73,23 @@ export default function RootLayout({ children }) {
         <a href="#main" className="skip-link">Skip to content</a>
         {children}
         <Footer />
+        <Analytics />
+        {/* Google tag (gtag.js) */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-KD3DDTCREF" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-KD3DDTCREF');
+          `}
+        </Script>
+        {/* Ahrefs Web Analytics */}
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="EW9Ccc0C7+EH7tdhovW5kQ"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
