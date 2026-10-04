@@ -9,6 +9,7 @@ import LeafDecoration from "@/components/ui/LeafDecoration";
 import { SERVICES_DATA } from "@/data/services";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
+import posthog from "posthog-js";
 import styles from "./page.module.css";
 
 if (typeof window !== "undefined") {
@@ -81,6 +82,10 @@ export default function ServiceDetail() {
         }),
       });
       if(res.ok) {
+        posthog.capture("contact_form_submitted", {
+          form_location: "service_detail_page",
+          service_slug: slug,
+        });
         setFormState("success");
         setToken(null);
         turnstileRef.current?.reset();

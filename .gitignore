@@ -42,3 +42,9 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# Google OAuth credentials
+client_secret_*.json
+.google-token.json
+.env.local
+!.env.example

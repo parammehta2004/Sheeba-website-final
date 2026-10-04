@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
+import posthog from "posthog-js";
 
 import Navigation from "@/components/layout/Navigation";
 import Button from "@/components/ui/Button";
@@ -182,6 +183,7 @@ export default function HomePage() {
         }),
       });
       if(res.ok) {
+        posthog.capture("contact_form_submitted", { form_location: "homepage" });
         setFormState("success");
         setToken(null);
         turnstileRef.current?.reset();

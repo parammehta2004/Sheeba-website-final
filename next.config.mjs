@@ -4,12 +4,13 @@ const nextConfig = {
     const isDev = process.env.NODE_ENV === 'development';
     const cspDirectives = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com https://www.googletagmanager.com https://analytics.ahrefs.com",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com https://www.googletagmanager.com https://analytics.ahrefs.com https://*.posthog.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https://images.unsplash.com https://cdn.prod.website-files.com https://www.googletagmanager.com https://*.google-analytics.com",
+      "img-src 'self' data: blob: https://images.unsplash.com https://cdn.prod.website-files.com https://www.googletagmanager.com https://*.google-analytics.com https://www.google.com https://stats.g.doubleclick.net",
       "media-src 'self' https://cdn.prod.website-files.com",
-      `connect-src 'self' https://vapor.biohackk.com https://challenges.cloudflare.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://analytics.ahrefs.com${isDev ? " ws: wss:" : ""}`,
+      `connect-src 'self' https://vapor.biohackk.com https://challenges.cloudflare.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com https://stats.g.doubleclick.net https://analytics.ahrefs.com https://*.posthog.com${isDev ? " ws: wss:" : ""}`,
+      "worker-src 'self' blob:",
       "frame-src 'self' https://www.youtube.com https://w.soundcloud.com https://player.vimeo.com https://challenges.cloudflare.com",
       "frame-ancestors 'none'",
     ];
