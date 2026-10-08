@@ -99,6 +99,9 @@ export default function HomePage() {
         smooth: true,
       });
 
+      // Exposed so in-page anchor buttons can scroll through Lenis instead of fighting it.
+      window.lenis = lenis;
+
       rafCallback = (time) => { lenis.raf(time * 1000); };
       lenis.on("scroll", ScrollTrigger.update);
       gsapModule.ticker.add(rafCallback);
@@ -108,7 +111,10 @@ export default function HomePage() {
     initScroll();
 
     return () => {
-      if (lenis) lenis.destroy();
+      if (lenis) {
+        if (window.lenis === lenis) delete window.lenis;
+        lenis.destroy();
+      }
       if (gsapModule && rafCallback) gsapModule.ticker.remove(rafCallback);
     };
   }, []);
