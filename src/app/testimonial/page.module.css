@@ -16,8 +16,8 @@
 }
 
 .heroSection {
-  min-height: 280px;
-  padding: 4rem 1.5rem 2rem 1.5rem;
+  min-height: 420px;
+  padding: calc(var(--nav-height, 80px) + 3.5rem) 1.5rem 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,7 +33,7 @@
   .heroSection {
     background-image: linear-gradient(rgba(12, 30, 24, 0.85), rgba(12, 30, 24, 0.85)), url('/assets/test.jpg');
     background-position: center center;
-    padding: 3rem 1.5rem 2rem;
+    padding: calc(var(--nav-height, 72px) + 2rem) 1.5rem 3rem;
     min-height: auto;
   }
 }
@@ -41,18 +41,17 @@
 .heroContent {
   width: 100%;
   max-width: 1200px;
-}
-
-.heroSplit {
+  margin: 0 auto;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 5rem;
+  gap: 4rem;
 }
 
-.heroImage {
-  width: 320px;
-  flex-shrink: 0;
-  height: auto;
+.heroText {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 640px;
 }
 
 .badge {
@@ -70,39 +69,34 @@
 
 .titleHero {
   font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 7vw, var(--text-display));
+  font-size: clamp(2.5rem, 6vw, var(--text-display));
   line-height: 1.05;
-  color: var(--gray-900);
-  margin-bottom: 1.5rem;
-  position: relative;
-  top: -25px;
+  color: #ffffff;
+  margin: 0 0 1.75rem;
+  overflow-wrap: break-word;
 }
 
 .textAccent {
-  color: var(--accent-amber);
+  color: #34b5b2;
   font-style: italic;
 }
 
 .paragraph {
   font-size: var(--text-body);
-  line-height: 1.9;
-  color: var(--foreground);
-  opacity: 0.9;
-  margin-bottom: 2rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
   max-width: 580px;
-  position: relative;
-  left: -180px;
-  top: 100px;
 }
 
 /* ── Stats Summary ── */
 .statsSummary {
+  flex: 0 0 auto;
   display: flex;
-  gap: 3rem;
-  margin-top: 2rem;
-  position: relative;
-  left: 120px;
-  top: 20px;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-left: 2.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .statItem {
@@ -114,7 +108,8 @@
   font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 600;
-  color: var(--accent-deep);
+  line-height: 1.1;
+  color: #34b5b2;
 }
 
 .statLabel {
@@ -122,7 +117,7 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--accent-olive);
+  color: rgba(255, 255, 255, 0.8);
   margin-top: 0.25rem;
 }
 
@@ -419,62 +414,40 @@
 }
 
 /* ── Responsive breakpoints ── */
-@media (max-width: 1024px) {
-  .titleHero {
-    top: 0;
-  }
-  .paragraph {
-    left: -40px;
-    top: 40px;
+@media (max-width: 992px) {
+  .heroContent {
+    gap: 2.5rem;
   }
   .statsSummary {
-    left: 40px;
-    top: 10px;
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 992px) {
-  .heroSplit {
-    gap: 3rem;
-  }
-  .heroImage {
-    width: 260px;
+    padding-left: 2rem;
   }
 }
 
 @media (max-width: 768px) {
-  .heroSplit {
+  .heroContent {
     flex-direction: column;
-    gap: 2.5rem;
-    text-align: center;
-  }
-  
-  .heroImage {
-    width: 200px;
-  }
-  
-  .statsSummary {
-    justify-content: flex-end;
-    align-self: flex-end;
-    text-align: right;
+    align-items: stretch;
     gap: 2rem;
-    position: static;
-    left: 0;
-    top: 0;
-  }
-
-  .titleHero {
-    position: static;
-    top: 0;
+    text-align: center;
   }
 
   .paragraph {
-    position: static;
-    left: 0;
-    top: 0;
-    text-align: center;
     margin: 0 auto;
+  }
+
+  .statsSummary {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem 2rem;
+    padding-left: 0;
+    padding-top: 1.5rem;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .statVal {
+    font-size: 2rem;
   }
 
   .backToTopBtn {

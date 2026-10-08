@@ -7,6 +7,7 @@ import Navigation from "@/components/layout/Navigation";
 import Button from "@/components/ui/Button";
 import LeafDecoration from "@/components/ui/LeafDecoration";
 import InteractiveGrid from "@/components/ui/InteractiveGrid";
+import ContactQuickLinks from "@/components/ui/ContactQuickLinks";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
 import posthog from "posthog-js";
@@ -209,6 +210,7 @@ export default function Services() {
               <p style={{ fontSize: "18px", lineHeight: "1.7", color: "rgba(45, 90, 90, 0.8)", maxWidth: "400px" }}>
                 Request a consultation with Sheeba Majmudar. Tell us what you are looking to resolve, and we will guide you on the next steps.
               </p>
+              <ContactQuickLinks tone="light" />
             </div>
             
             <div className="reveal-up" style={{ width: "100%", maxWidth: "500px", background: "#ffffff", padding: "3rem", borderRadius: "8px", color: "var(--foreground)" }}>

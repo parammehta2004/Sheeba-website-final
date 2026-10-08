@@ -211,37 +211,30 @@ export default function Testimonial() {
         <section 
           className={`${styles.sectionWrapper} ${styles.heroSection}`}
         >
-          <div className={styles.heroContent} style={{ maxWidth: '1480px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '3rem', padding: '0 1rem' }}>
-            
-            {/* Top Row: Title (Left) & Stats (Right) */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem', width: '100%' }}>
-              <h1 className={styles.titleHero} style={{ color: '#ffffff', margin: 0, maxWidth: '600px' }}>
-                Stories of <span className={styles.textAccent} style={{ color: '#34b5b2' }}>Transformation.</span>
+          <div className={styles.heroContent}>
+            <div className={styles.heroText}>
+              <h1 className={styles.titleHero}>
+                Stories of <span className={styles.textAccent}>Transformation.</span>
               </h1>
-              
-              <div className={styles.statsSummary} style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div className={styles.statItem}>
-                  <span className={styles.statVal} style={{ color: 'var(--accent-teal-dark)' }}>83</span>
-                  <span className={styles.statLabel} style={{ color: 'var(--foreground)', opacity: 0.75 }}>Verified Stories</span>
-                </div>
-                <div className={styles.statItem}>
-                  <span className={styles.statVal} style={{ color: 'var(--accent-teal-dark)' }}>5.0 ★</span>
-                  <span className={styles.statLabel} style={{ color: 'var(--foreground)', opacity: 0.75 }}>Average Rating</span>
-                </div>
-                <div className={styles.statItem}>
-                  <span className={styles.statVal} style={{ color: 'var(--accent-teal-dark)' }}>100%</span>
-                  <span className={styles.statLabel} style={{ color: 'var(--foreground)', opacity: 0.75 }}>Tailored Care</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Row: Paragraph (Left) */}
-            <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
-              <p className={styles.paragraph} style={{ color: 'rgba(255, 255, 255, 0.95)', margin: 0, maxWidth: '580px', transform: 'translate(45%, -25%)' }}>
-                With over a decade of clinical success, Sheeba <br /> has guided hundreds of clients globally to identify root causes and build sustainable wellness. Explore their stories of transformation.
+              <p className={styles.paragraph}>
+                With over a decade of clinical success, Sheeba has guided hundreds of clients globally to identify root causes and build sustainable wellness. Explore their stories of transformation.
               </p>
             </div>
 
+            <div className={styles.statsSummary}>
+              <div className={styles.statItem}>
+                <span className={styles.statVal}>83</span>
+                <span className={styles.statLabel}>Verified Stories</span>
+              </div>
+              <div className={styles.statItem}>
+                <span className={styles.statVal}>5.0 ★</span>
+                <span className={styles.statLabel}>Average Rating</span>
+              </div>
+              <div className={styles.statItem}>
+                <span className={styles.statVal}>100%</span>
+                <span className={styles.statLabel}>Tailored Care</span>
+              </div>
+            </div>
           </div>
         </section>
 

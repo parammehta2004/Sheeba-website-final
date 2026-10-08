@@ -13,6 +13,7 @@ import LeafCorner from "@/components/ui/LeafCorner";
 import LeafBox from "@/components/ui/LeafBox";
 import BotanicalVinesConnector from "@/components/ui/BotanicalVinesConnector";
 import InteractiveGrid from "@/components/ui/InteractiveGrid";
+import ContactQuickLinks from "@/components/ui/ContactQuickLinks";
 import Preloader from "@/components/ui/Preloader";
 import { SERVICES_DATA } from "@/data/services";
 import styles from "./page.module.css";
@@ -575,6 +576,7 @@ export default function HomePage() {
 
               <h2 className={styles.contactTitle}>Let&apos;s find the<br/><i>root cause.</i></h2>
               <p className={styles.contactDesc}>Request a consultation with Sheeba Majmudar. Tell us what you are looking to resolve, and we will guide you on the next steps.</p>
+              <ContactQuickLinks tone="dark" />
             </div>
             
             <div className={`${styles.formWrapper} reveal-up`}>
