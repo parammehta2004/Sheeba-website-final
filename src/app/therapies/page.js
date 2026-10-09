@@ -18,7 +18,7 @@ const THERAPIES = [
   { title: "Reconnective Healing", body: "Reconnective Healing® transcends traditional energy healing techniques. It allows us to let go of the concept, approach and even the need for the method itself while including the benefits of all known energy healing methods.", slug: "reconnective-healing", img: "/assets/reconh.jpg", bgPosition: "center" },
   { title: "Gemmotherapy", body: "It has concentrated plant stem cells that are highly bioavailable and bioactive compounds yet gentle on the system. Can be used for children and adults to harmonise many health conditions.", slug: "gemmotherapy", img: "/assets/gemmo.jpg", bgPosition: "65% center" },
   { title: "Weight (Fat loss) programs", body: "Our signature Dropzone Program, a practitioner guided program has helped thousands to lose fat and engage in healthier lifestyles.", slug: "dropzone", img: "/assets/falos.jpeg" },
-  { title: "Practitioner Supplements", body: "Access premium, practitioner-grade supplements curated specifically to support your customized health protocols and total wellness journey.", slug: "practitioner-supplements", img: "/assets/prasup.jpeg", bgPosition: "85% center", externalLink: "https://www.practitionergraded.com" },
+  { title: "Practitioner Supplements", body: "Access premium, practitioner-grade supplements curated specifically to support your customized health protocols and total wellness journey.", slug: "practitioner-supplements", img: "/assets/prasup.jpeg", bgPosition: "85% center" },
   { title: "Aroma Therapy", body: "Essential oils have been used for over 5,000 years and continue to be used to fast track in healing all aspects of health, emotions, sleep and mood.", slug: "therapeutic-aroma-therapy", img: "/assets/aromather.jpeg" },
   { title: "E4L (Nutri Energetic System)", body: "The E4L system can detect your bio-field (energy) to scan for imbalances, restoring cells over time to their normal, optimal functioning as part of the natural healing response.", slug: "e4l-nutri-energetic-system", img: "/assets/e4l%20nes.jpg", bgPosition: "85% center" },
 ];
@@ -92,7 +92,7 @@ export default function Therapies() {
         {/* ── Therapies Grid ── */}
         <section className={styles.sectionWrapper} style={{ backgroundColor: 'transparent' }}>
           <div className={styles.stepsContent}>
-            <InteractiveGrid items={THERAPIES} basePath="/therapies" hideTags={true} />
+            <InteractiveGrid items={THERAPIES} basePath="/therapies" hideTags={true} titleLevel={2} balanced={true} />
           </div>
         </section>
 

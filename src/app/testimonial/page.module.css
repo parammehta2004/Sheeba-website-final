@@ -373,7 +373,7 @@
   border-radius: var(--radius-cards);
 }
 
-.noResults h3 {
+.noResults h2 {
   font-family: var(--font-heading);
   font-size: 1.8rem;
   color: var(--foreground);

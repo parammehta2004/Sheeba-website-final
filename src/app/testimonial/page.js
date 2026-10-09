@@ -292,7 +292,7 @@ export default function Testimonial() {
               ))
             ) : (
               <div className={styles.noResults}>
-                <h3>No reviews found</h3>
+                <h2>No reviews found</h2>
                 <p>Try resetting the category filter or searching for another keyword.</p>
               </div>
             )}

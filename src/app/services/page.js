@@ -30,7 +30,7 @@ const THERAPIES = [
   { title: "Reconnective Healing", body: "Reconnective Healing® transcends traditional energy healing techniques. It allows us to let go of the concept, approach and even the need for the method itself while including the benefits of all known energy healing methods.", slug: "reconnective-healing", img: "/assets/reconh.jpg", bgPosition: "center" },
   { title: "Gemmotherapy", body: "It has concentrated plant stem cells that are highly bioavailable and bioactive compounds yet gentle on the system. Can be used for children and adults to harmonise many health conditions.", slug: "gemmotherapy", img: "/assets/gemmo.jpg", bgPosition: "65% center" },
   { title: "Weight (Fat loss) programs", body: "Our signature Dropzone Program, a practitioner guided program has helped thousands to lose fat and engage in healthier lifestyles.", slug: "dropzone", img: "/assets/falos.jpeg" },
-  { title: "Practitioner Supplements", body: "Access premium, practitioner-grade supplements curated specifically to support your customized health protocols and total wellness journey.", slug: "practitioner-supplements", img: "/assets/prasup.jpeg", bgPosition: "85% center", externalLink: "https://www.practitionergraded.com" },
+  { title: "Practitioner Supplements", body: "Access premium, practitioner-grade supplements curated specifically to support your customized health protocols and total wellness journey.", slug: "practitioner-supplements", img: "/assets/prasup.jpeg", bgPosition: "85% center" },
   { title: "Aroma Therapy", body: "Essential oils have been used for over 5,000 years and continue to be used to fast track in healing all aspects of health, emotions, sleep and mood.", slug: "therapeutic-aroma-therapy", img: "/assets/aromather.jpeg" },
   { title: "E4L (Nutri Energetic System)", body: "The E4L system can detect your bio-field (energy) to scan for imbalances, restoring cells over time to their normal, optimal functioning as part of the natural healing response.", slug: "e4l-nutri-energetic-system", img: "/assets/e4l%20nes.jpg", bgPosition: "85% center" },
 ];
@@ -140,7 +140,7 @@ export default function Services() {
 
         {/* ── Health Assessments Grid ── */}
         <section className={`${styles.sectionWrapper} ${styles.darkSection}`} style={{ backgroundColor: 'var(--accent-teal-dark)', color: 'var(--background)' }}>
-          <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '0 2rem' }}>
+          <div className={styles.gridShell}>
             <div className={`${styles.sectionHeader} reveal-up`} style={{ textAlign: 'center', margin: '0 auto 4rem auto' }}>
               <h2 className={styles.titleSection}>
                 Our <span className={styles.textAccent}>Health Assessments</span>
@@ -151,14 +151,14 @@ export default function Services() {
             </div>
             
             <div className="reveal-up">
-              <InteractiveGrid items={HEALTH_ASSESSMENTS} basePath="/health-assessments" hideTags={true} />
+              <InteractiveGrid items={HEALTH_ASSESSMENTS} basePath="/health-assessments" hideTags={true} balanced={true} />
             </div>
           </div>
         </section>
 
         {/* ── Therapies Grid ── */}
         <section className={styles.sectionWrapper} style={{ backgroundColor: 'transparent' }}>
-          <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '4rem 2rem 8rem' }}>
+          <div className={styles.gridShell} style={{ paddingTop: '4rem', paddingBottom: '8rem' }}>
             <div className={`${styles.sectionHeader} reveal-up`} style={{ textAlign: 'center', margin: '0 auto 4rem auto' }}>
               <h2 className={styles.titleSection}>
                 Our <span className={styles.textAccent}>Therapies</span>
@@ -169,7 +169,7 @@ export default function Services() {
             </div>
             
             <div className="reveal-up">
-              <InteractiveGrid items={THERAPIES} basePath="/therapies" hideTags={true} />
+              <InteractiveGrid items={THERAPIES} basePath="/therapies" hideTags={true} balanced={true} />
             </div>
           </div>
         </section>
@@ -223,19 +223,19 @@ export default function Services() {
                 <form onSubmit={handleFormSubmit}>
                   <div style={{ marginBottom: "1.5rem" }}>
                     <label htmlFor="services-name" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Full Name</label>
-                    <input type="text" id="services-name" name="name" autoComplete="name" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
+                    <input type="text" id="services-name" name="name" autoComplete="name" required aria-required="true" style={{ width: "100%", minHeight: "48px", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "1.5rem" }}>
                     <label htmlFor="services-email" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Email Address</label>
-                    <input type="email" id="services-email" name="email" autoComplete="email" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
+                    <input type="email" id="services-email" name="email" autoComplete="email" required aria-required="true" style={{ width: "100%", minHeight: "48px", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "1.5rem" }}>
                     <label htmlFor="services-phone" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Phone Number</label>
-                    <input type="tel" id="services-phone" name="phone" autoComplete="tel" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
+                    <input type="tel" id="services-phone" name="phone" autoComplete="tel" required aria-required="true" style={{ width: "100%", minHeight: "48px", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "2rem" }}>
                     <label htmlFor="services-message" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>What are you looking to resolve?</label>
-                    <input type="text" id="services-message" name="message" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
+                    <input type="text" id="services-message" name="message" required aria-required="true" style={{ width: "100%", minHeight: "48px", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   {TURNSTILE_SITE_KEY && (
                     <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>

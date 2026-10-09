@@ -16,7 +16,7 @@ export default function Footer() {
 
         {/* Company Column */}
         <nav aria-label="Footer" style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-          <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', marginBottom: '0.5rem' }}>Company</h4>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', marginBottom: '0.5rem' }}>Company</h2>
           <Link href="/about" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>About</Link>
           <Link href="/services" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Services</Link>
           <Link href="/media-gallery" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Media Gallery</Link>
@@ -25,18 +25,18 @@ export default function Footer() {
 
         {/* Legal & Support Column */}
         <nav aria-label="Support and legal" style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-          <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', marginBottom: '0.5rem' }}>Support</h4>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', marginBottom: '0.5rem' }}>Support</h2>
           <Link href="/contact-us" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Contact Us</Link>
           <Link href="/faq" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>FAQ</Link>
           
-          <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', margin: '1rem 0 0.5rem' }}>Legal</h4>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', margin: '1rem 0 0.5rem' }}>Legal</h2>
           <Link href="/t-cs" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>T&Cs</Link>
           <Link href="/data-privacy-policy" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none', transition: 'color 0.3s' }}>Data & Privacy Policy</Link>
         </nav>
 
         {/* Contact Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-          <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', marginBottom: '0.5rem' }}>Contact</h4>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: '#34b5b2', marginBottom: '0.5rem' }}>Contact</h2>
           <a href="mailto:admin@sheebathenutritionist.com" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none' }}>admin@sheebathenutritionist.com</a>
           <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="tel:+6596566714" style={{ color: 'rgba(199, 220, 217, 0.9)', textDecoration: 'none' }}>+65 9656 6714</a>
