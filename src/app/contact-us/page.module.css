@@ -5,7 +5,6 @@
   background: var(--background);
   position: relative;
   overflow: hidden; /* only x-overflow hidden, page naturally scrolls y */
-  padding-bottom: var(--spacing-120);
 }
 
 /* ─── Shared Section Properties ─── */
@@ -108,6 +107,15 @@
   line-height: 1.6;
 }
 
+/* Contact links: 48px-tall tap targets */
+.infoLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  color: inherit;
+  text-decoration: none;
+}
+
 .infoBlock p a:hover {
   text-decoration: underline;
   color: var(--accent-amber);
@@ -161,12 +169,19 @@
   box-shadow: var(--shadow-premium);
 }
 
+/* Rests in the empty band just below the form card, never over the fields.
+   The leaf lies near-horizontal (rotation on the svg, since GSAP's float tween
+   owns the wrapper's transform: y 0 -> -30px, rotation 0 -> 10deg), so even at
+   the top of the float it stays clear of the card's bottom edge. */
 .contactLeaf {
-  top: -40px;
-  right: -60px;
-  width: 250px;
-  height: 250px;
-  transform: rotate(30deg);
+  top: calc(100% + 1rem);
+  right: 1.5rem;
+  width: 150px;
+  height: 150px;
+}
+
+.contactLeaf svg {
+  transform: rotate(-85deg);
 }
 
 .form {
@@ -192,6 +207,7 @@
 .formGroup input,
 .formGroup textarea {
   width: 100%;
+  min-height: 48px; /* 48px tap target at every breakpoint */
   padding: 1rem 1.25rem;
   background: var(--background);
   border: 1px solid rgba(74, 77, 66, 0.1);
@@ -238,8 +254,7 @@
   }
   .infoBlock p {
     font-size: 0.95rem;
-    word-break: break-all;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
   }
   .formCol {
     padding: 1.25rem;
@@ -251,5 +266,182 @@
   .formGroup textarea {
     font-size: 1rem;
     padding: 0.75rem 1rem;
+  }
+}
+
+/* ─── Consultation Guide (server-rendered copy below the form) ─── */
+.guideSection {
+  width: 100%;
+  padding: clamp(4rem, 8vw, 7rem) 1.5rem;
+  position: relative;
+}
+
+.guideInner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.guideNarrow {
+  max-width: 860px;
+}
+
+.guideHeader {
+  max-width: 760px;
+  margin: 0 auto var(--spacing-42);
+  text-align: center;
+}
+
+.guideTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  color: var(--foreground);
+  margin-bottom: 1.25rem;
+}
+
+.guideIntro {
+  font-size: var(--text-body-sm);
+  line-height: 1.7;
+  color: var(--foreground);
+  opacity: 0.85;
+  margin: 0;
+}
+
+.stepsList,
+.enquiryGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--spacing-24);
+}
+
+.stepsList {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.enquiryGrid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.stepCard,
+.enquiryCard,
+.faqItem {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: var(--spacing-30);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+}
+
+.enquiryCard {
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.enquiryCard:hover,
+.enquiryCard:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--accent-teal);
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--accent-teal);
+  color: var(--accent-teal);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.25;
+  color: var(--accent-teal-dark);
+  margin: 0 0 0.75rem;
+}
+
+.cardBody {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Whole card is clickable via the heading link */
+.cardLink {
+  color: inherit;
+}
+
+.cardLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.cardLink:hover {
+  color: var(--accent-amber);
+}
+
+.cardLink:focus-visible {
+  outline: none;
+}
+
+.enquiryCard:has(.cardLink:focus-visible) {
+  outline: 2px solid var(--accent-amber);
+  outline-offset: 3px;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+}
+
+.guideLinks {
+  margin: var(--spacing-42) auto 0;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--foreground);
+}
+
+.guideLinks a {
+  color: var(--accent-teal-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--accent-teal);
+}
+
+.guideLinks a:hover {
+  color: var(--accent-amber);
+}
+
+@media (max-width: 768px) {
+  .guideSection {
+    padding: 3.5rem 1rem;
+  }
+  .enquiryGrid {
+    grid-template-columns: 1fr;
+  }
+  .stepCard,
+  .enquiryCard,
+  .faqItem {
+    padding: 1.25rem;
+  }
+  .guideIntro {
+    font-size: 1.05rem;
   }
 }
