@@ -139,9 +139,12 @@
   gap: 0.75rem;
 }
 
+/* A <p>, not a heading: weight/tracking match the global h1–h6 rule it used to get. */
 .hoverTitle {
   font-family: var(--font-heading);
   font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: #ffffff;
   margin: 0;
   line-height: 1.2;
@@ -180,17 +183,18 @@
   transform: translateY(-2px);
 }
 
+/* ── Legacy auto-fit grids (services / therapies / assessments pages) ── */
 @media (max-width: 768px) {
-  .gridContainer {
+  .gridContainer:not(.balanced) {
     grid-template-columns: 1fr 1fr !important;
     gap: 0.75rem !important;
   }
-  
-  .defaultOverlay {
+
+  .gridContainer:not(.balanced) .defaultOverlay {
     padding: 1rem !important; /* Matches hover padding to prevent shift */
   }
-  
-  .cardTitle {
+
+  .gridContainer:not(.balanced) .cardTitle {
     font-size: 0.9rem !important; /* Slightly smaller to fit long terms */
     line-height: 1.25 !important;
     margin: 0 !important;
@@ -203,19 +207,19 @@
     overflow-wrap: break-word;
     hyphens: auto;
   }
-  
-  .categoryTag {
+
+  .gridContainer:not(.balanced) .categoryTag {
     font-size: 7.5px !important;
     padding: 1px 5px !important;
     letter-spacing: 1px !important;
     margin-bottom: 0.35rem !important;
   }
 
-  .hoverOverlay {
+  .gridContainer:not(.balanced) .hoverOverlay {
     padding: 1rem !important;
   }
 
-  .hoverTitle {
+  .gridContainer:not(.balanced) .hoverTitle {
     font-size: 0.9rem !important;
     line-height: 1.25 !important;
     display: -webkit-box;
@@ -228,13 +232,13 @@
     hyphens: auto;
   }
 
-  .hoverBody {
+  .gridContainer:not(.balanced) .hoverBody {
     font-size: 10.5px !important;
     line-height: 1.35 !important;
     -webkit-line-clamp: 3 !important; /* Standardizes body reveal space */
   }
 
-  .exploreButton {
+  .gridContainer:not(.balanced) .exploreButton {
     padding: 4px 10px !important;
     font-size: 8.5px !important;
     margin-top: 0.2rem !important;
@@ -243,8 +247,98 @@
 }
 
 @media (max-width: 480px) {
-  .gridContainer {
+  .gridContainer:not(.balanced) {
     grid-template-columns: 1fr !important;
   }
 }
 
+/* ── Balanced grids (home page) ──
+   Column count and per-card spans come from InteractiveGrid.js as CSS variables,
+   so shorter rows widen to fill the width instead of leaving an orphan card.
+   Cards get a fixed height per breakpoint (not an aspect ratio) so a widened card
+   stays the same height as its neighbours. */
+.balanced {
+  --card-h: clamp(190px, 56vw, 260px);
+  grid-template-columns: repeat(var(--cols-sm, 2), minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.balanced > .gridCard {
+  grid-column: span var(--span-sm, 1);
+  aspect-ratio: auto;
+  height: var(--card-h);
+}
+
+@media (min-width: 640px) {
+  .balanced {
+    --card-h: 290px;
+    grid-template-columns: repeat(var(--cols-md, 3), minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .balanced > .gridCard { grid-column: span var(--span-md, 1); }
+}
+
+@media (min-width: 1024px) {
+  .balanced {
+    --card-h: 360px;
+    grid-template-columns: repeat(var(--cols-lg, 4), minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .balanced > .gridCard { grid-column: span var(--span-lg, 1); }
+}
+
+/* Compact phone cards: two per row, type stays at 12px+ so it is legible. */
+@media (max-width: 639px) {
+  .balanced .defaultOverlay,
+  .balanced .hoverOverlay {
+    padding: 0.9rem;
+  }
+
+  .balanced .categoryTag {
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 2px 7px;
+    margin-bottom: 0.4rem;
+  }
+
+  .balanced .cardTitle {
+    font-size: 1rem;
+    line-height: 1.25;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .balanced .hoverInner { gap: 0.45rem; }
+
+  .balanced .hoverTitle {
+    font-size: 1rem;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .balanced .hoverBody {
+    font-size: 12px;
+    line-height: 1.4;
+    -webkit-line-clamp: 4;
+  }
+
+  .balanced .exploreButton {
+    margin-top: 0.25rem;
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  /* Half-width cards: "Explore →" so the pill never wraps. */
+  .balanced > .gridCard:not(.fullRowSm) .exploreNoun { display: none; }
+}

@@ -87,7 +87,7 @@ export default function HealthAssessments() {
         {/* ── Assessments Grid ── */}
         <section className={styles.sectionWrapper}>
           <div className={styles.stepsContent}>
-            <InteractiveGrid items={ASSESSMENTS} basePath="/health-assessments" hideTags={true} columns={3} />
+            <InteractiveGrid items={ASSESSMENTS} basePath="/health-assessments" hideTags={true} titleLevel={2} balanced={true} />
           </div>
         </section>
 

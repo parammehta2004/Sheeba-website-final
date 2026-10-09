@@ -243,7 +243,7 @@ export default function HomePage() {
 
       {/* ─── PRESS LOGOS (Full Color Marquee) ─── */}
       <section className={styles.pressMarquee}>
-        <h3 className={styles.pressHeader}>As Featured In</h3>
+        <h2 className={styles.pressHeader}>As Featured In</h2>
         <div className={styles.marqueeTrack}>
           {/* Double up to create infinite loop effect seamlessly */}
           {[...Array(2)].map((_, loopIdx) => (
@@ -392,35 +392,37 @@ export default function HomePage() {
         <div className={styles.content}>
           <div className="reveal-up">
             <div className={styles.svcGrid}>
-              {/* Assessments Column */}
+              {/* Assessments */}
               <div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.8rem', marginBottom: '0.5rem' }}>
-                  <h2 className={styles.svcColTitle} style={{ color: 'var(--foreground)', margin: 0 }}>Assessments</h2>
-                  <Link href="/health-assessments" style={{ color: 'var(--accent-teal)', fontSize: '24px', fontWeight: 'bold', textDecoration: 'none', transition: 'opacity 0.3s' }} title="View All Health Assessments">&gt;</Link>
+                <div className={styles.svcHeader}>
+                  <h2 className={styles.svcColTitle}>Assessments</h2>
+                  <Link href="/health-assessments" className={styles.svcViewAll}>View all assessments <span aria-hidden="true">→</span></Link>
                 </div>
-                <p className={styles.svcColDesc} style={{color: 'var(--foreground)', opacity: 0.8}}>The foundational data required to stop guessing.</p>
-                <InteractiveGrid 
+                <p className={styles.svcColDesc}>The foundational data required to stop guessing.</p>
+                <InteractiveGrid
                   items={SERVICES_DATA
                     .filter(s => s.type === "Health Assessment")
-                    .slice(0, 4)
-                    .map(s => ({...s, body: s.description}))} 
+                    .map(s => ({...s, body: s.description}))}
                   basePath="/health-assessments"
+                  hideTags={true}
+                  balanced={true}
                 />
               </div>
-              
-              {/* Therapies Column */}
+
+              {/* Therapies */}
               <div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.8rem', marginBottom: '0.5rem' }}>
-                  <h2 className={styles.svcColTitle} style={{ color: 'var(--foreground)', margin: 0 }}>Therapies</h2>
-                  <Link href="/therapies" style={{ color: 'var(--accent-teal)', fontSize: '24px', fontWeight: 'bold', textDecoration: 'none', transition: 'opacity 0.3s' }} title="View All Therapies">&gt;</Link>
+                <div className={styles.svcHeader}>
+                  <h2 className={styles.svcColTitle}>Therapies</h2>
+                  <Link href="/therapies" className={styles.svcViewAll}>View all therapies <span aria-hidden="true">→</span></Link>
                 </div>
-                <p className={styles.svcColDesc} style={{color: 'var(--foreground)', opacity: 0.8}}>Specific protocols to shift the body back into a healing state.</p>
-                <InteractiveGrid 
+                <p className={styles.svcColDesc}>Specific protocols to shift the body back into a healing state.</p>
+                <InteractiveGrid
                   items={SERVICES_DATA
                     .filter(s => s.type === "Therapy")
-                    .slice(0, 4)
-                    .map(s => ({...s, body: s.description}))} 
+                    .map(s => ({...s, body: s.description}))}
                   basePath="/therapies"
+                  hideTags={true}
+                  balanced={true}
                 />
               </div>
             </div>

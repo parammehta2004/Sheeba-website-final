@@ -105,6 +105,16 @@
   position: relative;
 }
 
+/* Inner wrapper for the assessments / therapies card grids. The section already
+   pads the sides on phones, so the extra gutter is dropped there to keep the
+   two-up cards wide enough for their titles. */
+.gridShell {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
 /* ─── Typography (Evergreen Scale) ─── */
 .badge {
   display: inline-block;
@@ -355,6 +365,7 @@
 
 @media (max-width: 768px) {
   .sectionWrapper { padding: 4rem 1.5rem; }
+  .gridShell { padding-left: 0; padding-right: 0; }
   .heroSection {
     padding-top: 6rem;
   }
