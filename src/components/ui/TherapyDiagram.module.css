@@ -51,6 +51,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-tags, 30px);
   color: #2d5a5a; /* Dark teal text for contrast on white */
+  text-decoration: none; /* Cards are links to each therapy's detail page */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);

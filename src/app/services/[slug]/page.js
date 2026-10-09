@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, notFound } from "next/navigation";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -9,11 +10,32 @@ import LeafDecoration from "@/components/ui/LeafDecoration";
 import { SERVICES_DATA } from "@/data/services";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
+import { canonicalServicePath } from "@/lib/seo";
 import posthog from "posthog-js";
 import styles from "./page.module.css";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+}
+
+// Sibling pages in the same group (therapies or health assessments), linked by
+// canonical path so every detail page gets crawlable internal links.
+function relatedServices(slug) {
+  const isTherapy = (canonicalServicePath(slug) || "").startsWith("/therapies");
+  const type = isTherapy ? "Therapy" : "Health Assessment";
+  const seen = new Set([slug]);
+  const items = SERVICES_DATA.filter((s) => {
+    if (s.type !== type || seen.has(s.slug)) return false;
+    seen.add(s.slug);
+    return true;
+  });
+  return { isTherapy, items };
+}
+
+// Desktop column count for the related grid: 6 -> 3+3, 4 -> 4, never a lone card.
+function relatedColumns(count) {
+  if (count <= 4) return count;
+  return count % 3 === 0 ? 3 : 4;
 }
 
 export default function ServiceDetail() {
@@ -26,6 +48,7 @@ export default function ServiceDetail() {
   const service = SERVICES_DATA.find((s) => s.slug === slug);
   const primaryAccent = slug === "dropzone" ? "var(--accent-teal)" : "var(--accent-sage)";
   const buttonBg = slug === "dropzone" ? "var(--accent-teal)" : "var(--accent-deep)";
+  const related = relatedServices(slug);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -142,7 +165,7 @@ export default function ServiceDetail() {
         <div className={styles.content} style={{ maxWidth: '800px', margin: '0 auto', padding: '0 2rem' }}>
           <div className="reveal-up" style={{ textAlign: 'center' }}>
             {slug === "dropzone" ? (
-              <div style={{ display: "flex", alignItems: "center", justifyContent: 'center', gap: "1.5rem", marginBottom: "1.5rem" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: 'center', gap: "1rem 1.5rem", marginBottom: "1.5rem" }}>
                 <img 
                   src="/assets/dropzone-logo.svg" 
                   alt="Dropzone Logo" 
@@ -160,6 +183,11 @@ export default function ServiceDetail() {
             <p className={styles.paragraph} style={{ fontSize: "19px", lineHeight: "1.8", color: "rgba(74, 78, 70, 0.85)", marginBottom: "0" }}>
               {service.description}
             </p>
+            {service.externalLink && (
+              <a href={service.externalLink} target="_blank" rel="noopener noreferrer" className={styles.externalButton} style={{ marginTop: "2rem" }}>
+                {service.externalLinkLabel || "Visit the official site"}{" →"}
+              </a>
+            )}
           </div>
         </div>
       </section>
@@ -172,6 +200,15 @@ export default function ServiceDetail() {
               className={styles.richText} 
               dangerouslySetInnerHTML={{ __html: service.longContent }} 
             />
+
+            {service.externalLink && (
+              <div className={styles.externalCta}>
+                {service.externalLinkPrompt && <p className={styles.externalCtaText}>{service.externalLinkPrompt}</p>}
+                <a href={service.externalLink} target="_blank" rel="noopener noreferrer" className={styles.externalButton}>
+                  {service.externalLinkLabel || "Visit the official site"}{" →"}
+                </a>
+              </div>
+            )}
             
             {/* Book Consultation button moved here from hero */}
             {service.type !== "Health Assessment" && (
@@ -185,12 +222,50 @@ export default function ServiceDetail() {
         </section>
       )}
 
+      {/* ─── RELATED SERVICES ─── */}
+      {related.items.length > 0 && (
+        <section className={`${styles.section} ${styles.relatedSection}`} aria-labelledby="related-heading">
+          <div className={styles.content}>
+            <div className={styles.relatedHeader}>
+              <h2 id="related-heading" className={styles.relatedTitle}>
+                {related.isTherapy ? "Related therapies" : "Other health assessments"}
+              </h2>
+              <Link href={related.isTherapy ? "/therapies" : "/health-assessments"} className={styles.relatedAll}>
+                {related.isTherapy ? "View all therapies" : "View all health assessments"} →
+              </Link>
+            </div>
+            <ul className={styles.relatedGrid} style={{ "--related-cols": relatedColumns(related.items.length) }}>
+              {related.items.map((item) => (
+                <li key={item.slug}>
+                  <Link href={canonicalServicePath(item.slug)} className={styles.relatedCard}>
+                    <span
+                      className={styles.relatedImage}
+                      aria-hidden="true"
+                      style={{
+                        backgroundImage: `url(${item.img})`,
+                        backgroundPosition: item.bgPosition || "center",
+                        backgroundSize: item.bgSize || "cover",
+                        backgroundColor: item.bgColor || "transparent",
+                      }}
+                    />
+                    <span className={styles.relatedBody}>
+                      <h3 className={styles.relatedCardTitle}>{item.title}</h3>
+                      <span className={styles.relatedExplore}>Explore →</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       {/* ─── CONTACT SECTION ─── */}
-      <section id="book" className={`${styles.section} ${styles.contactSection}`} style={{ backgroundColor: "var(--foreground)", padding: "8rem 2rem" }}>
+      <section id="book" className={`${styles.section} ${styles.contactSection}`} style={{ backgroundColor: "var(--foreground)" }}>
         <div className={styles.content}>
           <div className={styles.contactGrid} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
             <div className="reveal-up">
-              <h2 className={styles.contactTitle} style={{ fontFamily: "var(--font-heading)", fontSize: "48px", color: "#f8f1de", marginBottom: "2rem" }}>
+              <h2 className={styles.contactTitle} style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(2.25rem, 6vw, 48px)", color: "#f8f1de", marginBottom: "2rem" }}>
                 Take the <i style={{color: "var(--accent-amber)"}}>next step.</i>
               </h2>
               <p className={styles.contactDesc} style={{ fontSize: "18px", lineHeight: "1.7", color: "rgba(248, 241, 222, 0.8)", maxWidth: "450px" }}>
@@ -198,7 +273,7 @@ export default function ServiceDetail() {
               </p>
             </div>
             
-            <div className="reveal-up" style={{ background: "#ffffff", padding: "4rem", borderRadius: "8px", display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '260px' }}>
+            <div className={`${styles.formCard} reveal-up`}>
               {service.type === "Health Assessment" ? (
                 <div style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "var(--font-heading)", fontStyle: "italic", fontSize: "28px", color: buttonBg, marginBottom: "1.5rem" }}>Ready to begin?</div>
@@ -215,22 +290,22 @@ export default function ServiceDetail() {
                   <p style={{ color: "rgba(74, 78, 70, 0.8)", fontSize: "16px" }}>Sheeba&apos;s clinic has received your request and will be in touch shortly to schedule your consultation.</p>
                 </div>
               ) : (
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={handleFormSubmit} style={{ width: "100%" }}>
                   <div style={{ marginBottom: "1.5rem" }}>
                     <label htmlFor="service-name" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Full Name</label>
-                    <input type="text" id="service-name" name="name" autoComplete="name" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
+                    <input type="text" id="service-name" name="name" autoComplete="name" required aria-required="true" style={{ width: "100%", minHeight: "48px", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "1.5rem" }}>
                     <label htmlFor="service-email" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Email Address</label>
-                    <input type="email" id="service-email" name="email" autoComplete="email" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
+                    <input type="email" id="service-email" name="email" autoComplete="email" required aria-required="true" style={{ width: "100%", minHeight: "48px", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "1.5rem" }}>
                     <label htmlFor="service-phone" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>Phone Number</label>
-                    <input type="tel" id="service-phone" name="phone" autoComplete="tel" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
+                    <input type="tel" id="service-phone" name="phone" autoComplete="tel" required aria-required="true" style={{ width: "100%", minHeight: "48px", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   <div style={{ marginBottom: "2.5rem" }}>
                     <label htmlFor="service-message" style={{ display: "block", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "var(--accent-olive)", marginBottom: "0.5rem" }}>What are you looking to resolve?</label>
-                    <input type="text" id="service-message" name="message" required aria-required="true" style={{ width: "100%", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
+                    <input type="text" id="service-message" name="message" required aria-required="true" style={{ width: "100%", minHeight: "48px", padding: "12px 0", border: "none", borderBottom: "1px solid rgba(74, 78, 70, 0.2)", fontSize: "16px", fontFamily: "var(--font-body)" }} />
                   </div>
                   {TURNSTILE_SITE_KEY && (
                     <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
@@ -249,7 +324,7 @@ export default function ServiceDetail() {
                       />
                     </div>
                   )}
-                  <button type="submit" disabled={formState === "submitting"} aria-describedby={formState === "error" ? "service-form-error" : undefined} style={{ width: "100%", background: "var(--background)", color: "var(--foreground)", padding: "18px", border: "none", borderRadius: "40px", fontSize: "16px", fontWeight: "500", cursor: "pointer", transition: "all 0.3s" }}>
+                  <button type="submit" disabled={formState === "submitting"} aria-describedby={formState === "error" ? "service-form-error" : undefined} style={{ width: "100%", fontFamily: "var(--font-body)", background: "var(--background)", color: "var(--foreground)", padding: "18px", border: "none", borderRadius: "40px", fontSize: "16px", fontWeight: "500", cursor: "pointer", transition: "all 0.3s" }}>
                     {formState === "submitting" ? "Sending..." : "Request Consultation"}
                   </button>
                   {formState === "error" && <p id="service-form-error" role="alert" style={{color:'red', fontSize:'12px', marginTop:'1rem', textAlign:'center'}}>There was an error sending your request.</p>}

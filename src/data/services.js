@@ -8,10 +8,10 @@ export const SERVICES_DATA = [
     img: "/assets/mmcard.jpg",
     bgPosition: "35% center",
     longContent: `
-      <h5>The "North Star" — Metabolic Mapping</h5>
+      <h2>The "North Star" — Metabolic Mapping</h2>
       <p>Your biology is unique. Rather than relying on generic templates, we decode your body's "inner software" using <strong>Metabolic Mapping</strong>—our clinical North Star. By performing a functional analysis of 42+ metabolic markers in your blood test (including cellular hydration, adrenal fatigue, subclinical thyroid function, and gut health), we identify the exact root blocks preventing fat burning and design a highly customized blueprint for your body.</p>
       <p>This comprehensive biochemical blueprint allows us to stop guessing and start targeting exactly what your body needs to thrive, ensuring sustainable health and wellness progress.</p>
-      <h5>Bridging Biochemistry and Fat Loss</h5>
+      <h2>Bridging Biochemistry and Fat Loss</h2>
       <p>Metabolic Mapping serves as the clinical engine behind our weight management protocols. If you are aiming for fat loss, your biochemical markers (such as thyroid levels, cortisol, and insulin sensitivity) directly dictate how your body burns fat. For this reason, your Metabolic Mapping blueprint links seamlessly with our premier fat loss system, <a href="https://www.dropzone.fit" target="_blank" rel="noopener noreferrer" style="color: var(--accent-teal); text-decoration: underline; font-weight: bold;">Dropzone</a>. By bridging the clinical data from Sheeba The Nutritionist with the target protocols on <a href="https://www.dropzone.fit" target="_blank" rel="noopener noreferrer" style="color: var(--accent-teal); text-decoration: underline; font-weight: bold;">Dropzone.fit</a>, we ensure your weight loss plan is perfectly aligned with your internal biochemistry.</p>
     `
   },
@@ -24,7 +24,7 @@ export const SERVICES_DATA = [
     bgPosition: "85% center",
     longContent: `
       <p>In the Food Compatibility Test, it is a non-invasive procedure (great for kids!) that uses your hair sample. The good news is that not only is this test limited to foods (over 600) but also tests everyday household products that may be triggering inflammation.</p>
-      <h5>So how is this different and is it accurate?</h5>
+      <h2>So how is this different and is it accurate?</h2>
       <p>When using hair, it is really testing how your cells are reacting to the product. There is a sophisticated equipment that tests the electrical systems of the product with that of your cells (from your hair sample). Every cell in your body needs electrical stimulation to function correctly. Incompatible foods and products can interfere with this electrical stimulation, preventing healing and increasing inflammation.</p>
       <p>Every food, product and our own cells, each one has their own unique electrical signatures and the equipment allows to determine what the positive or negative influence of that food or household product is. It tells us if those foods or products are really compatible with your body or if they are creating inflammation or aggravating existing symptoms.</p>
       <p>Once we have the food compatibility test, it allows us to focus on the foods and products that do work, so the body can start the cellular healing work.</p>
@@ -56,7 +56,7 @@ export const SERVICES_DATA = [
     img: "/assets/htmt.jpg",
     longContent: `
       <p>This assessment measures the mineral deficiencies and heavy metal toxicities going on at the cellular level. A small sample of hair from the scalp is taken and sent to a licensed laboratory for analysis. We strongly recommend this for children that would like to have a health assessment test done.</p>
-      <h5>Careful analysis of the hair contents, can reveal the following information about you and your body:</h5>
+      <h2>Careful analysis of the hair contents, can reveal the following information about you and your body:</h2>
       <ul>
         <li>Exposure to and accumulation of Toxic Elements</li>
         <li>Nutritional mineral deficiency or excess</li>
@@ -89,7 +89,7 @@ export const SERVICES_DATA = [
     longContent: `
       <p>The E4L (Energy4Life) Bioenergetic Wellness System (formerly known as Nutri-Energetics Systems or NES Health) is a bioenergetic wellness system designed to assess and support the body's communication networks. Rather than providing a medical diagnosis, it focuses on mapping the "human body-field," which is considered the master control system for the body's physical activity.</p>
       
-      <h5>How the System Works</h5>
+      <h2>How the System Works</h2>
       <p>The E4L system operates on a two-step process to detect and correct energetic distortions caused by stress, toxins, and physical imbalances:</p>
       
       <strong>Step 1: The Bioenergetic Scan</strong>
@@ -110,7 +110,7 @@ export const SERVICES_DATA = [
     longContent: `
       <p>The E4L (Energy4Life) Bioenergetic Wellness System (formerly known as Nutri-Energetics Systems or NES Health) is a bioenergetic wellness system designed to assess and support the body's communication networks. Rather than providing a medical diagnosis, it focuses on mapping the "human body-field," which is considered the master control system for the body's physical activity.</p>
       
-      <h5>How the System Works</h5>
+      <h2>How the System Works</h2>
       <p>The E4L system operates on a two-step process to detect and correct energetic distortions caused by stress, toxins, and physical imbalances:</p>
       
       <strong>Step 1: The Bioenergetic Scan</strong>
@@ -129,12 +129,12 @@ export const SERVICES_DATA = [
     longContent: `
       <p>Sheeba uses aromatherapy for her clients as and when required, to address specific health concerns. Aromatherapy is the use of medicinal or therapeutic grade plant essences that can be inhaled, applied, diffused or even ingested. Aromatherapy can be used to access brain areas and the emotional centres of the brain — creating balance and harmony of body and mind.</p>
       <p>Essential oils can be a great adjunct tool to hasten healing as they do not require digestive absorption and results are almost immediate. They possess anti-inflammatory, anti-microbial, anti-viral and detoxification properties that are a powerful aid to healing and promote the feeling of well-being. They decrease stress and assist in better quality sleep, reduce pain and improve circulation, digestion and immune function.</p>
-      <h5>Essential Oils</h5>
+      <h2>Essential Oils</h2>
       <p>Oils are the most basic and essential form of aromatherapy. How to use the different types of oils is important, as is exactly where the oil needs to be used on the body. Some oils also have multiple medicinal uses. Some popular and most accessible essential oils are peppermint, eucalyptus, lavender, tea tree and lemon. Essential oil is the pure essence or extract from a plant and directly derived from nature.</p>
       <p>For example, peppermint oil can settle the stomach, focus the mind and refresh your senses, providing cooling and calming effects. Eucalyptus oil can soothe migraines and headaches, reduce fevers and treat respiratory issues. Here Sheeba makes a difference as she comes with a lot of experience and deep knowledge in this area and usually administers this for her clients to achieve total wellness.</p>
-      <h5>How to use?</h5>
+      <h2>How to use?</h2>
       <p>Aromatherapy's main uses are for health, anti-aging and beauty. Essential oils can be massaged into the body, inhaled through the air or diffused into cosmetic products. Drops of these oils are often added to air diffusers and steamers for easy inhalation. Add essential oils to cream- or oil-based products, like lotions and shampoos, or bathe with drops of an oil in the water.</p>
-      <h5>Where and how to purchase?</h5>
+      <h2>Where and how to purchase?</h2>
       <p>Most essential oils are commonly found online through aromatherapy websites. Since essential oils are very potent and needed in small amounts, it is best to consult a therapist like Sheeba who can make a real difference. Organically grown oils are best to use because they are void of any pesticide or preservative residue. Please consult an aromatherapy expert at all times before use.</p>
     `
   },
@@ -145,19 +145,21 @@ export const SERVICES_DATA = [
     description: "Voted the best weightloss program in Singapore, our signature Dropzone program is a state-of-the-art, practitioner-guided fat loss protocol that guarantees measurable fat loss by tailoring the strategy to your unique biochemistry and activating autophagy while sparing muscle mass.",
     img: "/assets/dzlogoupd.png",
     externalLink: "https://www.dropzone.fit",
+    externalLinkLabel: "Explore Dropzone at dropzone.fit",
+    externalLinkPrompt: "Discover all the details about the program, pricing tiers, and client results on the official site.",
     longContent: `
       <p>Dropzone is a state-of-the-art precision targeted fat loss program that is customized for your body and metabolism – the only program in the world that guarantees measurable fat loss because it is tailored specifically to you. Created by Sheeba Majmudar, it combines nutrition, lifestyle, and targeted protocols based on over 20 years of clinical experience.</p>
       
-      <h5>Voted the Best Weightloss Program in Singapore</h5>
+      <h2>Voted the Best Weightloss Program in Singapore</h2>
       <p>Recognised for its unmatched clinical results, Dropzone has been voted the best weightloss program in Singapore, offering a precision-guided approach to sustainable body transformation that works even when other diets fail.</p>
 
-      <h5>The Science of Permanent Fatloss</h5>
+      <h2>The Science of Permanent Fatloss</h2>
       <p>Dropzone utilizes a game-changing mechanism to deliver permanent fatloss. By activating autophagy (the body's natural cellular recycling and anti-aging system), the body is stimulated to burn stored fat rapidly for fuel. Crucially, while traditional fasting or extreme calorie restriction causes the body to break down muscle mass alongside fat, Dropzone utilizes instant-absorption nanosomes to target fat cells specifically. This spares 100% of your precious muscle mass, keeping your metabolism running high and preventing the post-diet rebound.</p>
       
-      <h5>The "North Star" — Metabolic Mapping</h5>
+      <h2>The "North Star" — Metabolic Mapping</h2>
       <p>Your biology is unique. Rather than relying on generic templates, we decode your body's "inner software" using <strong>Metabolic Mapping</strong>—our clinical North Star. By performing a functional analysis of 42+ metabolic markers in your blood test (including cellular hydration, adrenal fatigue, subclinical thyroid function, and gut health), we identify the exact root blocks preventing fat burning and design a highly customized blueprint for your body.</p>
 
-      <h5>Key Benefits</h5>
+      <h2>Key Benefits</h2>
       <ul>
         <li>Sustainable and Permanent Fat Loss (Sparing Muscle Mass)</li>
         <li>Activated Autophagy & Anti-Aging Effects</li>
@@ -166,12 +168,6 @@ export const SERVICES_DATA = [
         <li>Reduction of Visceral and Subcutaneous Fat</li>
         <li>Clearer Skin & Reduced Systemic Inflammation</li>
       </ul>
-      <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(52, 181, 178, 0.08); border: 1.5px dashed var(--accent-teal); border-radius: 12px; text-align: center;">
-        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--accent-teal-dark);">Discover all the details about the program, pricing tiers, and client results on the official site.</p>
-        <a href="https://www.dropzone.fit" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: var(--accent-teal); color: #fff; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: transform 0.2s;">
-          Explore all the details on Dropzone at dropzone.fit →
-        </a>
-      </div>
     `
   },
   {
@@ -182,16 +178,12 @@ export const SERVICES_DATA = [
     img: "/assets/prasup.jpeg",
     bgPosition: "85% center",
     externalLink: "https://www.practitionergraded.com",
+    externalLinkLabel: "Shop at Practitioner Graded",
+    externalLinkPrompt: "Purchase your prescribed clinical-grade supplements from our partner store.",
     longContent: `
-      <h5>Premium Practitioner-Grade Supplements</h5>
+      <h2>Premium Practitioner-Grade Supplements</h2>
       <p>Not all supplements are created equal. We partner with top-tier, practitioner-exclusive manufacturers to provide high-bioavailability, clinical-strength formulas that are verified for purity and potency.</p>
       <p>Your customized health protocol will recommend specific target nutrients. Access the official practitioner store directly to order your recommended formulas.</p>
-      <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(52, 181, 178, 0.08); border: 1.5px dashed var(--accent-teal); border-radius: 12px; text-align: center;">
-        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--accent-teal-dark);">Purchase your prescribed clinical-grade supplements from our partner store.</p>
-        <a href="https://www.practitionergraded.com" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: var(--accent-teal); color: #fff; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: transform 0.2s;">
-          Shop at Practitioner Guided →
-        </a>
-      </div>
     `
   },
   {
@@ -202,10 +194,10 @@ export const SERVICES_DATA = [
     img: "/assets/gemmo.jpg",
     bgPosition: "65% center",
     longContent: `
-      <h5>Embryonic Plant Stem Cells</h5>
+      <h2>Embryonic Plant Stem Cells</h2>
       <p>I am excited to introduce to you what I have recently added to my growing list of natural therapies that support healing. I have started using this therapy in my practice with amazing results.</p>
       <p>"Gemmae" stands for Embryo in Latin. This little-known therapy started in the 1980s in Europe, with very few practitioners in the West.</p>
-      <h5>What exactly is it?</h5>
+      <h2>What exactly is it?</h2>
       <p>Unlike typical herbs (Ayurvedic or Western) which use shrubs and bushes, Gemmotherapy uses many massive trees like the Giant Redwood or Oak. The very young budding shoots, leaves, flowers or rootlets only are used to capture the vitality of the entire plant. In effect, what you get:</p>
       <ul>
         <li>Non-toxic extracts</li>
@@ -217,7 +209,7 @@ export const SERVICES_DATA = [
         <li>Works on the emotional and spiritual aspects, similar to Flower Remedies</li>
         <li>Contains amino acids, antioxidants, minerals, anti-inflammatories and detoxification abilities — all in nature's proportion</li>
       </ul>
-      <h5>What is Gemmotherapy used for?</h5>
+      <h2>What is Gemmotherapy used for?</h2>
       <ul>
         <li>Deep detoxification action — supports all drainage systems in the body</li>
         <li>Only product that cleanses and builds simultaneously (helps restore functions while detoxifying)</li>
@@ -259,11 +251,11 @@ export const SERVICES_DATA = [
     bgPosition: "35% center",
     longContent: `
       <p><strong>Biodynamic Craniosacral Therapy (BDCT)</strong> is a sophisticated, subtle form of bodywork that uses the principles of Quantum Physics. Unlike other physical or energy therapies, healing in BDCT comes not from the practitioner, but from within the client. Healing of your body and mind is generated by your own Life Force in motion. Using her hands, the Biodynamic Craniosacral Therapist is able to sense this motion. Rather than focusing on disease or symptoms, the practitioner stays centered and synchronizes with the deep, slow rhythm of the regenerative health in the life force.</p>
-      <h5>Is Biodynamic Craniosacral Therapy a type of energy work?</h5>
+      <h2>Is Biodynamic Craniosacral Therapy a type of energy work?</h2>
       <p>Biodynamic Craniosacral Therapy is not a form of energy work — there is no channeling or transfer of energy from practitioner to client. Nor is it the more common, mechanical approach to craniosacral therapy. In BDCT, healing comes from within the client. The client's own healing forces create the resolution most appropriate for that individual. BDCT awakens a person's own capacity for healing.</p>
-      <h5>How is BDCT different from other types of Craniosacral Therapy?</h5>
+      <h2>How is BDCT different from other types of Craniosacral Therapy?</h2>
       <p>Other types of Craniosacral therapy use a more mechanical approach, with the practitioner using their hands to assess and correct imbalances between the bones of the head, the sacrum and the fluid around the brain and spinal cord. In the Biodynamic approach, the practitioner facilitates the client's own internal healing process instead of fixing the client. The practitioner focuses on the whole rather than portions of the system, and on the health within rather than the disease. Clients report feeling change initiated from inside themselves rather than from the practitioner's interventions.</p>
-      <h5>How can it benefit me? Who is it for?</h5>
+      <h2>How can it benefit me? Who is it for?</h2>
       <p>Life is full of physical and emotional impacts. BDCT helps the body release these stored imprints, cleaning up cellular memories. This creates not only physical health, but a deeper sense of well-being and connectedness.</p>
       <p>Starting from birth — which itself is considered traumatic — even newborn babies can receive a session, as it is such a gentle therapy. Pregnant mothers can benefit greatly from this therapy as well.</p>
       <p>Most people feel deeply relaxed and centered after a session. The changes you experience may range from subtle to profound. You may stand straighter or breathe more easily. Pains may decrease and emotional boundaries may be easier to maintain. Long-standing health issues may resolve. Results from BDCT are usually long-lasting, many times permanent, because they are made by your own system.</p>

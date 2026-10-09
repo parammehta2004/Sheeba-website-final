@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import styles from "./TherapyDiagram.module.css";
 
 // Customized Inline SVG Icons for each therapy
@@ -141,37 +142,43 @@ const Icons = {
 const THERAPY_CARDS = [
   {
     id: "craniosacral",
+    href: "/therapies/biodynamic-craniosacral-therapy",
     title: "Biodynamic Craniosacral Therapy",
     Icon: Icons.craniosacral,
     positionClass: styles.posTopLeft,
   },
   {
     id: "reconnective",
+    href: "/therapies/reconnective-healing",
     title: "Reconnective Healing",
     Icon: Icons.reconnective,
     positionClass: styles.posMidLeft,
   },
   {
     id: "gemmotherapy",
+    href: "/therapies/gemmotherapy",
     title: "Gemmotherapy",
     Icon: Icons.gemmotherapy,
     positionClass: styles.posBottomLeft,
   },
   {
     id: "dropzone",
+    href: "/therapies/dropzone",
     title: "Dropzone",
     Icon: Icons.dropzone,
     positionClass: styles.posTopRight,
   },
   {
     id: "aromatherapy",
+    href: "/therapies/therapeutic-aroma-therapy",
     title: "Aroma Therapy",
     Icon: Icons.aromatherapy,
     positionClass: styles.posMidRight,
   },
   {
     id: "nes",
-    title: "NES (Nutri Energetic System)",
+    href: "/therapies/e4l-nutri-energetic-system",
+    title: "E4L (Nutri Energetic System)",
     Icon: Icons.nes,
     positionClass: styles.posBottomRight,
   },
@@ -237,12 +244,12 @@ export default function TherapyDiagram() {
         {THERAPY_CARDS.map((card) => {
           const CardIcon = card.Icon;
           return (
-            <div key={card.id} className={`${styles.therapyCard} ${card.positionClass}`}>
-              <span className={styles.iconWrapper}>
+            <Link key={card.id} href={card.href} className={`${styles.therapyCard} ${card.positionClass}`}>
+              <span className={styles.iconWrapper} aria-hidden="true">
                 <CardIcon />
               </span>
               <span className={styles.cardText}>{card.title}</span>
-            </div>
+            </Link>
           );
         })}
       </div>
